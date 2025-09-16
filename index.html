@@ -1,37 +1,59 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- Open Graph Meta Tags for Facebook Link Preview -->
-<meta property="og:title" content="HappyLawn Hire Equipment">
-<meta property="og:description" content="Quality lawn and garden tools for hire. Check out our 4-hour and full-day rates!">
-<meta property="og:image" content="https://happylawn.github.io/facebookpreview.jpg">
-<meta property="og:url" content="[https://YOUR-USERNAME.github.io/](https://YOUR-USERNAME.github.io/)">
-<meta property="og:type" content="website">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HappyLawn Equipment for Hire</title>
+
+    <!-- Open Graph Meta Tags for Facebook Link Preview -->
+    <meta property="og:title" content="HappyLawn Hire Equipment">
+    <meta property="og:description" content="Quality lawn and garden tools for hire. Check out our 4-hour and full-day rates!">
+    <meta property="og:image" content="https://happylawn.github.io/facebookpreview.jpg">
+    <meta property="og:url" content="https://happylawn.github.io/">
+    <meta property="og:type" content="website">
+
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         body {
             font-family: 'Inter', sans-serif;
+            scroll-behavior: smooth;
         }
-        .header-shadow {
-            box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.05);
+        .hero-bg {
+            background-image: url('https://images.unsplash.com/photo-1525286252438-c8749e0f6e36?q=80&w=2070&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+        /* Custom CSS for the translucent footer gradient */
+        .footer-gradient::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image: linear-gradient(to bottom, var(--tw-gradient-stops));
+            --tw-gradient-from: #14532d var(--tw-gradient-from-position);
+            --tw-gradient-to: rgb(20 83 45 / 0) var(--tw-gradient-to-position);
+            --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
+            --tw-gradient-to: #15803d var(--tw-gradient-to-position);
+            opacity: 0.5; /* This sets the 50% translucency */
+            z-index: -1;
         }
     </style>
 </head>
 <body class="bg-gray-50">
 
-    <!-- Header Section -->
-   <header id="header" class="bg-white/80 backdrop-blur-md sticky top-0 z-50 transition-shadow">
-    <div class="container mx-auto px-6 py-4">
-        <div class="text-center">
-            <h1 class="text-3xl md:text-4xl font-bold text-gray-800">HappyLawn Hire Equipment</h1>
-            <p class="mt-2 text-lg text-gray-600">Bring your lawn back to life.</p>
+    <!-- Hero Section -->
+    <header class="hero-bg h-screen min-h-[500px] flex flex-col items-center justify-center text-white relative">
+        <div class="absolute inset-0 bg-black/50"></div> <!-- Overlay for text readability -->
+        <div class="relative z-10 text-center p-6">
+            <img src="your-logo.png" alt="HappyLawn Hire Logo" class="h-24 md:h-32 w-auto mx-auto mb-4">
+            <h1 class="text-4xl md:text-6xl font-extrabold tracking-tight">HappyLawn Hire Equipment</h1>
+            <p class="mt-4 text-lg md:text-xl max-w-2xl mx-auto">Bring your lawn back to life with professional-grade tools.</p>
+            <a href="#products" class="mt-8 inline-block bg-green-600 text-white font-bold py-3 px-8 rounded-lg shadow-lg hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-75 transition-transform transform hover:scale-105">
+                View Equipment
+            </a>
         </div>
-    </div>
-</header>
+    </header>
 
 
     <!-- Main Content -->
@@ -274,6 +296,7 @@
 
 </body>
 </html>
+
 
 
 
