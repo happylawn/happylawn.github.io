@@ -81,25 +81,41 @@ src="https://www.facebook.com/tr?id=1479906689908468&ev=PageView&noscript=1"
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
 
             <!-- Product Card 1: Lawn Scarifier -->
-            <div class="bg-white rounded-lg shadow-lg overflow-hidden transform hover:scale-105 transition-transform duration-300 ease-in-out flex flex-col">
-                <div class="h-56 overflow-hidden flex items-center justify-center">
-                   <img class="w-full h-full object-contain p-2" src="scarifier.png" alt="Makita Lawn Scarifier">
-                </div>
-                <div class="p-6 flex-grow flex flex-col justify-between">
-                    <div>
-                        <h3 class="text-xl font-semibold text-gray-800 mb-2">Makita 40V Lawn Scarifier</h3>
-                        <p class="text-gray-600 text-sm mb-4">Perfect for removing moss and thatch allowing water and nutrients to get to the roots to promote a thicker, greener, healthier lawn.<br> <br>
-                        Hire includes: <br> - 2x 8ah Batteries <br> - Dual Fast charger <br> - Scarifier blade: Ideal for Spring & Autumn <br> - Dethatcher Blade: Perfect for year-round use</p>
-                    </div>
-                    <div class="flex justify-between items-end mt-4">
-                        <div>
-                            <p class="text-lg font-bold text-[#1B2A13]">$45 <span class="text-sm font-medium text-gray-500">/ 4hrs</span></p>
-                            <p class="text-lg font-bold text-[#1B2A13]">$60 <span class="text-sm font-medium text-gray-500">/ day</span></p>
-                        </div>
-                        <a href="mailto:happylawnhire@gmail.com?subject=Hire Enquiry: Makita 40V Lawn Scarifier" class="bg-[#1B2A13] text-[#E5E7BE] text-center font-semibold py-2 px-4 rounded-lg shadow-md hover:bg-[#131D0D] whitespace-nowrap onclick="fbq('track', 'Contact');">Book Now</a>
-                    </div>
-                </div>
+           <div class="bg-white rounded-lg shadow-lg overflow-hidden transform hover:scale-105 transition-transform duration-300 ease-in-out flex flex-col">
+    <div class="h-56 overflow-hidden flex items-center justify-center">
+        <img class="w-full h-full object-contain p-2" src="scarifier.png" alt="Makita Lawn Scarifier">
+    </div>
+    <div class="p-6 flex-grow flex flex-col justify-between">
+        <div>
+            <h3 class="text-xl font-semibold text-gray-800 mb-2">Makita 40V Lawn Scarifier</h3>
+            <p class="text-gray-600 text-sm mb-4">
+                Perfect for removing moss and thatch allowing water and nutrients to get to the roots to promote a thicker, greener, healthier lawn.<br><br>
+                Hire includes: <br> - 2x 8ah Batteries <br> - Dual Fast charger <br> - Scarifier blade <br> - Dethatcher Blade
+            </p>
+        </div>
+
+        <div class="relative bg-gray-100 p-1 rounded-xl flex mb-4 w-full border border-gray-200">
+            <div id="slider-scarifier" class="absolute top-1 left-1 bottom-1 w-[calc(50%-4px)] bg-white rounded-lg shadow-sm transition-all duration-300 ease-in-out"></div>
+            
+            <button onclick="setToggle('scarifier', '4hr', 45)" class="relative z-10 w-1/2 py-2 text-sm font-bold transition-colors duration-300 text-gray-800" id="btn-scarifier-4hr">
+                4 Hours
+            </button>
+            <button onclick="setToggle('scarifier', 'day', 60)" class="relative z-10 w-1/2 py-2 text-sm font-bold transition-colors duration-300 text-gray-400" id="btn-scarifier-day">
+                Full Day
+            </button>
+        </div>
+
+        <div class="flex justify-between items-center mt-2">
+            <div>
+                <span class="text-2xl font-black text-[#1B2A13]" id="price-scarifier">$45</span>
             </div>
+            
+            <button onclick="addCurrentSelection('Makita 40V Lawn Scarifier', 'scarifier')" class="bg-[#1B2A13] text-[#E5E7BE] font-semibold py-2 px-6 rounded-lg shadow-md hover:bg-[#131D0D] transition">
+                Add to List
+            </button>
+        </div>
+    </div>
+</div>
 
      <!-- PASTE THIS ENTIRE BLOCK to fix the mower card layout -->
 <!-- Product Card 8: Lawn Mower -->
@@ -447,6 +463,7 @@ src="https://www.facebook.com/tr?id=1479906689908468&ev=PageView&noscript=1"
     </script>
 </body>
 </html>
+
 
 
 
