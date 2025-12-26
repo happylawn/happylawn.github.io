@@ -120,113 +120,188 @@ src="https://www.facebook.com/tr?id=1479906689908468&ev=PageView&noscript=1"
      <!-- PASTE THIS ENTIRE BLOCK to fix the mower card layout -->
 <!-- Product Card 8: Lawn Mower -->
 <div class="bg-white rounded-lg shadow-lg overflow-hidden transform hover:scale-105 transition-transform duration-300 ease-in-out flex flex-col">
-               <div class="h-56 overflow-hidden flex items-center justify-center">
-                  <img class="w-full h-full object-contain p-4" src="mower.png" alt="Makita 36V Lawn Mower">
-              </div>
-              <div class="p-6 flex-grow flex flex-col justify-between">
-                  <div>
-                      <h3 class="text-xl font-semibold text-gray-800 mb-2">Makita 36V Lawn Mower</h3>
-                      <p class="text-gray-600 text-sm mb-4">
-                          Effortlessly achieve a perfect cut with this 36V battery powered mower. Easy to operate, quiet and powerful enough for any job.<br><br>
-                          Hire includes:<br>
-                          - 4x 5ah batteries<br>
-                          - Dual charger
-                      </p>
-                  </div>
-                  <div class="flex justify-between items-end mt-4">
-                      <div>
-                          <p class="text-lg font-bold text-[#1B2A13]">$35 <span class="text-sm font-medium text-gray-500">/ 4hrs</span></p>
-                          <p class="text-lg font-bold text-[#1B2A13]">$50 <span class="text-sm font-medium text-gray-500">/ day</span></p>
-                      </div>
-                      <a href="mailto:happylawnhire@gmail.com?subject=Hire Enquiry: Makita 36V Lawn Mower" class="bg-[#1B2A13] text-white text-center font-semibold py-2 px-4 rounded-lg shadow-md hover:bg-[#131D0D] whitespace-nowrap onclick="fbq('track', 'Contact');">Book Now</a>
-                  </div>
-              </div>
-          </div>    
+    <div class="h-56 overflow-hidden flex items-center justify-center">
+        <img class="w-full h-full object-contain p-4" src="mower.png" alt="Makita 36V Lawn Mower">
+    </div>
+    <div class="p-6 flex-grow flex flex-col justify-between">
+        <div>
+            <h3 class="text-xl font-semibold text-gray-800 mb-2">Makita 36V Lawn Mower</h3>
+            <p class="text-gray-600 text-sm mb-4">
+                Effortlessly achieve a perfect cut with this 36V battery powered mower. Easy to operate, quiet and powerful enough for any job.<br><br>
+                Hire includes:<br>
+                - 4x 5ah batteries<br>
+                - Dual charger
+            </p>
+        </div>
+
+        <div class="relative bg-gray-100 p-1 rounded-xl flex mb-4 w-full border border-gray-200">
+            <div id="slider-mower" class="absolute top-1 left-1 bottom-1 w-[calc(50%-4px)] bg-white rounded-lg shadow-sm transition-all duration-300 ease-in-out"></div>
+            
+            <button onclick="setToggle('mower', '4hr', 35)" class="relative z-10 w-1/2 py-2 text-sm font-bold transition-colors duration-300 text-gray-800" id="btn-mower-4hr">
+                4 Hours
+            </button>
+            <button onclick="setToggle('mower', 'day', 50)" class="relative z-10 w-1/2 py-2 text-sm font-bold transition-colors duration-300 text-gray-400" id="btn-mower-day">
+                Full Day
+            </button>
+        </div>
+
+        <div class="flex justify-between items-center mt-2">
+            <div>
+                <span class="text-2xl font-black text-[#1B2A13]" id="price-mower">$35</span>
+            </div>
+            
+            <button onclick="addCurrentSelection('Makita 36V Lawn Mower', 'mower')" class="bg-[#1B2A13] text-[#E5E7BE] font-semibold py-2 px-6 rounded-lg shadow-md hover:bg-[#131D0D] transition">
+                Add to List
+            </button>
+        </div>
+    </div>
+</div> 
    
             
             <!-- Product Card 3: Makita 40V Leaf Blower -->
             <div class="bg-white rounded-lg shadow-lg overflow-hidden transform hover:scale-105 transition-transform duration-300 ease-in-out flex flex-col">
-                 <div class="h-56 overflow-hidden flex items-center justify-center">
-                   <img class="w-full h-full object-contain p-4" src="blower.png" alt="Makita 40V Leaf Blower">
-                </div>
-                <div class="p-6 flex-grow flex flex-col justify-between">
-                    <div>
-                        <h3 class="text-xl font-semibold text-gray-800 mb-2">Makita 40V Leaf Blower</h3>
-                        <p class="text-gray-600 text-sm mb-4">Quickly clear leaves and debris from your driveway and lawn with this powerful tool. <br> <br>
-                        Hire includes: <br> - 2x 4ah Batteries <br> - Fast charger </p>
-                    </div>
-                    <div class="flex justify-between items-end mt-4">
-                        <div>
-                            <p class="text-lg font-bold text-[#1B2A13]">$30 <span class="text-sm font-medium text-gray-500">/ 4hrs</span></p>
-                            <p class="text-lg font-bold text-[#1B2A13]">$40 <span class="text-sm font-medium text-gray-500">/ day</span></p>
-                        </div>
-                        <a href="mailto:happylawnhire@gmail.com?subject=Hire Enquiry: Makita 40V Leaf Blower" class="bg-[#1B2A13] text-white text-center font-semibold py-2 px-4 rounded-lg shadow-md hover:bg-[#131D0D] whitespace-nowrap onclick="fbq('track', 'Contact');">Book Now</a>
-                    </div>
-                </div>
-            </div>
+    <div class="h-56 overflow-hidden flex items-center justify-center">
+        <img class="w-full h-full object-contain p-4" src="blower.png" alt="Makita 40V Leaf Blower">
+    </div>
+    <div class="p-6 flex-grow flex flex-col justify-between">
+        <div>
+            <h3 class="text-xl font-semibold text-gray-800 mb-2">Makita 40V Leaf Blower</h3>
+            <p class="text-gray-600 text-sm mb-4">
+                Quickly clear leaves and debris from your driveway and lawn with this powerful tool.<br><br>
+                Hire includes: <br> - 2x 4ah Batteries <br> - Fast charger 
+            </p>
+        </div>
 
-            <!-- Product Card 4: Makita 40V Line Trimmer -->
-            <div class="bg-white rounded-lg shadow-lg overflow-hidden transform hover:scale-105 transition-transform duration-300 ease-in-out flex flex-col">
-                 <div class="h-56 overflow-hidden flex items-center justify-center">
-                   <img class="w-full h-full object-contain p-4" src="trimmer.png" alt="Makita 40V Line Trimmer">
-                </div>
-                <div class="p-6 flex-grow flex flex-col justify-between">
-                    <div>
-                        <h3 class="text-xl font-semibold text-gray-800 mb-2">Makita 40V Line Trimmer</h3>
-                        <p class="text-gray-600 text-sm mb-4"> Ideal for tackling overgrown areas, clearing large properties or creating sharp edges. Equivalent to 30cc petrol line trimmer. <br> <br>
-                        Hire includes: <br> - 2x 4ah Batteries <br> - Fast charger </p>
-                    </div>
-                    <div class="flex justify-between items-end mt-4">
-                        <div>
-                            <p class="text-lg font-bold text-[#1B2A13]">$35 <span class="text-sm font-medium text-gray-500">/ 4hrs</span></p>
-                            <p class="text-lg font-bold text-[#1B2A13]">$50 <span class="text-sm font-medium text-gray-500">/ day</span></p>
-                        </div>
-                        <a href="mailto:happylawnhire@gmail.com?subject=Hire Enquiry: Makita 40V Line Trimmer" class="bg-[#1B2A13] text-white text-center font-semibold py-2 px-4 rounded-lg shadow-md hover:bg-[#131D0D] whitespace-nowrap onclick="fbq('track', 'Contact');">Book Now</a>
-                    </div>
-                </div>
+        <div class="relative bg-gray-100 p-1 rounded-xl flex mb-4 w-full border border-gray-200">
+            <div id="slider-blower" class="absolute top-1 left-1 bottom-1 w-[calc(50%-4px)] bg-white rounded-lg shadow-sm transition-all duration-300 ease-in-out"></div>
+            
+            <button onclick="setToggle('blower', '4hr', 30)" class="relative z-10 w-1/2 py-2 text-sm font-bold transition-colors duration-300 text-gray-800" id="btn-blower-4hr">
+                4 Hours
+            </button>
+            <button onclick="setToggle('blower', 'day', 40)" class="relative z-10 w-1/2 py-2 text-sm font-bold transition-colors duration-300 text-gray-400" id="btn-blower-day">
+                Full Day
+            </button>
+        </div>
+
+        <div class="flex justify-between items-center mt-2">
+            <div>
+                <span class="text-2xl font-black text-[#1B2A13]" id="price-blower">$30</span>
             </div>
+            
+            <button onclick="addCurrentSelection('Makita 40V Leaf Blower', 'blower')" class="bg-[#1B2A13] text-[#E5E7BE] font-semibold py-2 px-6 rounded-lg shadow-md hover:bg-[#131D0D] transition">
+                Add to List
+            </button>
+        </div>
+    </div>
+</div>
+            <!-- Product Card 4: Makita 40V Line Trimmer -->
+           <div class="bg-white rounded-lg shadow-lg overflow-hidden transform hover:scale-105 transition-transform duration-300 ease-in-out flex flex-col">
+    <div class="h-56 overflow-hidden flex items-center justify-center">
+        <img class="w-full h-full object-contain p-4" src="trimmer.png" alt="Makita 40V Line Trimmer">
+    </div>
+    <div class="p-6 flex-grow flex flex-col justify-between">
+        <div>
+            <h3 class="text-xl font-semibold text-gray-800 mb-2">Makita 40V Line Trimmer</h3>
+            <p class="text-gray-600 text-sm mb-4">
+                Ideal for tackling overgrown areas, clearing large properties or creating sharp edges. Equivalent to 30cc petrol line trimmer. <br><br>
+                Hire includes: <br> - 2x 4ah Batteries <br> - Fast charger 
+            </p>
+        </div>
+
+        <div class="relative bg-gray-100 p-1 rounded-xl flex mb-4 w-full border border-gray-200">
+            <div id="slider-trimmer" class="absolute top-1 left-1 bottom-1 w-[calc(50%-4px)] bg-white rounded-lg shadow-sm transition-all duration-300 ease-in-out"></div>
+            
+            <button onclick="setToggle('trimmer', '4hr', 35)" class="relative z-10 w-1/2 py-2 text-sm font-bold transition-colors duration-300 text-gray-800" id="btn-trimmer-4hr">
+                4 Hours
+            </button>
+            <button onclick="setToggle('trimmer', 'day', 50)" class="relative z-10 w-1/2 py-2 text-sm font-bold transition-colors duration-300 text-gray-400" id="btn-trimmer-day">
+                Full Day
+            </button>
+        </div>
+
+        <div class="flex justify-between items-center mt-2">
+            <div>
+                <span class="text-2xl font-black text-[#1B2A13]" id="price-trimmer">$35</span>
+            </div>
+            
+            <button onclick="addCurrentSelection('Makita 40V Line Trimmer', 'trimmer')" class="bg-[#1B2A13] text-[#E5E7BE] font-semibold py-2 px-6 rounded-lg shadow-md hover:bg-[#131D0D] transition">
+                Add to List
+            </button>
+        </div>
+    </div>
+</div>
 
 <div class="bg-white rounded-lg shadow-lg overflow-hidden transform hover:scale-105 transition-transform duration-300 ease-in-out flex flex-col">
-               <div class="h-56 overflow-hidden flex items-center justify-center">
-                  <img class="w-full h-full object-contain p-4" src="hedge2.png" alt="Makita 40V Hedge Trimmer">
-              </div>
-              <div class="p-6 flex-grow flex flex-col justify-between">
-                  <div>
-                      <h3 class="text-xl font-semibold text-gray-800 mb-2">Makita 40V Hedge Trimmer</h3>
-                      <p class="text-gray-600 text-sm mb-4">Powerful, quiet, and perfectly balanced for trimming hedges and bushes with a clean, professional finish.<br><br>
-                      Hire includes:<br>
-                      - 1x 4ah Battery<br>
-                      - Fast charger</p>
-                  </div>
-                  <div class="flex justify-between items-end mt-4">
-                      <div>
-                          <p class="text-lg font-bold text-[#1B2A13]">$30 <span class="text-sm font-medium text-gray-500">/ 4hrs</span></p>
-                          <p class="text-lg font-bold text-[#1B2A13]">$50 <span class="text-sm font-medium text-gray-500">/ day</span></p>
-                      </div>
-                      <a href="mailto:happylawnhire@gmail.com?subject=Hire Enquiry: Makita 40V Hedge Trimmer" class="bg-[#1B2A13] text-white text-center font-semibold py-2 px-4 rounded-lg shadow-md hover:bg-[#131D0D] whitespace-nowrap onclick="fbq('track', 'Contact');">Book Now</a>
-                  </div>
-              </div>
-          </div>
+    <div class="h-56 overflow-hidden flex items-center justify-center">
+        <img class="w-full h-full object-contain p-4" src="hedge2.png" alt="Makita 40V Hedge Trimmer">
+    </div>
+    <div class="p-6 flex-grow flex flex-col justify-between">
+        <div>
+            <h3 class="text-xl font-semibold text-gray-800 mb-2">Makita 40V Hedge Trimmer</h3>
+            <p class="text-gray-600 text-sm mb-4">
+                Powerful, quiet, and perfectly balanced for trimming hedges and bushes with a clean, professional finish.<br><br>
+                Hire includes:<br>
+                - 1x 4ah Battery<br>
+                - Fast charger
+            </p>
+        </div>
+
+        <div class="relative bg-gray-100 p-1 rounded-xl flex mb-4 w-full border border-gray-200">
+            <div id="slider-hedge" class="absolute top-1 left-1 bottom-1 w-[calc(50%-4px)] bg-white rounded-lg shadow-sm transition-all duration-300 ease-in-out"></div>
+            
+            <button onclick="setToggle('hedge', '4hr', 30)" class="relative z-10 w-1/2 py-2 text-sm font-bold transition-colors duration-300 text-gray-800" id="btn-hedge-4hr">
+                4 Hours
+            </button>
+            <button onclick="setToggle('hedge', 'day', 50)" class="relative z-10 w-1/2 py-2 text-sm font-bold transition-colors duration-300 text-gray-400" id="btn-hedge-day">
+                Full Day
+            </button>
+        </div>
+
+        <div class="flex justify-between items-center mt-2">
+            <div>
+                <span class="text-2xl font-black text-[#1B2A13]" id="price-hedge">$30</span>
+            </div>
+            
+            <button onclick="addCurrentSelection('Makita 40V Hedge Trimmer', 'hedge')" class="bg-[#1B2A13] text-[#E5E7BE] font-semibold py-2 px-6 rounded-lg shadow-md hover:bg-[#131D0D] transition">
+                Add to List
+            </button>
+        </div>
+    </div>
+</div>
 
                         <!-- Product Card 6: Lawn Roller -->
-            <div class="bg-white rounded-lg shadow-lg overflow-hidden transform hover:scale-105 transition-transform duration-300 ease-in-out flex flex-col">
-                 <div class="h-56 overflow-hidden flex items-center justify-center">
-                    <img class="w-full h-full object-contain p-4" src="LawnRoller.png" alt="Lawn Roller">
-                </div>
-                <div class="p-6 flex-grow flex flex-col justify-between">
-                    <div>
-                        <h3 class="text-xl font-semibold text-gray-800 mb-2">Lawn Roller</h3>
-                        <p class="text-gray-600 text-sm mb-4">95L water-filled. Easily flatten uneven ground or pack down new seeds and sod for a perfect finish.</p>
-                    </div>
-                    <div class="flex justify-between items-end mt-4">
-                        <div>
-                            <p class="text-lg font-bold text-[#1B2A13]">$15 <span class="text-sm font-medium text-gray-500">/ 4hrs</span></p>
-                            <p class="text-lg font-bold text-[#1B2A13]">$25 <span class="text-sm font-medium text-gray-500">/ day</span></p>
-                        </div>
-                        <a href="mailto:happylawnhire@gmail.com?subject=Hire Enquiry: Lawn Roller" class="bg-[#1B2A13] text-white text-center font-semibold py-2 px-4 rounded-lg shadow-md hover:bg-[#131D0D] whitespace-nowrap onclick="fbq('track', 'Contact');">Book Now</a>
-                    </div>
-                </div>
+           <div class="bg-white rounded-lg shadow-lg overflow-hidden transform hover:scale-105 transition-transform duration-300 ease-in-out flex flex-col">
+    <div class="h-56 overflow-hidden flex items-center justify-center">
+        <img class="w-full h-full object-contain p-4" src="LawnRoller.png" alt="Lawn Roller">
+    </div>
+    <div class="p-6 flex-grow flex flex-col justify-between">
+        <div>
+            <h3 class="text-xl font-semibold text-gray-800 mb-2">Lawn Roller</h3>
+            <p class="text-gray-600 text-sm mb-4">95L water-filled. Easily flatten uneven ground or pack down new seeds and sod for a perfect finish.</p>
+        </div>
+
+        <div class="relative bg-gray-100 p-1 rounded-xl flex mb-4 w-full border border-gray-200">
+            <div id="slider-roller" class="absolute top-1 left-1 bottom-1 w-[calc(50%-4px)] bg-white rounded-lg shadow-sm transition-all duration-300 ease-in-out"></div>
+            
+            <button onclick="setToggle('roller', '4hr', 15)" class="relative z-10 w-1/2 py-2 text-sm font-bold transition-colors duration-300 text-gray-800" id="btn-roller-4hr">
+                4 Hours
+            </button>
+            <button onclick="setToggle('roller', 'day', 25)" class="relative z-10 w-1/2 py-2 text-sm font-bold transition-colors duration-300 text-gray-400" id="btn-roller-day">
+                Full Day
+            </button>
+        </div>
+
+        <div class="flex justify-between items-center mt-2">
+            <div>
+                <span class="text-2xl font-black text-[#1B2A13]" id="price-roller">$15</span>
             </div>
+            
+            <button onclick="addCurrentSelection('Lawn Roller', 'roller')" class="bg-[#1B2A13] text-[#E5E7BE] font-semibold py-2 px-6 rounded-lg shadow-md hover:bg-[#131D0D] transition">
+                Add to List
+            </button>
+        </div>
+    </div>
+</div>
 
         <div class="bg-white rounded-lg shadow-lg overflow-hidden transform hover:scale-105 transition-transform duration-300 ease-in-out flex flex-col">
     <div class="h-56 overflow-hidden flex items-center justify-center">
@@ -236,101 +311,167 @@ src="https://www.facebook.com/tr?id=1479906689908468&ev=PageView&noscript=1"
         <div>
             <h3 class="text-xl font-semibold text-gray-800 mb-2">Lawnboy Sprayer 10L</h3>
             <p class="text-gray-600 text-sm mb-4">
-                Perfect for precise application of liquid fertilizers, weed killers, or pesticides.  <br><br>
+                Perfect for precise application of liquid fertilizers, weed killers, or pesticides. <br><br>
             </p>
         </div>
-        <div class="flex justify-between items-end mt-4">
+
+        <div class="relative bg-gray-100 p-1 rounded-xl flex mb-4 w-full border border-gray-200">
+            <div id="slider-sprayer" class="absolute top-1 left-1 bottom-1 w-[calc(50%-4px)] bg-white rounded-lg shadow-sm transition-all duration-300 ease-in-out"></div>
+            
+            <button onclick="setToggle('sprayer', '4hr', 15)" class="relative z-10 w-1/2 py-2 text-sm font-bold transition-colors duration-300 text-gray-800" id="btn-sprayer-4hr">
+                4 Hours
+            </button>
+            <button onclick="setToggle('sprayer', 'day', 25)" class="relative z-10 w-1/2 py-2 text-sm font-bold transition-colors duration-300 text-gray-400" id="btn-sprayer-day">
+                Full Day
+            </button>
+        </div>
+
+        <div class="flex justify-between items-center mt-2">
             <div>
-                <p class="text-lg font-bold text-[#1B2A13]">$15 <span class="text-sm font-medium text-gray-500">/ 4hrs</span></p>
-                <p class="text-lg font-bold text-[#1B2A13]">$25 <span class="text-sm font-medium text-gray-500">/ day</span></p>
+                <span class="text-2xl font-black text-[#1B2A13]" id="price-sprayer">$15</span>
             </div>
-            <a href="mailto:happylawnhire@gmail.com?subject=Hire Enquiry: Lawnboy Sprayer" 
-               class="bg-[#1B2A13] text-white text-center font-semibold py-2 px-4 rounded-lg shadow-md hover:bg-[#131D0D] whitespace-nowrap" 
-               onclick="fbq('track', 'Contact');">
-               Book Now
-            </a>
+            
+            <button onclick="addCurrentSelection('Lawnboy Sprayer 10L', 'sprayer')" class="bg-[#1B2A13] text-[#E5E7BE] font-semibold py-2 px-6 rounded-lg shadow-md hover:bg-[#131D0D] transition">
+                Add to List
+            </button>
         </div>
     </div>
 </div>
+</div>
             <!-- Product Card 5: Chest Mount Spreader -->
             <div class="bg-white rounded-lg shadow-lg overflow-hidden transform hover:scale-105 transition-transform duration-300 ease-in-out flex flex-col">
-                 <div class="h-56 overflow-hidden flex items-center justify-center">
-                   <img class="w-full h-full object-contain p-4" src="spreader.png">
-                </div>
-                <div class="p-6 flex-grow flex flex-col justify-between">
-                    <div>
-                        <h3 class="text-xl font-semibold text-gray-800 mb-2">Chest Mount Spreader</h3>
-                        <p class="text-gray-600 text-sm mb-4">Evenly and consistently distribute grass seeds or fertilizer across your lawn.</p>
-                    </div>
-                    <div class="flex justify-between items-end mt-4">
-                        <div>
-                            <p class="text-lg font-bold text-[#1B2A13]">$10 <span class="text-sm font-medium text-gray-500">/ 4hrs</span></p>
-                            <p class="text-lg font-bold text-[#1B2A13]">$15 <span class="text-sm font-medium text-gray-500">/ day</span></p>
-                        </div>
-                        <a href="mailto:happylawnhire@gmail.com?subject=Hire Enquiry: Chest Mount Spreader" class="bg-[#1B2A13] text-white text-center font-semibold py-2 px-4 rounded-lg shadow-md hover:bg-[#131D0D] whitespace-nowrap onclick="fbq('track', 'Contact');">Book Now</a>
-                    </div>
-                </div>
+    <div class="h-56 overflow-hidden flex items-center justify-center">
+        <img class="w-full h-full object-contain p-4" src="spreader.png" alt="Chest Mount Spreader">
+    </div>
+    <div class="p-6 flex-grow flex flex-col justify-between">
+        <div>
+            <h3 class="text-xl font-semibold text-gray-800 mb-2">Chest Mount Spreader</h3>
+            <p class="text-gray-600 text-sm mb-4">Evenly and consistently distribute grass seeds or fertilizer across your lawn.</p>
+        </div>
+
+        <div class="relative bg-gray-100 p-1 rounded-xl flex mb-4 w-full border border-gray-200">
+            <div id="slider-spreader" class="absolute top-1 left-1 bottom-1 w-[calc(50%-4px)] bg-white rounded-lg shadow-sm transition-all duration-300 ease-in-out"></div>
+            
+            <button onclick="setToggle('spreader', '4hr', 10)" class="relative z-10 w-1/2 py-2 text-sm font-bold transition-colors duration-300 text-gray-800" id="btn-spreader-4hr">
+                4 Hours
+            </button>
+            <button onclick="setToggle('spreader', 'day', 15)" class="relative z-10 w-1/2 py-2 text-sm font-bold transition-colors duration-300 text-gray-400" id="btn-spreader-day">
+                Full Day
+            </button>
+        </div>
+
+        <div class="flex justify-between items-center mt-2">
+            <div>
+                <span class="text-2xl font-black text-[#1B2A13]" id="price-spreader">$10</span>
             </div>
+            
+            <button onclick="addCurrentSelection('Chest Mount Spreader', 'spreader')" class="bg-[#1B2A13] text-[#E5E7BE] font-semibold py-2 px-6 rounded-lg shadow-md hover:bg-[#131D0D] transition">
+                Add to List
+            </button>
+        </div>
+    </div>
+</div>
 
 
             <!-- Product Card 7: Landscape Rake -->
             <div class="bg-white rounded-lg shadow-lg overflow-hidden transform hover:scale-105 transition-transform duration-300 ease-in-out flex flex-col">
-                 <div class="h-56 overflow-hidden flex items-center justify-center">
-                   <img class="w-full h-full object-contain p-4" src="landscaperake.png" alt="Landscape Rake">
-                </div>
-                <div class="p-6 flex-grow flex flex-col justify-between">
-                    <div>
-                        <h3 class="text-xl font-semibold text-gray-800 mb-2">Landscape Rake</h3>
-                        <p class="text-gray-600 text-sm mb-4">A 910mm wide, heavy-duty rake for grading, leveling, and spreading topsoil.</p>
-                    </div>
-                    <div class="flex justify-between items-end mt-4">
-                        <div>
-                            <p class="text-lg font-bold text-[#1B2A13]">$15 <span class="text-sm font-medium text-gray-500">/ 4hrs</span></p>
-                            <p class="text-lg font-bold text-[#1B2A13]">$20 <span class="text-sm font-medium text-gray-500">/ day</span></p>
-                        </div>
-                        <a href="mailto:happylawnhire@gmail.com?subject=Hire Enquiry: Landscape Rake" class="bg-[#1B2A13] text-white text-center font-semibold py-2 px-4 rounded-lg shadow-md hover:bg-[#131D0D] whitespace-nowrap onclick="fbq('track', 'Contact');">Book Now</a>
-                    </div>
-                </div>
+    <div class="h-56 overflow-hidden flex items-center justify-center">
+        <img class="w-full h-full object-contain p-4" src="landscaperake.png" alt="Landscape Rake">
+    </div>
+    <div class="p-6 flex-grow flex flex-col justify-between">
+        <div>
+            <h3 class="text-xl font-semibold text-gray-800 mb-2">Landscape Rake</h3>
+            <p class="text-gray-600 text-sm mb-4">A 910mm wide, heavy-duty rake for grading, leveling, and spreading topsoil.</p>
+        </div>
+
+        <div class="relative bg-gray-100 p-1 rounded-xl flex mb-4 w-full border border-gray-200">
+            <div id="slider-rake" class="absolute top-1 left-1 bottom-1 w-[calc(50%-4px)] bg-white rounded-lg shadow-sm transition-all duration-300 ease-in-out"></div>
+            
+            <button onclick="setToggle('rake', '4hr', 15)" class="relative z-10 w-1/2 py-2 text-sm font-bold transition-colors duration-300 text-gray-800" id="btn-rake-4hr">
+                4 Hours
+            </button>
+            <button onclick="setToggle('rake', 'day', 20)" class="relative z-10 w-1/2 py-2 text-sm font-bold transition-colors duration-300 text-gray-400" id="btn-rake-day">
+                Full Day
+            </button>
+        </div>
+
+        <div class="flex justify-between items-center mt-2">
+            <div>
+                <span class="text-2xl font-black text-[#1B2A13]" id="price-rake">$15</span>
             </div>
+            
+            <button onclick="addCurrentSelection('Landscape Rake', 'rake')" class="bg-[#1B2A13] text-[#E5E7BE] font-semibold py-2 px-6 rounded-lg shadow-md hover:bg-[#131D0D] transition">
+                Add to List
+            </button>
+        </div>
+    </div>
+</div>
 
             <!-- Product Card 8: Lawn Leveling Rake -->
             <div class="bg-white rounded-lg shadow-lg overflow-hidden transform hover:scale-105 transition-transform duration-300 ease-in-out flex flex-col">
-                 <div class="h-56 overflow-hidden flex items-center justify-center">
-                   <img class="w-full h-full object-contain p-4" src="levelingrake.png" alt="Lawn Leveling Rake">
-                </div>
-                <div class="p-6 flex-grow flex flex-col justify-between">
-                    <div>
-                        <h3 class="text-xl font-semibold text-gray-800 mb-2">Lawn Leveling Rake</h3>
-                        <p class="text-gray-600 text-sm mb-4">The professional's choice for achieving a perfectly flat and level lawn surface.</p>
-                    </div>
-                    <div class="flex justify-between items-end mt-4">
-                        <div>
-                            <p class="text-lg font-bold text-[#1B2A13]">$15 <span class="text-sm font-medium text-gray-500">/ 4hrs</span></p>
-                            <p class="text-lg font-bold text-[#1B2A13]">$20 <span class="text-sm font-medium text-gray-500">/ day</span></p>
-                        </div>
-                        <a href="mailto:happylawnhire@gmail.com?subject=Hire Enquiry: Lawn Leveling Rake" class="bg-[#1B2A13] text-white text-center font-semibold py-2 px-4 rounded-lg shadow-md hover:bg-[#131D0D] whitespace-nowrap onclick="fbq('track', 'Contact');">Book Now</a>
-                    </div>
-                </div>
-            </div>
-<div class="bg-white rounded-lg shadow-lg overflow-hidden transform hover:scale-105 transition-transform duration-300 ease-in-out flex flex-col">
-               <div class="h-56 overflow-hidden flex items-center justify-center">
-                  <img class="w-full h-full object-contain p-4" src="barrow1.png" alt="Tradesman Wheelbarrow">
-              </div>
-              <div class="p-6 flex-grow flex flex-col justify-between">
-                  <div>
-                      <h3 class="text-xl font-semibold text-gray-800 mb-2">Tradesman Wheelbarrow</h3>
-                      <p class="text-gray-600 text-sm mb-4">Built tough for trade use, this heavy-duty wheelbarrow is rated to 160kg.</p>
-                      </div>
-                  <div class="flex justify-between items-end mt-4">
-                      <div>
-                          <p class="text-lg font-bold text-[#1B2A13]">$15 <span class="text-sm font-medium text-gray-500">/ 4hrs</span></p>
-                          <p class="text-lg font-bold text-[#1B2A13]">$20 <span class="text-sm font-medium text-gray-500">/ day</span></p>
-                      </div>
-                      <a href="mailto:happylawnhire@gmail.com?subject=Hire Enquiry: Tradesman Wheelbarrow" class="bg-[#1B2A13] text-white text-center font-semibold py-2 px-4 rounded-lg shadow-md hover:bg-[#131D0D] whitespace-nowrap onclick="fbq('track', 'Contact');">Book Now</a>
-                  </div>
-              </div>
-          </div>
+    <div class="h-56 overflow-hidden flex items-center justify-center">
+        <img class="w-full h-full object-contain p-4" src="levelingrake.png" alt="Lawn Leveling Rake">
+    </div>
+    <div class="p-6 flex-grow flex flex-col justify-between">
+        <div>
+            <h3 class="text-xl font-semibold text-gray-800 mb-2">Lawn Leveling Rake</h3>
+            <p class="text-gray-600 text-sm mb-4">The professional's choice for achieving a perfectly flat and level lawn surface.</p>
         </div>
+
+        <div class="relative bg-gray-100 p-1 rounded-xl flex mb-4 w-full border border-gray-200">
+            <div id="slider-levelrake" class="absolute top-1 left-1 bottom-1 w-[calc(50%-4px)] bg-white rounded-lg shadow-sm transition-all duration-300 ease-in-out"></div>
+            
+            <button onclick="setToggle('levelrake', '4hr', 15)" class="relative z-10 w-1/2 py-2 text-sm font-bold transition-colors duration-300 text-gray-800" id="btn-levelrake-4hr">
+                4 Hours
+            </button>
+            <button onclick="setToggle('levelrake', 'day', 20)" class="relative z-10 w-1/2 py-2 text-sm font-bold transition-colors duration-300 text-gray-400" id="btn-levelrake-day">
+                Full Day
+            </button>
+        </div>
+
+        <div class="flex justify-between items-center mt-2">
+            <div>
+                <span class="text-2xl font-black text-[#1B2A13]" id="price-levelrake">$15</span>
+            </div>
+            
+            <button onclick="addCurrentSelection('Lawn Leveling Rake', 'levelrake')" class="bg-[#1B2A13] text-[#E5E7BE] font-semibold py-2 px-6 rounded-lg shadow-md hover:bg-[#131D0D] transition">
+                Add to List
+            </button>
+        </div>
+    </div>
+</div>
+<div class="bg-white rounded-lg shadow-lg overflow-hidden transform hover:scale-105 transition-transform duration-300 ease-in-out flex flex-col">
+    <div class="h-56 overflow-hidden flex items-center justify-center">
+        <img class="w-full h-full object-contain p-4" src="barrow1.png" alt="Tradesman Wheelbarrow">
+    </div>
+    <div class="p-6 flex-grow flex flex-col justify-between">
+        <div>
+            <h3 class="text-xl font-semibold text-gray-800 mb-2">Tradesman Wheelbarrow</h3>
+            <p class="text-gray-600 text-sm mb-4">Built tough for trade use, this heavy-duty wheelbarrow is rated to 160kg.</p>
+        </div>
+
+        <div class="relative bg-gray-100 p-1 rounded-xl flex mb-4 w-full border border-gray-200">
+            <div id="slider-barrow" class="absolute top-1 left-1 bottom-1 w-[calc(50%-4px)] bg-white rounded-lg shadow-sm transition-all duration-300 ease-in-out"></div>
+            
+            <button onclick="setToggle('barrow', '4hr', 15)" class="relative z-10 w-1/2 py-2 text-sm font-bold transition-colors duration-300 text-gray-800" id="btn-barrow-4hr">
+                4 Hours
+            </button>
+            <button onclick="setToggle('barrow', 'day', 20)" class="relative z-10 w-1/2 py-2 text-sm font-bold transition-colors duration-300 text-gray-400" id="btn-barrow-day">
+                Full Day
+            </button>
+        </div>
+
+        <div class="flex justify-between items-center mt-2">
+            <div>
+                <span class="text-2xl font-black text-[#1B2A13]" id="price-barrow">$15</span>
+            </div>
+            
+            <button onclick="addCurrentSelection('Tradesman Wheelbarrow', 'barrow')" class="bg-[#1B2A13] text-[#E5E7BE] font-semibold py-2 px-6 rounded-lg shadow-md hover:bg-[#131D0D] transition">
+                Add to List
+            </button>
+        </div>
+    </div>
+</div>
     </main>
      <!-- How It Works Section -->
     <section class="bg-green-50 border-y mt-16">
@@ -463,6 +604,7 @@ src="https://www.facebook.com/tr?id=1479906689908468&ev=PageView&noscript=1"
     </script>
 </body>
 </html>
+
 
 
 
