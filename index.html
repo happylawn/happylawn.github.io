@@ -380,8 +380,26 @@ src="https://www.facebook.com/tr?id=1479906689908468&ev=PageView&noscript=1"
         });
     </script>
 
+<script>
+function addToList(name, price, id) {
+    let cart = JSON.parse(localStorage.getItem('happyLawnCart')) || [];
+    cart.push({ name, price, id });
+    localStorage.setItem('happyLawnCart', JSON.stringify(cart));
+    updateCartCount();
+    alert(name + " added to your hire list!");
+}
+
+function updateCartCount() {
+    let cart = JSON.parse(localStorage.getItem('happyLawnCart')) || [];
+    document.getElementById('cart-count').innerText = cart.length;
+}
+// Run on load
+updateCartCount();
+</script>
+
 </body>
 </html>
+
 
 
 
