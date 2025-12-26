@@ -369,109 +369,84 @@ src="https://www.facebook.com/tr?id=1479906689908468&ev=PageView&noscript=1"
     </div>
 </footer>
 
-    <script>
+<script>
+        // 1. Scroll Header Logic
         window.addEventListener('scroll', function() {
             const header = document.getElementById('header');
-            if (window.scrollY > 10) {
+            if (header && window.scrollY > 10) {
                 header.classList.add('header-shadow');
-            } else {
+            } else if (header) {
                 header.classList.remove('header-shadow');
             }
         });
+
+        // 2. Master Price List
+        let currentSelections = {
+            scarifier: { duration: '4 Hours', price: 45 },
+            mower: { duration: '4 Hours', price: 35 },
+            blower: { duration: '4 Hours', price: 30 },
+            trimmer: { duration: '4 Hours', price: 35 },
+            hedge: { duration: '4 Hours', price: 30 },
+            roller: { duration: '4 Hours', price: 15 },
+            sprayer: { duration: '4 Hours', price: 15 },
+            spreader: { duration: '4 Hours', price: 10 },
+            rake: { duration: '4 Hours', price: 15 },
+            'level rake': { duration: '4 Hours', price: 15 },
+            barrow: { duration: '4 Hours', price: 15 },
+        };
+
+        // 3. Toggle Logic
+        function setToggle(id, duration, price) {
+            const slider = document.getElementById(`slider-${id}`);
+            const priceDisplay = document.getElementById(`price-${id}`);
+            const btn4hr = document.getElementById(`btn-${id}-4hr`);
+            const btnDay = document.getElementById(`btn-${id}-day`);
+
+            if (!slider || !priceDisplay) return;
+
+            if (duration === '4hr') {
+                slider.style.transform = 'translateX(0%)';
+                btn4hr.classList.add('text-gray-800');
+                btn4hr.classList.remove('text-gray-400');
+                btnDay.classList.add('text-gray-400');
+                btnDay.classList.remove('text-gray-800');
+                currentSelections[id] = { duration: '4 Hours', price: price };
+            } else {
+                slider.style.transform = 'translateX(100%)';
+                btnDay.classList.add('text-gray-800');
+                btnDay.classList.remove('text-gray-400');
+                btn4hr.classList.add('text-gray-400');
+                btn4hr.classList.remove('text-gray-800');
+                currentSelections[id] = { duration: 'Full Day', price: price };
+            }
+            priceDisplay.innerText = `$${price}`;
+        }
+
+        // 4. Cart Logic
+        function addCurrentSelection(productName, id) {
+            const selection = currentSelections[id];
+            addToList(productName + ' (' + selection.duration + ')', selection.price, id);
+        }
+
+        function addToList(name, price, id) {
+            let cart = JSON.parse(localStorage.getItem('happyLawnCart')) || [];
+            cart.push({ name, price, id });
+            localStorage.setItem('happyLawnCart', JSON.stringify(cart));
+            updateCartCount();
+            alert(name + " added to your hire list!");
+        }
+
+        function updateCartCount() {
+            let cart = JSON.parse(localStorage.getItem('happyLawnCart')) || [];
+            const countEl = document.getElementById('cart-count');
+            if (countEl) countEl.innerText = cart.length;
+        }
+
+        // Initialize on page load
+        updateCartCount();
     </script>
-
-<script>
-function addToList(name, price, id) {
-    let cart = JSON.parse(localStorage.getItem('happyLawnCart')) || [];
-    cart.push({ name, price, id });
-    localStorage.setItem('happyLawnCart', JSON.stringify(cart));
-    updateCartCount();
-    alert(name + " added to your hire list!");
-}
-
-function updateCartCount() {
-    let cart = JSON.parse(localStorage.getItem('happyLawnCart')) || [];
-    document.getElementById('cart-count').innerText = cart.length;
-}
-// Run on load
-updateCartCount();
-</script>
-
-// Master Price List - This keeps track of what the user has selected
-let currentSelections = {
-    scarifier: { duration: '4 Hours', price: 45 },
-    mower: { duration: '4 Hours', price: 35 },
-    blower: { duration: '4 Hours', price: 30 },
-    trimmer: { duration: '4 Hours', price: 35 },
-    hedge: { duration: '4 Hours', price: 30 },
-    roller: { duration: '4 Hours', price: 15 },
-    sprayer: { duration: '4 Hours', price: 15 },
-    spreader: { duration: '4 Hours', price: 10 },
-    rake: { duration: '4 Hours', price: 15 },
-    level rake: { duration: '4 Hours', price: 15 },
-    barrow: { duration: '4 Hours', price: 15 },
-};
-
-function setToggle(id, duration, price) {
-    const slider = document.getElementById(`slider-${id}`);
-    const priceDisplay = document.getElementById(`price-${id}`);
-    const btn4hr = document.getElementById(`btn-${id}-4hr`);
-    const btnDay = document.getElementById(`btn-${id}-day`);
-
-    if (duration === '4hr') {
-        slider.style.transform = 'translateX(0%)';
-        btn4hr.classList.add('text-gray-800');
-        btn4hr.classList.remove('text-gray-400');
-        btnDay.classList.add('text-gray-400');
-        btnDay.classList.remove('text-gray-800');
-        currentSelections[id] = { duration: '4 Hours', price: price };
-    } else {
-        slider.style.transform = 'translateX(100%)';
-        btnDay.classList.add('text-gray-800');
-        btnDay.classList.remove('text-gray-400');
-        btn4hr.classList.add('text-gray-400');
-        btn4hr.classList.remove('text-gray-800');
-        currentSelections[id] = { duration: 'Full Day', price: price };
-    }
-    
-    priceDisplay.innerText = `$${price}`;
-}
-
-function addCurrentSelection(productName, id) {
-    const selection = currentSelections[id];
-    // This sends the data to your cart
-    addToList(productName + ' (' + selection.duration + ')', selection.price, id);
-}
-
-// Your existing cart function
-function addToList(name, price, id) {
-    let cart = JSON.parse(localStorage.getItem('happyLawnCart')) || [];
-    cart.push({ name, price, id });
-    localStorage.setItem('happyLawnCart', JSON.stringify(cart));
-    updateCartCount();
-    alert(name + " added to your hire list!");
-}
-
-function updateCartCount() {
-    let cart = JSON.parse(localStorage.getItem('happyLawnCart')) || [];
-    const countEl = document.getElementById('cart-count');
-    if(countEl) countEl.innerText = cart.length;
-}
-updateCartCount();
-    
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
 
 
 
