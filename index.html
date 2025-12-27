@@ -380,7 +380,12 @@ src="https://www.facebook.com/tr?id=1479906689908468&ev=PageView&noscript=1"
 
 <div id="floating-cart" class="fixed bottom-6 right-6 z-50 hidden">
     <div class="bg-white rounded-2xl shadow-2xl p-6 border-2 border-[#1B2A13] w-[320px] md:w-[380px]">
-        <h4 class="text-lg font-bold text-[#1B2A13] mb-3 flex items-center">🛒 Your Hire List</h4>
+        <h4 class="text-lg font-bold text-[#1B2A13] mb-3 flex justify-between items-center cursor-pointer" onclick="toggleCart()">
+    <span>🛒 Your Hire List</span>
+    <button id="cart-toggle-icon" class="text-sm bg-[#1B2A13] text-white px-2 py-1 rounded md:hidden">
+        Minimize
+    </button>
+</h4>
         
         <div id="cart-items" class="space-y-2 mb-4 max-h-48 overflow-y-auto border-b pb-3">
             </div>
@@ -532,6 +537,7 @@ src="https://www.facebook.com/tr?id=1479906689908468&ev=PageView&noscript=1"
 </script>
 </body>
 </html>
+
 
 
 
