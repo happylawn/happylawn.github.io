@@ -417,6 +417,14 @@ src="https://www.facebook.com/tr?id=1479906689908468&ev=PageView&noscript=1"
     </div>
 </div>
 
+<div class="bg-blue-50 p-3 rounded-lg border border-blue-100 mb-4">
+    <div class="flex justify-between text-xs text-blue-800">
+        <span class="font-bold underline">Refunadable Bond:</span>
+        <span class="font-bold">$50 Cash</span>
+    </div>
+    <p class="text-[10px] text-blue-600 mt-1 leading-tight">Payable in cash on pickup. Fully refunded when equipment is returned clean & undamaged.</p>
+</div>
+            
             <div class="flex justify-between items-center mb-4 pt-2 border-t text-[#1B2A13]">
                 <span class="font-bold">Total:</span>
                 <span id="cart-total" class="text-2xl font-black">$0</span>
@@ -537,40 +545,51 @@ src="https://www.facebook.com/tr?id=1479906689908468&ev=PageView&noscript=1"
         }
     }
 
-    function requestBooking() {
-    const dateInput = document.getElementById('pickup-date').value;
+function requestBooking() {
+    // Get fields
+    const dateInput = document.getElementById('pickup-date');
+    const custName = document.getElementById('customer-name');
+    const custPhone = document.getElementById('customer-phone');
     const timeSelect = document.getElementById('pickup-time').value;
-    const custName = document.getElementById('customer-name').value;
-    const custPhone = document.getElementById('customer-phone').value;
 
-    if (!dateInput || !custName || !custPhone) {
-        alert("Please provide your Name, Phone, and Pickup Date.");
+    // Reset borders
+    [dateInput, custName, custPhone].forEach(el => el.style.borderColor = '#e5e7eb');
+
+    // Validation
+    let isValid = true;
+    if (!dateInput.value) { dateInput.style.borderColor = 'red'; isValid = false; }
+    if (!custName.value) { custName.style.borderColor = 'red'; isValid = false; }
+    if (!custPhone.value) { custPhone.style.borderColor = 'red'; isValid = false; }
+
+    if (!isValid) {
+        alert("Please fill in your name, phone, and pickup date.");
         return;
     }
 
     let itemSummary = "";
-    let total = 0;
+    let hireTotal = 0;
     cart.forEach(item => {
         itemSummary += `   - ${item.name} (${item.duration}): $${item.price}%0A`;
-        total += item.price;
+        hireTotal += item.price;
     });
 
-    const subject = encodeURIComponent(`Equipment Hire Request - ${custName}`);
+    const subject = encodeURIComponent(`Hire Request: ${custName.value}`);
     
-    // Professional Email Body Construction
     const body = `Hiring Request Details:%0A` +
                  `============================%0A%0A` +
-                 `CUSTOMER INFO:%0A` +
-                 `Name: ${custName}%0A` +
-                 `Phone: ${custPhone}%0A%0A` +
+                 `CUSTOMER:%0A` +
+                 `Name: ${custName.value}%0A` +
+                 `Phone: ${custPhone.value}%0A%0A` +
                  `HIRE ITEMS:%0A` +
                  `${itemSummary}%0A` +
-                 `TOTAL ESTIMATE: $${total}%0A%0A` +
+                 `HIRE TOTAL: $${hireTotal}%0A` +
+                 `REFUNDABLE CASH BOND: $50.00%0A%0A` +
+                 `DUE ON PICKUP: $${hireTotal} + $50 bond%0A%0A` +
                  `PICKUP PREFERENCE:%0A` +
-                 `Date: ${dateInput}%0A` +
+                 `Date: ${dateInput.value}%0A` +
                  `Time: ${timeSelect}%0A%0A` +
                  `============================%0A` +
-                 `Please confirm availability and pickup address via phone or email.`;
+                 `I understand the $50 cash bond is required on pickup.`;
 
     window.location.href = `mailto:happylawnhire@gmail.com?subject=${subject}&body=${body}`;
 }
@@ -582,6 +601,7 @@ src="https://www.facebook.com/tr?id=1479906689908468&ev=PageView&noscript=1"
 </script>
 </body>
 </html>
+
 
 
 
