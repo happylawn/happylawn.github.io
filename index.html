@@ -378,10 +378,10 @@ src="https://www.facebook.com/tr?id=1479906689908468&ev=PageView&noscript=1"
     </div>
 </footer>
 
-<div id="floating-cart" class="fixed bottom-6 right-6 z-50 hidden transition-all duration-300">
-    <div class="bg-white rounded-2xl shadow-2xl p-6 border-2 border-[#1B2A13] w-[320px] md:w-[380px]">
+<div id="floating-cart" class="fixed bottom-4 right-4 left-4 md:left-auto md:bottom-6 md:right-6 z-50 hidden transition-all duration-300">
+    <div class="bg-white rounded-2xl shadow-2xl p-4 md:p-6 border-2 border-[#1B2A13] w-full md:w-[380px] max-h-[85vh] flex flex-col">
         
-        <h4 class="text-lg font-bold text-[#1B2A13] mb-0 flex justify-between items-center cursor-pointer" onclick="toggleCart()">
+        <h4 class="text-lg font-bold text-[#1B2A13] mb-0 flex justify-between items-center cursor-pointer shrink-0" onclick="toggleCart()">
             <span class="flex items-center">
                 🛒 Your Hire List 
                 <span id="cart-count" class="ml-2 bg-red-600 text-white text-[10px] font-bold px-2 py-0.5 rounded-full hidden">0</span>
@@ -391,11 +391,11 @@ src="https://www.facebook.com/tr?id=1479906689908468&ev=PageView&noscript=1"
             </button>
         </h4>
 
-        <div id="cart-content" class="mt-4">
-            <div id="cart-items" class="space-y-2 mb-4 max-h-48 overflow-y-auto border-b pb-3 text-[#1B2A13]">
+        <div id="cart-content" class="mt-4 overflow-y-auto pr-1 custom-scrollbar">
+            <div id="cart-items" class="space-y-2 mb-4 border-b pb-3 text-[#1B2A13]">
                 </div>
 
-            <div class="space-y-3 mb-4 pt-2">
+            <div class="space-y-3 mb-4">
                 <div>
                     <label class="block text-xs font-bold text-gray-500 uppercase mb-1">Pickup Date</label>
                     <input type="date" id="pickup-date" class="w-full border rounded-lg p-2 text-sm outline-none border-gray-200">
@@ -418,11 +418,11 @@ src="https://www.facebook.com/tr?id=1479906689908468&ev=PageView&noscript=1"
             </div>
 
             <div class="bg-blue-50 p-3 rounded-lg border border-blue-100 mb-4">
-                <div class="flex justify-between text-xs text-blue-800">
-                    <span class="font-bold underline">Refundable Bond:</span>
-                    <span class="font-bold">$50 Cash</span>
+                <div class="flex justify-between text-xs text-blue-800 font-bold">
+                    <span class="underline">Refundable Bond:</span>
+                    <span>$50 Cash</span>
                 </div>
-                <p class="text-[10px] text-blue-600 mt-1 leading-tight">Payable in cash on pickup. Fully refunded when equipment is returned clean & undamaged.</p>
+                <p class="text-[10px] text-blue-600 mt-1 leading-tight">Payable on pickup. Fully refunded when equipment is returned clean & undamaged.</p>
             </div>
 
             <div class="flex justify-between items-center mb-4 pt-2 border-t text-[#1B2A13]">
@@ -433,11 +433,21 @@ src="https://www.facebook.com/tr?id=1479906689908468&ev=PageView&noscript=1"
             <button onclick="requestBooking()" class="w-full bg-[#1B2A13] text-[#E5E7BE] font-bold py-3 rounded-lg hover:bg-black transition mb-2">
                 Request to Book
             </button>
-            <button onclick="clearCart()" class="w-full text-xs text-red-600 hover:underline">Clear List</button>
+            <button onclick="clearCart()" class="w-full text-xs text-red-600 hover:underline mb-2">Clear List</button>
         </div>
     </div>
 </div>
 
+<style>
+    /* Makes the scrollbar look tidy inside the cart */
+    .custom-scrollbar::-webkit-scrollbar {
+        width: 4px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+        background: #1B2A13;
+        border-radius: 10px;
+    }
+</style>
 <script>
     let cart = [];
     let currentSelections = {
@@ -587,6 +597,7 @@ src="https://www.facebook.com/tr?id=1479906689908468&ev=PageView&noscript=1"
 </script>
 </body>
 </html>
+
 
 
 
