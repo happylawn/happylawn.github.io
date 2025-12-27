@@ -366,142 +366,18 @@ src="https://www.facebook.com/tr?id=1479906689908468&ev=PageView&noscript=1"
         </div>
     </section>
 
-    <!-- Footer -->
-    <footer class="bg-[#253A1A] text-white mt-12">
+ <footer class="bg-[#253A1A] text-white mt-12">
     <div class="container mx-auto px-6 py-8 text-center">
         <p class="text-xl font-semibold mb-2">Ready to refresh your lawn?</p>
         <p class="mb-4">Contact us today to book your equipment!</p>
         <div class="font-medium space-y-2">
-            <a href="tel:02108046595" class="block hover:underline" onclick="fbq('track', 'Contact')">
-                📞 021 0804 6595
-            </a>
-            <a href="mailto:happylawnhire@gmail.com" class="block hover:underline" onclick="fbq('track', 'Contact')">
-                📧 happylawnhire@gmail.com
-            </a>
+            <a href="tel:02108046595" class="block hover:underline" onclick="fbq('track', 'Contact')">📞 021 0804 6595</a>
+            <a href="mailto:happylawnhire@gmail.com" class="block hover:underline" onclick="fbq('track', 'Contact')">📧 happylawnhire@gmail.com</a>
         </div>
         <p class="mt-6 text-sm opacity-80">HappyLawn Hire 2025.</p>
     </div>
 </footer>
 
-<script>
-        // 1. Scroll Header Logic
-        window.addEventListener('scroll', function() {
-            const header = document.getElementById('header');
-            if (header && window.scrollY > 10) {
-                header.classList.add('header-shadow');
-            } else if (header) {
-                header.classList.remove('header-shadow');
-            }
-        });
-
-        // 2. Master Price List
-        let currentSelections = {
-            scarifier: { duration: '4 Hours', price: 45 },
-            mower: { duration: '4 Hours', price: 35 },
-            blower: { duration: '4 Hours', price: 30 },
-            trimmer: { duration: '4 Hours', price: 35 },
-            hedge: { duration: '4 Hours', price: 30 },
-            roller: { duration: '4 Hours', price: 15 },
-            sprayer: { duration: '4 Hours', price: 15 },
-            spreader: { duration: '4 Hours', price: 10 },
-            rake: { duration: '4 Hours', price: 15 },
-            levelrake: { duration: '4 Hours', price: 15 },
-            barrow: { duration: '4 Hours', price: 15 },
-        };
-
-        // 3. Toggle Logic
-        function setToggle(id, duration, price) {
-            const slider = document.getElementById(`slider-${id}`);
-            const priceDisplay = document.getElementById(`price-${id}`);
-            const btn4hr = document.getElementById(`btn-${id}-4hr`);
-            const btnDay = document.getElementById(`btn-${id}-day`);
-
-            if (!slider || !priceDisplay) return;
-
-            if (duration === '4hr') {
-                slider.style.transform = 'translateX(0%)';
-                btn4hr.classList.add('text-gray-800');
-                btn4hr.classList.remove('text-gray-400');
-                btnDay.classList.add('text-gray-400');
-                btnDay.classList.remove('text-gray-800');
-                currentSelections[id] = { duration: '4 Hours', price: price };
-            } else {
-                slider.style.transform = 'translateX(100%)';
-                btnDay.classList.add('text-gray-800');
-                btnDay.classList.remove('text-gray-400');
-                btn4hr.classList.add('text-gray-400');
-                btn4hr.classList.remove('text-gray-800');
-                currentSelections[id] = { duration: 'Full Day', price: price };
-            }
-            priceDisplay.innerText = `$${price}`;
-        }
-
-        // 4. Cart Logic
-        function addCurrentSelection(productName, id) {
-            const selection = currentSelections[id];
-            addToList(productName + ' (' + selection.duration + ')', selection.price, id);
-        }
-
-        function addToList(name, price, id) {
-            let cart = JSON.parse(localStorage.getItem('happyLawnCart')) || [];
-            cart.push({ name, price, id });
-            localStorage.setItem('happyLawnCart', JSON.stringify(cart));
-            updateCartCount();
-            alert(name + " added to your hire list!");
-        }
-
-        function updateCartCount() {
-            let cart = JSON.parse(localStorage.getItem('happyLawnCart')) || [];
-            const countEl = document.getElementById('cart-count');
-            if (countEl) countEl.innerText = cart.length;
-        }
-
-        // Initialize on page load
-        updateCartCount();
-// Function to handle the final email booking request
-function requestBooking() {
-    const dateInput = document.getElementById('pickup-date').value;
-    const timeSelect = document.getElementById('pickup-time').value;
-
-    if (!dateInput) {
-        alert("Please select a pickup date before requesting.");
-        return;
-    }
-
-    // Format the date for the email (makes it look cleaner than YYYY-MM-DD)
-    const dateObj = new Date(dateInput);
-    const formattedDate = dateObj.toLocaleDateString('en-NZ', { 
-        weekday: 'long', 
-        year: 'numeric', 
-        month: 'long', 
-        day: 'numeric' 
-    });
-
-    // Build the list of items
-    let itemSummary = "";
-    let total = 0;
-    
-    cart.forEach(item => {
-        itemSummary += `%0A• ${item.name} (${item.duration}) - $${item.price}`;
-        total += item.price;
-    });
-
-    // Construct the email body
-    const subject = `Equipment Hire Request - ${dateInput}`;
-    const body = `Hi HappyLawn Hire,%0A%0AI would like to request a booking for the following equipment:%0A${itemSummary}%0A%0A----------------------------%0ATotal Price: $${total}%0A%0APickup Details:%0ARequested Date: ${formattedDate}%0APreferred Time: ${timeSelect}%0A%0APlease let me know if this is available!`;
-
-    // Trigger the email
-    window.location.href = `mailto:happylawnhire@gmail.com?subject=${subject}&body=${body}`;
-}
-
-// Ensure the calendar doesn't allow past dates
-document.addEventListener('DOMContentLoaded', () => {
-    const datePicker = document.getElementById('pickup-date');
-    if(datePicker) {
-        datePicker.min = new Date().toISOString().split("T")[0];
-    }
-});
-    </script>
 <div id="floating-cart" class="fixed bottom-6 right-6 z-50 hidden">
     <div class="bg-white rounded-2xl shadow-2xl p-6 border-2 border-[#1B2A13] w-[320px] md:w-[380px]">
         <h4 class="text-lg font-bold text-[#1B2A13] mb-3 flex items-center">🛒 Your Hire List</h4>
@@ -521,103 +397,141 @@ document.addEventListener('DOMContentLoaded', () => {
                     <option value="Afternoon (2pm - 6pm)">Afternoon (2pm - 6pm)</option>
                 </select>
             </div>
-        </div>
-<div class="mb-4">
-    <label class="block text-xs font-bold text-gray-500 uppercase mb-1">Additional Notes (Optional)</label>
-    <textarea id="booking-notes" placeholder="Any specific requirements?" class="w-full border rounded-lg p-2 text-sm focus:ring-2 focus:ring-green-600 outline-none h-16 resize-none"></textarea>
-</div>
-        <div class="mb-4">
-            <label class="block text-xs font-bold text-gray-500 uppercase mb-1">Additional Notes (Optional)</label>
-            <textarea id="booking-notes" placeholder="e.g. your address or phone number" class="w-full border rounded-lg p-2 text-sm focus:ring-2 focus:ring-green-600 outline-none h-16 resize-none"></textarea>
+            <div>
+                <label class="block text-xs font-bold text-gray-500 uppercase mb-1">Additional Notes (Optional)</label>
+                <textarea id="booking-notes" placeholder="e.g. your address or phone number" class="w-full border rounded-lg p-2 text-sm focus:ring-2 focus:ring-green-600 outline-none h-16 resize-none"></textarea>
+            </div>
         </div>
 
-        <div class="flex justify-between items-center mb-4 pt-2 border-t">
-            <span class="font-bold text-gray-700">Total:</span>
-            <span id="cart-total" class="text-2xl font-black text-[#1B2A13]">$0</span>
+        <div class="flex justify-between items-center mb-4 pt-2 border-t text-[#1B2A13]">
+            <span class="font-bold">Total:</span>
+            <span id="cart-total" class="text-2xl font-black">$0</span>
         </div>
 
-        function requestBooking() {
-    const dateInput = document.getElementById('pickup-date').value;
-    const timeSelect = document.getElementById('pickup-time').value;
-    const notes = document.getElementById('booking-notes').value; // <--- ADD THIS LINE
-
-    if (!dateInput) {
-        alert("Please select a pickup date first!");
-        return;
-    }
-
-    let itemSummary = "";
-    let total = 0;
-    cart.forEach(item => {
-        itemSummary += `%0A• ${item.name} (${item.duration}) - $${item.price}`;
-        total += item.price;
-    });
-
-    const subject = `Equipment Hire Request - ${dateInput}`;
-    
-    // Updated body to include notes at the end
-    const body = `Hi HappyLawn Hire,%0A%0AI would like to request a booking:%0A${itemSummary}%0A%0A----------------------------%0ATotal Price: $${total}%0A%0APickup Details:%0ADate: ${dateInput}%0ATime: ${timeSelect}%0A%0ANotes: ${encodeURIComponent(notes)}`;
-
-    window.location.href = `mailto:happylawnhire@gmail.com?subject=${subject}&body=${body}`;
-}
+        <button onclick="requestBooking()" class="w-full bg-[#1B2A13] text-[#E5E7BE] font-bold py-3 rounded-lg hover:bg-black transition mb-2">
+            Request to Book
+        </button>
+        <button onclick="clearCart()" class="w-full text-xs text-red-600 hover:underline">Clear List</button>
     </div>
 </div>
-let cart = [];
 
-function addCurrentSelection(productName, id) {
-    // Get the selection (4hr or Day) and price from your existing currentSelections object
-    const selection = currentSelections[id];
-    
-    // Add item to our cart array
-    cart.push({
-        name: productName,
-        duration: selection.duration,
-        price: selection.price
+<script>
+    // 1. Storage & State
+    let cart = [];
+    let currentSelections = {
+        scarifier: { duration: '4 Hours', price: 45 },
+        mower: { duration: '4 Hours', price: 35 },
+        blower: { duration: '4 Hours', price: 30 },
+        trimmer: { duration: '4 Hours', price: 35 },
+        hedge: { duration: '4 Hours', price: 30 },
+        roller: { duration: '4 Hours', price: 15 },
+        sprayer: { duration: '4 Hours', price: 15 },
+        spreader: { duration: '4 Hours', price: 10 },
+        rake: { duration: '4 Hours', price: 15 },
+        levelrake: { duration: '4 Hours', price: 15 },
+        barrow: { duration: '4 Hours', price: 15 }
+    };
+
+    // 2. Header Shadow Logic
+    window.addEventListener('scroll', function() {
+        const header = document.getElementById('header');
+        if (header && window.scrollY > 10) header.classList.add('header-shadow');
+        else if (header) header.classList.remove('header-shadow');
     });
 
-    updateCartUI();
-    
-    // Optional: Add a little "pop" animation to the button to show it worked
-    fbq('track', 'AddToCart', { content_name: productName, value: selection.price, currency: 'NZD' });
-}
+    // 3. Price Toggle Logic
+    function setToggle(id, duration, price) {
+        const slider = document.getElementById(`slider-${id}`);
+        const priceDisplay = document.getElementById(`price-${id}`);
+        const btn4hr = document.getElementById(`btn-${id}-4hr`);
+        const btnDay = document.getElementById(`btn-${id}-day`);
 
-function updateCartUI() {
-    const cartEl = document.getElementById('floating-cart');
-    const itemsEl = document.getElementById('cart-items');
-    const totalEl = document.getElementById('cart-total');
+        if (!slider || !priceDisplay) return;
 
-    // Show cart if items exist
-    if (cart.length > 0) {
-        cartEl.classList.remove('hidden');
-    } else {
-        cartEl.classList.add('hidden');
+        if (duration === '4hr') {
+            slider.style.transform = 'translateX(0%)';
+            btn4hr.classList.replace('text-gray-400', 'text-gray-800');
+            btnDay.classList.replace('text-gray-800', 'text-gray-400');
+            currentSelections[id] = { duration: '4 Hours', price: price };
+        } else {
+            slider.style.transform = 'translateX(100%)';
+            btnDay.classList.replace('text-gray-400', 'text-gray-800');
+            btn4hr.classList.replace('text-gray-800', 'text-gray-400');
+            currentSelections[id] = { duration: 'Full Day', price: price };
+        }
+        priceDisplay.innerText = `$${price}`;
     }
 
-    // Clear and rebuild the list
-    itemsEl.innerHTML = '';
-    let total = 0;
+    // 4. Cart Logic
+    function addCurrentSelection(productName, id) {
+        const selection = currentSelections[id];
+        cart.push({
+            name: productName,
+            duration: selection.duration,
+            price: selection.price
+        });
+        updateCartUI();
+        fbq('track', 'AddToCart', { content_name: productName, value: selection.price, currency: 'NZD' });
+    }
 
-    cart.forEach((item, index) => {
-        total += item.price;
-        itemsEl.innerHTML += `
-            <div class="flex justify-between text-sm">
-                <span>${item.name} (${item.duration})</span>
-                <span class="font-semibold">$${item.price}</span>
-            </div>
-        `;
+    function updateCartUI() {
+        const cartEl = document.getElementById('floating-cart');
+        const itemsEl = document.getElementById('cart-items');
+        const totalEl = document.getElementById('cart-total');
+
+        cart.length > 0 ? cartEl.classList.remove('hidden') : cartEl.classList.add('hidden');
+
+        itemsEl.innerHTML = '';
+        let total = 0;
+
+        cart.forEach((item, index) => {
+            total += item.price;
+            itemsEl.innerHTML += `
+                <div class="flex justify-between items-center text-sm mb-2">
+                    <span>${item.name} <small class="text-gray-500">(${item.duration})</small></span>
+                    <span class="font-bold">$${item.price}</span>
+                </div>`;
+        });
+        totalEl.innerText = `$${total}`;
+    }
+
+    function clearCart() {
+        cart = [];
+        updateCartUI();
+    }
+
+    // 5. Booking/Email Logic
+    function requestBooking() {
+        const dateInput = document.getElementById('pickup-date').value;
+        const timeSelect = document.getElementById('pickup-time').value;
+        const notes = document.getElementById('booking-notes').value;
+
+        if (!dateInput) {
+            alert("Please select a pickup date first!");
+            return;
+        }
+
+        let itemSummary = "";
+        let total = 0;
+        cart.forEach(item => {
+            itemSummary += `%0A• ${item.name} (${item.duration}) - $${item.price}`;
+            total += item.price;
+        });
+
+        const subject = encodeURIComponent(`Hire Request: ${dateInput}`);
+        const body = `Hi HappyLawn Hire,%0A%0AI would like to request a booking:%0A${itemSummary}%0A%0A----------------------------%0ATotal Price: $${total}%0A%0APickup Details:%0ADate: ${dateInput}%0ATime: ${timeSelect}%0A%0ANotes: ${encodeURIComponent(notes)}`;
+
+        window.location.href = `mailto:happylawnhire@gmail.com?subject=${subject}&body=${body}`;
+    }
+
+    // Set min date to today
+    document.addEventListener('DOMContentLoaded', () => {
+        const picker = document.getElementById('pickup-date');
+        if(picker) picker.min = new Date().toISOString().split("T")[0];
     });
-
-    totalEl.innerText = `$${total}`;
-}
-
-function clearCart() {
-    cart = [];
-    updateCartUI();
-}
+</script>
 </body>
 </html>
-
-
 
 
 
