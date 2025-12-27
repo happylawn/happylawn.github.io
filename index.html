@@ -534,9 +534,51 @@ src="https://www.facebook.com/tr?id=1479906689908468&ev=PageView&noscript=1"
         const picker = document.getElementById('pickup-date');
         if(picker) picker.min = new Date().toISOString().split("T")[0];
     });
+function toggleCart() {
+    const content = document.getElementById('cart-content');
+    const icon = document.getElementById('cart-toggle-icon');
+    
+    if (content.classList.contains('hidden')) {
+        content.classList.remove('hidden');
+        icon.innerText = 'Minimize';
+    } else {
+        content.classList.add('hidden');
+        icon.innerText = 'Expand';
+    }
+}
+
+// Update your addCurrentSelection to auto-minimize or stay open
+function addCurrentSelection(productName, id) {
+    const selection = currentSelections[id];
+    cart.push({
+        name: productName,
+        duration: selection.duration,
+        price: selection.price
+    });
+    
+    updateCartUI();
+    
+    // On mobile, keep it minimized after adding so they can keep shopping
+    if (window.innerWidth < 768) {
+        const content = document.getElementById('cart-content');
+        content.classList.add('hidden');
+        document.getElementById('cart-toggle-icon').innerText = 'Expand';
+    }
+#floating-cart {
+    max-height: 85vh; /* Prevents it from going off-screen */
+    display: flex;
+    flex-direction: column;
+}
+
+#cart-items {
+    max-height: 25vh; /* Smaller scroll area for items on mobile */
+    overflow-y: auto;
+}
+}
 </script>
 </body>
 </html>
+
 
 
 
