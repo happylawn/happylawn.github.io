@@ -473,8 +473,61 @@ src="https://www.facebook.com/tr?id=1479906689908468&ev=PageView&noscript=1"
         <button onclick="clearCart()" class="text-xs text-red-600 mt-4 hover:underline">Clear All</button>
     </div>
 </div>
+let cart = [];
+
+function addCurrentSelection(productName, id) {
+    // Get the selection (4hr or Day) and price from your existing currentSelections object
+    const selection = currentSelections[id];
+    
+    // Add item to our cart array
+    cart.push({
+        name: productName,
+        duration: selection.duration,
+        price: selection.price
+    });
+
+    updateCartUI();
+    
+    // Optional: Add a little "pop" animation to the button to show it worked
+    fbq('track', 'AddToCart', { content_name: productName, value: selection.price, currency: 'NZD' });
+}
+
+function updateCartUI() {
+    const cartEl = document.getElementById('floating-cart');
+    const itemsEl = document.getElementById('cart-items');
+    const totalEl = document.getElementById('cart-total');
+
+    // Show cart if items exist
+    if (cart.length > 0) {
+        cartEl.classList.remove('hidden');
+    } else {
+        cartEl.classList.add('hidden');
+    }
+
+    // Clear and rebuild the list
+    itemsEl.innerHTML = '';
+    let total = 0;
+
+    cart.forEach((item, index) => {
+        total += item.price;
+        itemsEl.innerHTML += `
+            <div class="flex justify-between text-sm">
+                <span>${item.name} (${item.duration})</span>
+                <span class="font-semibold">$${item.price}</span>
+            </div>
+        `;
+    });
+
+    totalEl.innerText = `$${total}`;
+}
+
+function clearCart() {
+    cart = [];
+    updateCartUI();
+}
 </body>
 </html>
+
 
 
 
