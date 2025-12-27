@@ -398,33 +398,33 @@ src="https://www.facebook.com/tr?id=1479906689908468&ev=PageView&noscript=1"
             <div class="space-y-3 mb-4 pt-2">
                 <div>
                     <label class="block text-xs font-bold text-gray-500 uppercase mb-1">Pickup Date</label>
-                    <input type="date" id="pickup-date" class="w-full border rounded-lg p-2 text-sm outline-none">
+                    <input type="date" id="pickup-date" class="w-full border rounded-lg p-2 text-sm outline-none border-gray-200">
                 </div>
                 <div>
                     <label class="block text-xs font-bold text-gray-500 uppercase mb-1">Preferred Time</label>
-                    <select id="pickup-time" class="w-full border rounded-lg p-2 text-sm outline-none">
+                    <select id="pickup-time" class="w-full border rounded-lg p-2 text-sm outline-none border-gray-200">
                         <option value="Morning (9am - 1pm)">Morning (9am - 1pm)</option>
                         <option value="Afternoon (2pm - 6pm)">Afternoon (2pm - 6pm)</option>
                     </select>
                 </div>
                 <div>
                     <label class="block text-xs font-bold text-gray-500 uppercase mb-1">Your Full Name</label>
-        <input type="text" id="customer-name" placeholder="Enter name..." class="w-full border rounded-lg p-2 text-sm outline-none">
-    </div>
-    <div>
-        <label class="block text-xs font-bold text-gray-500 uppercase mb-1">Contact Phone</label>
-        <input type="tel" id="customer-phone" placeholder="Enter phone number..." class="w-full border rounded-lg p-2 text-sm outline-none">
-    </div>
-</div>
+                    <input type="text" id="customer-name" placeholder="Enter name..." class="w-full border rounded-lg p-2 text-sm outline-none border-gray-200">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-gray-500 uppercase mb-1">Contact Phone</label>
+                    <input type="tel" id="customer-phone" placeholder="Enter phone number..." class="w-full border rounded-lg p-2 text-sm outline-none border-gray-200">
+                </div>
+            </div>
 
-<div class="bg-blue-50 p-3 rounded-lg border border-blue-100 mb-4">
-    <div class="flex justify-between text-xs text-blue-800">
-        <span class="font-bold underline">Refunadable Bond:</span>
-        <span class="font-bold">$50 Cash</span>
-    </div>
-    <p class="text-[10px] text-blue-600 mt-1 leading-tight">Payable in cash on pickup. Fully refunded when equipment is returned clean & undamaged.</p>
-</div>
-            
+            <div class="bg-blue-50 p-3 rounded-lg border border-blue-100 mb-4">
+                <div class="flex justify-between text-xs text-blue-800">
+                    <span class="font-bold underline">Refundable Bond:</span>
+                    <span class="font-bold">$50 Cash</span>
+                </div>
+                <p class="text-[10px] text-blue-600 mt-1 leading-tight">Payable in cash on pickup. Fully refunded when equipment is returned clean & undamaged.</p>
+            </div>
+
             <div class="flex justify-between items-center mb-4 pt-2 border-t text-[#1B2A13]">
                 <span class="font-bold">Total:</span>
                 <span id="cart-total" class="text-2xl font-black">$0</span>
@@ -439,7 +439,6 @@ src="https://www.facebook.com/tr?id=1479906689908468&ev=PageView&noscript=1"
 </div>
 
 <script>
-    // 1. Data Store
     let cart = [];
     let currentSelections = {
         scarifier: { duration: '4 Hours', price: 45 },
@@ -455,13 +454,11 @@ src="https://www.facebook.com/tr?id=1479906689908468&ev=PageView&noscript=1"
         barrow: { duration: '4 Hours', price: 15 }
     };
 
-    // 2. Price Toggle Logic
     function setToggle(id, duration, price) {
         const slider = document.getElementById(`slider-${id}`);
         const priceDisplay = document.getElementById(`price-${id}`);
         const btn4hr = document.getElementById(`btn-${id}-4hr`);
         const btnDay = document.getElementById(`btn-${id}-day`);
-
         if (!slider || !priceDisplay) return;
 
         if (duration === '4hr') {
@@ -478,14 +475,9 @@ src="https://www.facebook.com/tr?id=1479906689908468&ev=PageView&noscript=1"
         priceDisplay.innerText = `$${price}`;
     }
 
-    // 3. Cart Functions
     function addCurrentSelection(productName, id) {
         const selection = currentSelections[id];
-        cart.push({
-            name: productName,
-            duration: selection.duration,
-            price: selection.price
-        });
+        cart.push({ name: productName, duration: selection.duration, price: selection.price });
         updateCartUI();
         if (window.innerWidth < 768) { toggleCart(true); }
     }
@@ -540,53 +532,52 @@ src="https://www.facebook.com/tr?id=1479906689908468&ev=PageView&noscript=1"
         }
     }
 
-    // 4. THE FIXED BOOKING FUNCTION
     function requestBooking() {
         const dateEl = document.getElementById('pickup-date');
         const nameEl = document.getElementById('customer-name');
         const phoneEl = document.getElementById('customer-phone');
         const timeVal = document.getElementById('pickup-time').value;
 
-        // Reset borders
-        [dateEl, nameEl, phoneEl].forEach(el => el.style.border = "1px solid #e5e7eb");
-
-        // Validation
         let isValid = true;
-        if (!dateEl.value) { dateEl.style.border = "2px solid red"; isValid = false; }
-        if (!nameEl.value) { nameEl.style.border = "2px solid red"; isValid = false; }
-        if (!phoneEl.value) { phoneEl.style.border = "2px solid red"; isValid = false; }
+        [dateEl, nameEl, phoneEl].forEach(el => {
+            if (!el.value.trim()) {
+                el.style.border = "2px solid red";
+                isValid = false;
+            } else {
+                el.style.border = "1px solid #e5e7eb";
+            }
+        });
 
         if (!isValid) {
-            alert("Please fill in the required fields (highlighted in red).");
+            alert("Please fill in your Name, Phone, and Pickup Date.");
             return;
         }
 
         let itemSummary = "";
         let hireTotal = 0;
         cart.forEach(item => {
-            itemSummary += `%0A • ${item.name} (${item.duration}) - $${item.price}`;
+            itemSummary += `• ${item.name} (${item.duration}) - $${item.price}\n`;
             hireTotal += item.price;
         });
 
-        const subject = encodeURIComponent(`Hire Request: ${nameEl.value}`);
-        
-        // Cleaned up body formatting
-        const body = `Hiring Request Details:%0A` +
-                     `============================%0A` +
-                     `CUSTOMER INFO:%0A` +
-                     `Name: ${nameEl.value}%0A` +
-                     `Phone: ${phoneEl.value}%0A%0A` +
-                     `EQUIPMENT LISTED:${itemSummary}%0A%0A` +
-                     `HIRE TOTAL: $${hireTotal}%0A` +
-                     `REFUNDABLE CASH BOND: $50.00%0A%0A` +
-                     `DUE ON PICKUP: $${hireTotal} + $50 Cash Bond%0A%0A` +
-                     `PICKUP PREFERENCE:%0A` +
-                     `Date: ${dateEl.value}%0A` +
-                     `Time: ${timeVal}%0A%0A` +
-                     `============================%0A` +
-                     `I confirm I will bring a $50 cash bond for the power tools.`;
+        const emailSubject = `Hire Request: ${nameEl.value}`;
+        const emailBody = `Hiring Request Details:\n` +
+            `============================\n` +
+            `CUSTOMER INFO:\n` +
+            `Name: ${nameEl.value}\n` +
+            `Phone: ${phoneEl.value}\n\n` +
+            `EQUIPMENT LISTED:\n` +
+            `${itemSummary}\n` +
+            `HIRE TOTAL: $${hireTotal}\n` +
+            `REFUNDABLE CASH BOND: $50.00\n\n` +
+            `DUE ON PICKUP: $${hireTotal} + $50 Cash Bond\n` +
+            `============================\n` +
+            `PICKUP PREFERENCE:\n` +
+            `Date: ${dateEl.value}\n` +
+            `Time: ${timeVal}\n\n` +
+            `I confirm I will bring a $50 cash bond for the power tools.`;
 
-        window.location.href = `mailto:happylawnhire@gmail.com?subject=${subject}&body=${body}`;
+        window.location.href = `mailto:happylawnhire@gmail.com?subject=${encodeURIComponent(emailSubject)}&body=${encodeURIComponent(emailBody)}`;
     }
 
     document.addEventListener('DOMContentLoaded', () => {
@@ -596,6 +587,7 @@ src="https://www.facebook.com/tr?id=1479906689908468&ev=PageView&noscript=1"
 </script>
 </body>
 </html>
+
 
 
 
