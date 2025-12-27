@@ -408,10 +408,14 @@ src="https://www.facebook.com/tr?id=1479906689908468&ev=PageView&noscript=1"
                     </select>
                 </div>
                 <div>
-                    <label class="block text-xs font-bold text-gray-500 uppercase mb-1">Notes (Optional)</label>
-                    <textarea id="booking-notes" placeholder="Address or phone number..." class="w-full border rounded-lg p-2 text-sm h-16 resize-none outline-none"></textarea>
-                </div>
-            </div>
+                    <label class="block text-xs font-bold text-gray-500 uppercase mb-1">Your Full Name</label>
+        <input type="text" id="customer-name" placeholder="Enter name..." class="w-full border rounded-lg p-2 text-sm outline-none">
+    </div>
+    <div>
+        <label class="block text-xs font-bold text-gray-500 uppercase mb-1">Contact Phone</label>
+        <input type="tel" id="customer-phone" placeholder="Enter phone number..." class="w-full border rounded-lg p-2 text-sm outline-none">
+    </div>
+</div>
 
             <div class="flex justify-between items-center mb-4 pt-2 border-t text-[#1B2A13]">
                 <span class="font-bold">Total:</span>
@@ -534,28 +538,42 @@ src="https://www.facebook.com/tr?id=1479906689908468&ev=PageView&noscript=1"
     }
 
     function requestBooking() {
-        const dateInput = document.getElementById('pickup-date').value;
-        const timeSelect = document.getElementById('pickup-time').value;
-        const notes = document.getElementById('booking-notes').value;
+    const dateInput = document.getElementById('pickup-date').value;
+    const timeSelect = document.getElementById('pickup-time').value;
+    const custName = document.getElementById('customer-name').value;
+    const custPhone = document.getElementById('customer-phone').value;
 
-        if (!dateInput) {
-            alert("Please select a pickup date first!");
-            return;
-        }
-
-        let itemSummary = "";
-        let total = 0;
-        cart.forEach(item => {
-            itemSummary += `%0A• ${item.name} (${item.duration}) - $${item.price}`;
-            total += item.price;
-        });
-
-        const subject = encodeURIComponent(`Hire Request: ${dateInput}`);
-        const body = `Hi HappyLawn Hire,%0A%0AI would like to request a booking:%0A${itemSummary}%0A%0A----------------------------%0ATotal Price: $${total}%0A%0APickup Details:%0ADate: ${dateInput}%0ATime: ${timeSelect}%0A%0ANotes: ${encodeURIComponent(notes)}`;
-
-        window.location.href = `mailto:happylawnhire@gmail.com?subject=${subject}&body=${body}`;
+    if (!dateInput || !custName || !custPhone) {
+        alert("Please provide your Name, Phone, and Pickup Date.");
+        return;
     }
 
+    let itemSummary = "";
+    let total = 0;
+    cart.forEach(item => {
+        itemSummary += `   - ${item.name} (${item.duration}): $${item.price}%0A`;
+        total += item.price;
+    });
+
+    const subject = encodeURIComponent(`Equipment Hire Request - ${custName}`);
+    
+    // Professional Email Body Construction
+    const body = `Hiring Request Details:%0A` +
+                 `============================%0A%0A` +
+                 `CUSTOMER INFO:%0A` +
+                 `Name: ${custName}%0A` +
+                 `Phone: ${custPhone}%0A%0A` +
+                 `HIRE ITEMS:%0A` +
+                 `${itemSummary}%0A` +
+                 `TOTAL ESTIMATE: $${total}%0A%0A` +
+                 `PICKUP PREFERENCE:%0A` +
+                 `Date: ${dateInput}%0A` +
+                 `Time: ${timeSelect}%0A%0A` +
+                 `============================%0A` +
+                 `Please confirm availability and pickup address via phone or email.`;
+
+    window.location.href = `mailto:happylawnhire@gmail.com?subject=${subject}&body=${body}`;
+}
     // Set min date to today
     document.addEventListener('DOMContentLoaded', () => {
         const picker = document.getElementById('pickup-date');
@@ -564,6 +582,7 @@ src="https://www.facebook.com/tr?id=1479906689908468&ev=PageView&noscript=1"
 </script>
 </body>
 </html>
+
 
 
 
