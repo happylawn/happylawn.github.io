@@ -546,51 +546,56 @@ src="https://www.facebook.com/tr?id=1479906689908468&ev=PageView&noscript=1"
     }
 
 function requestBooking() {
-    // Get fields
+    // 1. Get the elements
     const dateInput = document.getElementById('pickup-date');
     const custName = document.getElementById('customer-name');
     const custPhone = document.getElementById('customer-phone');
     const timeSelect = document.getElementById('pickup-time').value;
 
-    // Reset borders
-    [dateInput, custName, custPhone].forEach(el => el.style.borderColor = '#e5e7eb');
+    // 2. Reset borders to original color
+    [dateInput, custName, custPhone].forEach(el => {
+        el.style.borderColor = '#e5e7eb'; 
+    });
 
-    // Validation
+    // 3. Validation: Check if empty and turn red
     let isValid = true;
     if (!dateInput.value) { dateInput.style.borderColor = 'red'; isValid = false; }
     if (!custName.value) { custName.style.borderColor = 'red'; isValid = false; }
     if (!custPhone.value) { custPhone.style.borderColor = 'red'; isValid = false; }
 
     if (!isValid) {
-        alert("Please fill in your name, phone, and pickup date.");
+        alert("Please complete the highlighted fields (Name, Phone, and Date).");
         return;
     }
 
+    // 4. Build Item List
     let itemSummary = "";
     let hireTotal = 0;
     cart.forEach(item => {
-        itemSummary += `   - ${item.name} (${item.duration}): $${item.price}%0A`;
+        itemSummary += `%0A • ${item.name} (${item.duration}) - $${item.price}`;
         hireTotal += item.price;
     });
 
+    // 5. Build Professional Email
     const subject = encodeURIComponent(`Hire Request: ${custName.value}`);
     
+    // We use %0A for new lines in mailto links
     const body = `Hiring Request Details:%0A` +
                  `============================%0A%0A` +
-                 `CUSTOMER:%0A` +
+                 `CUSTOMER INFO:%0A` +
                  `Name: ${custName.value}%0A` +
                  `Phone: ${custPhone.value}%0A%0A` +
-                 `HIRE ITEMS:%0A` +
-                 `${itemSummary}%0A` +
+                 `EQUIPMENT LISTED:${itemSummary}%0A%0A` +
                  `HIRE TOTAL: $${hireTotal}%0A` +
                  `REFUNDABLE CASH BOND: $50.00%0A%0A` +
-                 `DUE ON PICKUP: $${hireTotal} + $50 bond%0A%0A` +
+                 `DUE ON PICKUP: $${hireTotal} + $50 Cash Bond%0A%0A` +
                  `PICKUP PREFERENCE:%0A` +
                  `Date: ${dateInput.value}%0A` +
                  `Time: ${timeSelect}%0A%0A` +
                  `============================%0A` +
-                 `I understand the $50 cash bond is required on pickup.`;
+                 `I confirm I will bring a $50 cash bond for the power tools.`;
 
+    // 6. Launch Email Client
     window.location.href = `mailto:happylawnhire@gmail.com?subject=${subject}&body=${body}`;
 }
     // Set min date to today
@@ -601,6 +606,7 @@ function requestBooking() {
 </script>
 </body>
 </html>
+
 
 
 
