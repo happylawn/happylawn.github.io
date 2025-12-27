@@ -487,11 +487,7 @@ src="https://www.facebook.com/tr?id=1479906689908468&ev=PageView&noscript=1"
             price: selection.price
         });
         updateCartUI();
-        
-        // Mobile behavior: Minimize after adding
-        if (window.innerWidth < 768) {
-            toggleCart(true); 
-        }
+        if (window.innerWidth < 768) { toggleCart(true); }
     }
 
     function updateCartUI() {
@@ -513,7 +509,7 @@ src="https://www.facebook.com/tr?id=1479906689908468&ev=PageView&noscript=1"
         cart.forEach((item, index) => {
             total += item.price;
             itemsEl.innerHTML += `
-                <div class="flex justify-between items-center text-sm mb-2">
+                <div class="flex justify-between items-center text-sm mb-2 text-[#1B2A13]">
                     <span class="flex-1">${item.name} <small class="text-gray-500">(${item.duration})</small></span>
                     <span class="font-bold mr-2">$${item.price}</span>
                     <button onclick="removeItem(${index})" class="text-red-500 font-bold px-1">✕</button>
@@ -535,7 +531,6 @@ src="https://www.facebook.com/tr?id=1479906689908468&ev=PageView&noscript=1"
     function toggleCart(forceMinimize = false) {
         const content = document.getElementById('cart-content');
         const icon = document.getElementById('cart-toggle-icon');
-        
         if (content.classList.contains('hidden') && !forceMinimize) {
             content.classList.remove('hidden');
             icon.innerText = 'Minimize';
@@ -545,60 +540,55 @@ src="https://www.facebook.com/tr?id=1479906689908468&ev=PageView&noscript=1"
         }
     }
 
-function requestBooking() {
-    // 1. Get the elements
-    const dateInput = document.getElementById('pickup-date');
-    const custName = document.getElementById('customer-name');
-    const custPhone = document.getElementById('customer-phone');
-    const timeSelect = document.getElementById('pickup-time').value;
+    // 4. THE FIXED BOOKING FUNCTION
+    function requestBooking() {
+        const dateEl = document.getElementById('pickup-date');
+        const nameEl = document.getElementById('customer-name');
+        const phoneEl = document.getElementById('customer-phone');
+        const timeVal = document.getElementById('pickup-time').value;
 
-    // 2. Reset borders to original color
-    [dateInput, custName, custPhone].forEach(el => {
-        el.style.borderColor = '#e5e7eb'; 
-    });
+        // Reset borders
+        [dateEl, nameEl, phoneEl].forEach(el => el.style.border = "1px solid #e5e7eb");
 
-    // 3. Validation: Check if empty and turn red
-    let isValid = true;
-    if (!dateInput.value) { dateInput.style.borderColor = 'red'; isValid = false; }
-    if (!custName.value) { custName.style.borderColor = 'red'; isValid = false; }
-    if (!custPhone.value) { custPhone.style.borderColor = 'red'; isValid = false; }
+        // Validation
+        let isValid = true;
+        if (!dateEl.value) { dateEl.style.border = "2px solid red"; isValid = false; }
+        if (!nameEl.value) { nameEl.style.border = "2px solid red"; isValid = false; }
+        if (!phoneEl.value) { phoneEl.style.border = "2px solid red"; isValid = false; }
 
-    if (!isValid) {
-        alert("Please complete the highlighted fields (Name, Phone, and Date).");
-        return;
+        if (!isValid) {
+            alert("Please fill in the required fields (highlighted in red).");
+            return;
+        }
+
+        let itemSummary = "";
+        let hireTotal = 0;
+        cart.forEach(item => {
+            itemSummary += `%0A • ${item.name} (${item.duration}) - $${item.price}`;
+            hireTotal += item.price;
+        });
+
+        const subject = encodeURIComponent(`Hire Request: ${nameEl.value}`);
+        
+        // Cleaned up body formatting
+        const body = `Hiring Request Details:%0A` +
+                     `============================%0A` +
+                     `CUSTOMER INFO:%0A` +
+                     `Name: ${nameEl.value}%0A` +
+                     `Phone: ${phoneEl.value}%0A%0A` +
+                     `EQUIPMENT LISTED:${itemSummary}%0A%0A` +
+                     `HIRE TOTAL: $${hireTotal}%0A` +
+                     `REFUNDABLE CASH BOND: $50.00%0A%0A` +
+                     `DUE ON PICKUP: $${hireTotal} + $50 Cash Bond%0A%0A` +
+                     `PICKUP PREFERENCE:%0A` +
+                     `Date: ${dateEl.value}%0A` +
+                     `Time: ${timeVal}%0A%0A` +
+                     `============================%0A` +
+                     `I confirm I will bring a $50 cash bond for the power tools.`;
+
+        window.location.href = `mailto:happylawnhire@gmail.com?subject=${subject}&body=${body}`;
     }
 
-    // 4. Build Item List
-    let itemSummary = "";
-    let hireTotal = 0;
-    cart.forEach(item => {
-        itemSummary += `%0A • ${item.name} (${item.duration}) - $${item.price}`;
-        hireTotal += item.price;
-    });
-
-    // 5. Build Professional Email
-    const subject = encodeURIComponent(`Hire Request: ${custName.value}`);
-    
-    // We use %0A for new lines in mailto links
-    const body = `Hiring Request Details:%0A` +
-                 `============================%0A%0A` +
-                 `CUSTOMER INFO:%0A` +
-                 `Name: ${custName.value}%0A` +
-                 `Phone: ${custPhone.value}%0A%0A` +
-                 `EQUIPMENT LISTED:${itemSummary}%0A%0A` +
-                 `HIRE TOTAL: $${hireTotal}%0A` +
-                 `REFUNDABLE CASH BOND: $50.00%0A%0A` +
-                 `DUE ON PICKUP: $${hireTotal} + $50 Cash Bond%0A%0A` +
-                 `PICKUP PREFERENCE:%0A` +
-                 `Date: ${dateInput.value}%0A` +
-                 `Time: ${timeSelect}%0A%0A` +
-                 `============================%0A` +
-                 `I confirm I will bring a $50 cash bond for the power tools.`;
-
-    // 6. Launch Email Client
-    window.location.href = `mailto:happylawnhire@gmail.com?subject=${subject}&body=${body}`;
-}
-    // Set min date to today
     document.addEventListener('DOMContentLoaded', () => {
         const picker = document.getElementById('pickup-date');
         if(picker) picker.min = new Date().toISOString().split("T")[0];
@@ -606,6 +596,7 @@ function requestBooking() {
 </script>
 </body>
 </html>
+
 
 
 
