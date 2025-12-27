@@ -378,46 +378,48 @@ src="https://www.facebook.com/tr?id=1479906689908468&ev=PageView&noscript=1"
     </div>
 </footer>
 
-<div id="floating-cart" class="fixed bottom-6 right-6 z-50 hidden">
+<div id="floating-cart" class="fixed bottom-6 right-6 z-50 hidden transition-all duration-300">
     <div class="bg-white rounded-2xl shadow-2xl p-6 border-2 border-[#1B2A13] w-[320px] md:w-[380px]">
-        <h4 class="text-lg font-bold text-[#1B2A13] mb-3 flex justify-between items-center cursor-pointer" onclick="toggleCart()">
-    <span>🛒 Your Hire List</span>
-    <button id="cart-toggle-icon" class="text-sm bg-[#1B2A13] text-white px-2 py-1 rounded md:hidden">
-        Minimize
-    </button>
-</h4>
         
-        <div id="cart-items" class="space-y-2 mb-4 max-h-48 overflow-y-auto border-b pb-3">
+        <h4 class="text-lg font-bold text-[#1B2A13] mb-0 flex justify-between items-center cursor-pointer" onclick="toggleCart()">
+            <span>🛒 Your Hire List</span>
+            <button id="cart-toggle-icon" class="text-xs bg-[#1B2A13] text-white px-3 py-1 rounded-full uppercase tracking-wider">
+                Minimize
+            </button>
+        </h4>
+
+        <div id="cart-content" class="mt-4">
+            <div id="cart-items" class="space-y-2 mb-4 max-h-48 overflow-y-auto border-b pb-3 text-[#1B2A13]">
+                </div>
+
+            <div class="space-y-3 mb-4 pt-2">
+                <div>
+                    <label class="block text-xs font-bold text-gray-500 uppercase mb-1">Pickup Date</label>
+                    <input type="date" id="pickup-date" class="w-full border rounded-lg p-2 text-sm outline-none">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-gray-500 uppercase mb-1">Preferred Time</label>
+                    <select id="pickup-time" class="w-full border rounded-lg p-2 text-sm outline-none">
+                        <option value="Morning (9am - 1pm)">Morning (9am - 1pm)</option>
+                        <option value="Afternoon (2pm - 6pm)">Afternoon (2pm - 6pm)</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-gray-500 uppercase mb-1">Notes (Optional)</label>
+                    <textarea id="booking-notes" placeholder="Address or phone number..." class="w-full border rounded-lg p-2 text-sm h-16 resize-none outline-none"></textarea>
+                </div>
             </div>
 
-        <div class="space-y-3 mb-4 pt-2">
-            <div>
-                <label class="block text-xs font-bold text-gray-500 uppercase mb-1">Requested Pickup Date</label>
-                <input type="date" id="pickup-date" class="w-full border rounded-lg p-2 text-sm focus:ring-2 focus:ring-green-600 outline-none">
+            <div class="flex justify-between items-center mb-4 pt-2 border-t text-[#1B2A13]">
+                <span class="font-bold">Total:</span>
+                <span id="cart-total" class="text-2xl font-black">$0</span>
             </div>
-            <div>
-                <label class="block text-xs font-bold text-gray-500 uppercase mb-1">Preferred Time</label>
-                <select id="pickup-time" class="w-full border rounded-lg p-2 text-sm focus:ring-2 focus:ring-green-600 outline-none">
-                    <option value="Morning (9am - 1pm)">Morning (9am - 1pm)</option>
-                    <option value="Afternoon (2pm - 6pm)">Afternoon (2pm - 6pm)</option>
-                </select>
-            </div>
-            <div>
-                <label class="block text-xs font-bold text-gray-500 uppercase mb-1">Additional Notes (Optional)</label>
-                <textarea id="booking-notes" placeholder="e.g. your address or phone number" class="w-full border rounded-lg p-2 text-sm focus:ring-2 focus:ring-green-600 outline-none h-16 resize-none"></textarea>
-            </div>
-        </div>
 
-        <div class="flex justify-between items-center mb-4 pt-2 border-t text-[#1B2A13]">
-            <span class="font-bold">Total:</span>
-            <span id="cart-total" class="text-2xl font-black">$0</span>
-        </div>
-
-        <button onclick="requestBooking()" class="w-full bg-[#1B2A13] text-[#E5E7BE] font-bold py-3 rounded-lg hover:bg-black transition mb-2">
-            Request to Book
-        </button>
-        <button onclick="clearCart()" class="w-full text-xs text-red-600 hover:underline">Clear List</button>
-    </div>
+            <button onclick="requestBooking()" class="w-full bg-[#1B2A13] text-[#E5E7BE] font-bold py-3 rounded-lg hover:bg-black transition mb-2">
+                Request to Book
+            </button>
+            <button onclick="clearCart()" class="w-full text-xs text-red-600 hover:underline">Clear List</button>
+        </div> </div>
 </div>
 
 <script>
@@ -469,16 +471,31 @@ src="https://www.facebook.com/tr?id=1479906689908468&ev=PageView&noscript=1"
 
     // 4. Cart Logic
     function addCurrentSelection(productName, id) {
-        const selection = currentSelections[id];
-        cart.push({
-            name: productName,
-            duration: selection.duration,
-            price: selection.price
-        });
-        updateCartUI();
-        fbq('track', 'AddToCart', { content_name: productName, value: selection.price, currency: 'NZD' });
-    }
+    const selection = currentSelections[id];
+    cart.push({
+        name: productName,
+        duration: selection.duration,
+        price: selection.price
+    });
+    
+    updateCartUI();
 
+    // Trigger the Pulse Animation
+    const cartEl = document.getElementById('floating-cart');
+    cartEl.classList.add('pulse-animation');
+    
+    // Remove the class after 600ms so it can pulse again next time
+    setTimeout(() => {
+        cartEl.classList.remove('pulse-animation');
+    }, 600);
+
+    // Auto-minimize on mobile so they can keep shopping
+    if (window.innerWidth < 768) {
+        const content = document.getElementById('cart-content');
+        content.classList.add('hidden');
+        document.getElementById('cart-toggle-icon').innerText = 'Expand';
+    }
+}
     function updateCartUI() {
         const cartEl = document.getElementById('floating-cart');
         const itemsEl = document.getElementById('cart-items');
@@ -574,10 +591,20 @@ function addCurrentSelection(productName, id) {
     max-height: 25vh; /* Smaller scroll area for items on mobile */
     overflow-y: auto;
 }
+@keyframes cartPulse {
+    0% { transform: scale(1); box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); }
+    50% { transform: scale(1.05); box-shadow: 0 0 20px rgba(34, 197, 94, 0.6); border-color: #22c55e; }
+    100% { transform: scale(1); box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25); }
+}
+
+.pulse-animation {
+    animation: cartPulse 0.6s ease-out;
+}
 }
 </script>
 </body>
 </html>
+
 
 
 
