@@ -186,7 +186,11 @@ src="https://www.facebook.com/tr?id=1479906689908468&ev=PageView&noscript=1"
     </div>
 </div>
 
-<div class="product-grid-card bg-white rounded-lg shadow-lg overflow-hidden transform hover:scale-105 transition-transform duration-300 ease-in-out border-2 border-dashed border-[#1B2A13]">
+<div class="product-grid-card bg-white rounded-lg shadow-lg overflow-hidden transform hover:scale-105 transition-transform duration-300 ease-in-out border-2 border-[#1B2A13] relative">
+    <div id="save-badge-polecombo" class="absolute top-12 right-0 bg-red-600 text-white px-3 py-1 font-bold text-sm shadow-md z-20 rounded-l-lg">
+        SAVE $15
+    </div>
+    
     <div class="bg-[#1B2A13] text-[#E5E7BE] text-center py-1 text-xs font-bold uppercase tracking-widest">
         Best Value Combo
     </div>
@@ -197,20 +201,17 @@ src="https://www.facebook.com/tr?id=1479906689908468&ev=PageView&noscript=1"
         <div class="product-info-wrapper mb-4">
             <h3 class="text-xl font-bold text-gray-800 mb-2">Multi-Tool Combo Deal</h3>
             <p class="text-gray-600 text-sm italic mb-2">Pole Hedge Trimmer + Pole Saw Attachments</p>
-            <p class="text-gray-600 text-sm">Get the best of both worlds. Includes the UX01G power head and both the Hedge and Saw attachments for a complete property cleanup.</p>
+            <p class="text-gray-600 text-sm">Includes the UX01G power head and both the Hedge and Saw attachments. Perfect for property maintenance.</p>
         </div>
         
         <div class="relative bg-gray-100 p-1 rounded-xl flex mb-4 w-full border border-gray-200">
             <div id="slider-polecombo" class="absolute top-1 left-1 bottom-1 w-[calc(50%-4px)] bg-white rounded-lg shadow-sm transition-all duration-300 ease-in-out"></div>
             <button onclick="setToggle('polecombo', '4hr', 70)" class="relative z-10 w-1/2 py-2 text-sm font-bold transition-colors duration-300 text-gray-800" id="btn-polecombo-4hr">4 Hours</button>
-            <button onclick="setToggle('polecombo', 'day', 90)" class="relative z-10 w-1/2 py-2 text-sm font-bold transition-colors duration-300 text-gray-400" id="btn-polecombo-day">Full Day</button>
+            <button onclick="setToggle('polecombo', 'day', 100)" class="relative z-10 w-1/2 py-2 text-sm font-bold transition-colors duration-300 text-gray-400" id="btn-polecombo-day">Full Day</button>
         </div>
 
         <div class="flex justify-between items-center mt-2">
-            <div class="flex flex-col">
-                <span class="text-2xl font-black text-[#1B2A13]" id="price-polecombo">$70</span>
-                <span class="text-[10px] text-red-600 font-bold line-through">WAS $85</span>
-            </div>
+            <span class="text-2xl font-black text-[#1B2A13]" id="price-polecombo">$70</span>
             <button onclick="addCurrentSelection('Pole Multi-Tool Combo', 'polecombo')" class="bg-[#1B2A13] text-[#E5E7BE] font-semibold py-2 px-6 rounded-lg shadow-md hover:bg-[#131D0D] transition">Add Combo</button>
         </div>
     </div>
@@ -544,26 +545,36 @@ src="https://www.facebook.com/tr?id=1479906689908468&ev=PageView&noscript=1"
     };
 
     function setToggle(id, duration, price) {
-        const slider = document.getElementById(`slider-${id}`);
-        const priceDisplay = document.getElementById(`price-${id}`);
-        const btn4hr = document.getElementById(`btn-${id}-4hr`);
-        const btnDay = document.getElementById(`btn-${id}-day`);
-        if (!slider || !priceDisplay) return;
+    const slider = document.getElementById(`slider-${id}`);
+    const priceDisplay = document.getElementById(`price-${id}`);
+    const btn4hr = document.getElementById(`btn-${id}-4hr`);
+    const btnDay = document.getElementById(`btn-${id}-day`);
 
-        if (duration === '4hr') {
-            slider.style.transform = 'translateX(0%)';
-            btn4hr.classList.replace('text-gray-400', 'text-gray-800');
-            btnDay.classList.replace('text-gray-800', 'text-gray-400');
-            currentSelections[id] = { duration: '4 Hours', price: price };
-        } else {
-            slider.style.transform = 'translateX(100%)';
-            btnDay.classList.replace('text-gray-400', 'text-gray-800');
-            btn4hr.classList.replace('text-gray-800', 'text-gray-400');
-            currentSelections[id] = { duration: 'Full Day', price: price };
+    if (!slider || !priceDisplay) return;
+
+    if (duration === '4hr') {
+        slider.style.transform = 'translateX(0%)';
+        btn4hr.classList.replace('text-gray-400', 'text-gray-800');
+        btnDay.classList.replace('text-gray-800', 'text-gray-400');
+        currentSelections[id] = { duration: '4 Hours', price: price };
+        
+        // Dynamic Save Badge Logic
+        if (id === 'polecombo') {
+            document.getElementById('save-badge-polecombo').innerText = 'SAVE $15';
         }
-        priceDisplay.innerText = `$${price}`;
+    } else {
+        slider.style.transform = 'translateX(100%)';
+        btnDay.classList.replace('text-gray-400', 'text-gray-800');
+        btn4hr.classList.replace('text-gray-800', 'text-gray-400');
+        currentSelections[id] = { duration: 'Full Day', price: price };
+        
+        // Dynamic Save Badge Logic
+        if (id === 'polecombo') {
+            document.getElementById('save-badge-polecombo').innerText = 'SAVE $25';
+        }
     }
-
+    priceDisplay.innerText = `$${price}`;
+}
     function addCurrentSelection(productName, id) {
         const selection = currentSelections[id];
         cart.push({ name: productName, duration: selection.duration, price: selection.price });
@@ -676,6 +687,7 @@ src="https://www.facebook.com/tr?id=1479906689908468&ev=PageView&noscript=1"
 </script>
 </body>
 </html>
+
 
 
 
