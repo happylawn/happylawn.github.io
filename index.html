@@ -141,6 +141,52 @@ src="https://www.facebook.com/tr?id=1479906689908468&ev=PageView&noscript=1"
             </div>
 
             <div class="product-grid-card bg-white rounded-lg shadow-lg overflow-hidden transform hover:scale-105 transition-transform duration-300 ease-in-out">
+    <div class="h-56 overflow-hidden flex items-center justify-center">
+        <img class="w-full h-full object-contain p-4" src="polehedge.png" alt="Makita 40V Pole Hedge Trimmer">
+    </div>
+    <div class="p-6 flex-grow flex flex-col">
+        <div class="product-info-wrapper mb-4">
+            <h3 class="text-xl font-semibold text-gray-800 mb-2">Makita 40V Pole Hedge Trimmer</h3>
+            <p class="text-gray-600 text-sm">Long-reach adjustable pole trimmer (UX01G + EN402MP). Perfect for tall hedges without needing a ladder. 2.4metres long (3.4m with extension) and adjustable head angle.<br><br>Hire Includes:<br>- 4ah batteries (x2)<br>- Fast charger</p>
+        </div>
+        
+        <div class="relative bg-gray-100 p-1 rounded-xl flex mb-4 w-full border border-gray-200">
+            <div id="slider-polehedge" class="absolute top-1 left-1 bottom-1 w-[calc(50%-4px)] bg-white rounded-lg shadow-sm transition-all duration-300 ease-in-out"></div>
+            <button onclick="setToggle('polehedge', '4hr', 50)" class="relative z-10 w-1/2 py-2 text-sm font-bold transition-colors duration-300 text-gray-800" id="btn-polehedge-4hr">4 Hours</button>
+            <button onclick="setToggle('polehedge', 'day', 65)" class="relative z-10 w-1/2 py-2 text-sm font-bold transition-colors duration-300 text-gray-400" id="btn-polehedge-day">Full Day</button>
+        </div>
+
+        <div class="flex justify-between items-center mt-2">
+            <span class="text-2xl font-black text-[#1B2A13]" id="price-polehedge">$50</span>
+            <button onclick="addCurrentSelection('Makita 40V Pole Hedge Trimmer', 'polehedge')" class="bg-[#1B2A13] text-[#E5E7BE] font-semibold py-2 px-6 rounded-lg shadow-md hover:bg-[#131D0D] transition">Add to List</button>
+        </div>
+    </div>
+</div>
+
+            <div class="product-grid-card bg-white rounded-lg shadow-lg overflow-hidden transform hover:scale-105 transition-transform duration-300 ease-in-out">
+    <div class="h-56 overflow-hidden flex items-center justify-center">
+        <img class="w-full h-full object-contain p-4" src="polesaw.png" alt="Makita 40V Pole Saw">
+    </div>
+    <div class="p-6 flex-grow flex flex-col">
+        <div class="product-info-wrapper mb-4">
+            <h3 class="text-xl font-semibold text-gray-800 mb-2">Makita 40V Pole Saw</h3>
+            <p class="text-gray-600 text-sm">High-power 12" bar (UX01G + EY403MP). Reach branches up to 4m high safely from the ground. Automatic chain lubrication.<br><br>Hire Includes:<br>- 4ah batteries (x2)<br>- Fast charger & Bar oil</p>
+        </div>
+        
+        <div class="relative bg-gray-100 p-1 rounded-xl flex mb-4 w-full border border-gray-200">
+            <div id="slider-polesaw" class="absolute top-1 left-1 bottom-1 w-[calc(50%-4px)] bg-white rounded-lg shadow-sm transition-all duration-300 ease-in-out"></div>
+            <button onclick="setToggle('polesaw', '4hr', 50)" class="relative z-10 w-1/2 py-2 text-sm font-bold transition-colors duration-300 text-gray-800" id="btn-polesaw-4hr">4 Hours</button>
+            <button onclick="setToggle('polesaw', 'day', 65)" class="relative z-10 w-1/2 py-2 text-sm font-bold transition-colors duration-300 text-gray-400" id="btn-polesaw-day">Full Day</button>
+        </div>
+
+        <div class="flex justify-between items-center mt-2">
+            <span class="text-2xl font-black text-[#1B2A13]" id="price-polesaw">$50</span>
+            <button onclick="addCurrentSelection('Makita 40V Pole Saw', 'polesaw')" class="bg-[#1B2A13] text-[#E5E7BE] font-semibold py-2 px-6 rounded-lg shadow-md hover:bg-[#131D0D] transition">Add to List</button>
+        </div>
+    </div>
+</div>
+            
+            <div class="product-grid-card bg-white rounded-lg shadow-lg overflow-hidden transform hover:scale-105 transition-transform duration-300 ease-in-out">
                 <div class="h-56 overflow-hidden flex items-center justify-center">
                     <img class="w-full h-full object-contain p-4" src="blower.png" alt="Makita 40V Leaf Blower">
                 </div>
@@ -453,6 +499,8 @@ src="https://www.facebook.com/tr?id=1479906689908468&ev=PageView&noscript=1"
     let currentSelections = {
         scarifier: { duration: '4 Hours', price: 45 },
         mower: { duration: '4 Hours', price: 35 },
+        polehedge: { duration: '4 Hours', price: 50 },
+        polesaw: { duration: '4 Hours', price: 50 },
         blower: { duration: '4 Hours', price: 30 },
         trimmer: { duration: '4 Hours', price: 35 },
         hedge: { duration: '4 Hours', price: 30 },
@@ -597,6 +645,7 @@ src="https://www.facebook.com/tr?id=1479906689908468&ev=PageView&noscript=1"
 </script>
 </body>
 </html>
+
 
 
 
