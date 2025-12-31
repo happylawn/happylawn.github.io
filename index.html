@@ -685,6 +685,7 @@ src="https://www.facebook.com/tr?id=1479906689908468&ev=PageView&noscript=1"
 
         const emailSubject = `Hire Request: ${nameEl.value}`;
         // Inside your requestBooking function, replace the emailBody section:
+// Inside your requestBooking function
 let needsBond = cart.some(item => item.type === 'power');
 
 const emailBody = `Hiring Request Details:\n` +
@@ -695,13 +696,18 @@ const emailBody = `Hiring Request Details:\n` +
     `EQUIPMENT LISTED:\n` +
     `${itemSummary}\n` +
     `HIRE TOTAL: $${hireTotal}\n` +
-    (needsBond ? `REFUNDABLE CASH BOND: $50.00\n\n` : `\n`) +
-    (needsBond ? `DUE ON PICKUP: $${hireTotal} + $50 Cash Bond\n` : `DUE ON PICKUP: $${hireTotal}\n`) +
+    (needsBond ? `REFUNDABLE CASH BOND: $50.00 (Required in Cash)\n\n` : `\n`) +
+    `----------------------------\n` +
+    `PAYMENT OPTIONS:\n` +
+    `1. Cash on Pickup\n` +
+    `2. Pay via Hnry Invoice (will be emailed to you)\n\n` +
+    `TOTAL TO PAY: $${hireTotal}` + (needsBond ? ` + $50 Cash Bond` : ``) + `\n` +
     `============================\n` +
     `PICKUP PREFERENCE:\n` +
     `Date: ${dateEl.value}\n` +
     `Time Window: ${timeVal}\n\n` +
-    (needsBond ? `I confirm I will bring a $50 cash bond for the power tools.` : ``);
+    (needsBond ? `Note: Even if paying the hire fee via invoice, the $50 bond must be cash on pickup.` : ``);
+
         window.location.href = `mailto:happylawnhire@gmail.com?subject=${encodeURIComponent(emailSubject)}&body=${encodeURIComponent(emailBody)}`;
     }
 
@@ -712,6 +718,7 @@ const emailBody = `Hiring Request Details:\n` +
 </script>
 </body>
 </html>
+
 
 
 
