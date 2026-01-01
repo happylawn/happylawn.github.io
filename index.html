@@ -491,11 +491,11 @@ src="https://www.facebook.com/tr?id=1479906689908468&ev=PageView&noscript=1"
                     <input type="date" id="pickup-date" class="w-full border rounded-lg p-2 text-sm outline-none border-gray-200">
                 </div>
                 <div>
-                    <label class="block text-xs font-bold text-gray-500 uppercase mb-1">Preferred Time</label>
-                    <select id="pickup-time" class="w-full border rounded-lg p-2 text-sm outline-none border-gray-200">
-                        <option value="Morning (9am - 1pm)">Morning (9am - 1pm)</option>
-                        <option value="Afternoon (2pm - 6pm)">Afternoon (2pm - 6pm)</option>
-                    </select>
+                    <label id="time-selector-label" class="block text-xs font-bold text-gray-500 uppercase mb-1">Preferred Time</label>
+<select id="pickup-time" class="w-full border rounded-lg p-2 text-sm outline-none border-gray-200">
+    <option value="Morning (9am - 1pm)">Morning (9am - 1pm)</option>
+    <option value="Afternoon (2pm - 6pm)">Afternoon (2pm - 6pm)</option>
+</select>
                 </div>
                 <div>
                     <label class="block text-xs font-bold text-gray-500 uppercase mb-1">Your Full Name</label>
@@ -596,45 +596,59 @@ src="https://www.facebook.com/tr?id=1479906689908468&ev=PageView&noscript=1"
     }
 
     function updateCartUI() {
-        const cartEl = document.getElementById('floating-cart');
-        const itemsEl = document.getElementById('cart-items');
-        const totalEl = document.getElementById('cart-total');
-        const countEl = document.getElementById('cart-count');
-        const bondNotice = document.getElementById('bond-notice');
+    const cartEl = document.getElementById('floating-cart');
+    const itemsEl = document.getElementById('cart-items');
+    const totalEl = document.getElementById('cart-total');
+    const countEl = document.getElementById('cart-count');
+    const bondNotice = document.getElementById('bond-notice');
+    const timeLabel = document.getElementById('time-selector-label'); // Added
 
-        if (cart.length > 0) {
-            cartEl.classList.remove('hidden');
-            countEl.classList.remove('hidden');
-            countEl.innerText = cart.length;
-        } else {
-            cartEl.classList.add('hidden');
-        }
-
-        itemsEl.innerHTML = '';
-        let total = 0;
-        let needsBond = false;
-
-        cart.forEach((item, index) => {
-            total += item.price;
-            if (item.type === 'power') needsBond = true;
-            itemsEl.innerHTML += `
-                <div class="flex justify-between items-center text-sm mb-2 text-[#1B2A13]">
-                    <div class="flex flex-col">
-                        <span class="font-bold">${item.name}</span>
-                        <span class="text-[10px] uppercase tracking-wide text-gray-500">${item.duration} Hire</span>
-                    </div>
-                    <div class="flex items-center">
-                        <span class="font-bold mr-2">$${item.price}</span>
-                        <button onclick="removeItem(${index})" class="text-red-500 font-bold px-1">✕</button>
-                    </div>
-                </div>`;
-        });
-
-        if (bondNotice) {
-            needsBond ? bondNotice.classList.remove('hidden') : bondNotice.classList.add('hidden');
-        }
-        totalEl.innerText = `$${total}`;
+    if (cart.length > 0) {
+        cartEl.classList.remove('hidden');
+        countEl.classList.remove('hidden');
+        countEl.innerText = cart.length;
+    } else {
+        cartEl.classList.add('hidden');
     }
+
+    itemsEl.innerHTML = '';
+    let total = 0;
+    let needsBond = false;
+    let hasShortHire = false; // Added
+
+    cart.forEach((item, index) => {
+        total += item.price;
+        if (item.type === 'power') needsBond = true;
+        if (item.duration === '4 Hours') hasShortHire = true; // Check for 4hr items
+
+        itemsEl.innerHTML += `
+            <div class="flex justify-between items-center text-sm mb-2 text-[#1B2A13]">
+                <div class="flex flex-col">
+                    <span class="font-bold">${item.name}</span>
+                    <span class="text-[10px] uppercase tracking-wide text-gray-500">${item.duration} Hire</span>
+                </div>
+                <div class="flex items-center">
+                    <span class="font-bold mr-2">$${item.price}</span>
+                    <button onclick="removeItem(${index})" class="text-red-500 font-bold px-1">✕</button>
+                </div>
+            </div>`;
+    });
+
+    // Dynamic Label Logic: 
+    // If they ONLY have Full Day items, change the label to "Preferred Pickup Time"
+    if (timeLabel) {
+        if (hasShortHire) {
+            timeLabel.innerText = "Preferred Time (4hr Window)";
+        } else {
+            timeLabel.innerText = "Preferred Pickup Window";
+        }
+    }
+
+    if (bondNotice) {
+        needsBond ? bondNotice.classList.remove('hidden') : bondNotice.classList.add('hidden');
+    }
+    totalEl.innerText = `$${total}`;
+}
 
     function toggleCart(forceMinimize = false) {
         const content = document.getElementById('cart-content');
@@ -701,6 +715,7 @@ src="https://www.facebook.com/tr?id=1479906689908468&ev=PageView&noscript=1"
         if(picker) picker.min = new Date().toISOString().split("T")[0];
     });
 </script>
+
 
 
 
