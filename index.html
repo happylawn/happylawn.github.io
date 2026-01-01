@@ -24,7 +24,6 @@
         background-position: center;
         background-attachment: fixed;
     }
-    /* Fixed Footer Gradient Block */
     .footer-gradient::before {
         content: '';
         position: absolute;
@@ -34,7 +33,16 @@
         --tw-gradient-to: rgb(20 83 45 / 0);
         opacity: 0.5;
         z-index: -1;
-    } /* <--- This closing bracket was missing */
+    } /* You were missing this bracket */
+
+    .custom-scrollbar::-webkit-scrollbar {
+        width: 4px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+        background: #1B2A13;
+        border-radius: 10px;
+    }
+</style>
 
     .product-grid-card {
         display: flex;
@@ -730,6 +738,7 @@ const emailBody = `Hiring Request Details:\n` +
 </script>
 </body>
 </html>
+
 
 
 
