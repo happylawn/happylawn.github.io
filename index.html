@@ -458,15 +458,16 @@ src="https://www.facebook.com/tr?id=1479906689908468&ev=PageView&noscript=1"
 <div id="floating-cart" class="fixed bottom-4 right-4 left-4 md:left-auto md:bottom-6 md:right-6 z-50 hidden transition-all duration-300">
     <div class="bg-white rounded-2xl shadow-2xl p-4 md:p-6 border-2 border-[#1B2A13] w-full md:w-[380px] max-h-[85vh] flex flex-col">
         
-        <h4 class="text-lg font-bold text-[#1B2A13] mb-0 flex justify-between items-center cursor-pointer shrink-0" onclick="toggleCart()">
-            <span class="flex items-center">
-                🛒 Your Hire List 
-                <span id="cart-count" class="ml-2 bg-red-600 text-white text-[10px] font-bold px-2 py-0.5 rounded-full hidden">0</span>
-            </span>
-            <button id="cart-toggle-icon" class="text-xs bg-[#1B2A13] text-white px-3 py-1 rounded-full uppercase tracking-wider">
-                Minimize
-            </button>
-        </h4>
+        <h4 class="text-lg font-bold text-[#1B2A13] mb-0 flex justify-between items-center cursor-pointer" onclick="toggleCart()">
+    <span class="flex items-center">
+        🛒 Your Hire List 
+        <span id="cart-count" class="ml-2 bg-red-600 text-white text-[10px] font-bold px-2 py-0.5 rounded-full hidden">0</span>
+    </span>
+    <button id="cart-toggle-icon" class="w-8 h-8 flex items-center justify-center bg-[#1B2A13] text-white rounded-full transition-transform duration-300">
+        <span id="toggle-symbol" class="text-lg">−</span>
+    </button>
+</h4>
+
 
         <div id="cart-content" class="mt-4 overflow-y-auto pr-1 custom-scrollbar">
             <div id="cart-items" class="space-y-2 mb-4 border-b pb-3 text-[#1B2A13]">
@@ -718,6 +719,7 @@ const emailBody = `Hiring Request Details:\n` +
 </script>
 </body>
 </html>
+
 
 
 
