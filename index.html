@@ -645,15 +645,26 @@ src="https://www.facebook.com/tr?id=1479906689908468&ev=PageView&noscript=1"
     }
 
     function toggleCart(forceMinimize = false) {
-        const content = document.getElementById('cart-content');
-        const icon = document.getElementById('cart-toggle-icon');
-        if (content.classList.contains('hidden') && !forceMinimize) {
-            content.classList.remove('hidden');
-            icon.innerText = 'Minimize';
-        } else {
-            content.classList.add('hidden');
-            icon.innerText = 'Expand';
-        }
+    const content = document.getElementById('cart-content');
+    const symbol = document.getElementById('toggle-symbol');
+    const iconBtn = document.getElementById('cart-toggle-icon');
+    
+    // If forceMinimize is true (like when adding a product on mobile)
+    if (forceMinimize) {
+        content.classList.add('hidden');
+        symbol.innerText = '+';
+        return;
+    }
+
+    if (content.classList.contains('hidden')) {
+        content.classList.remove('hidden');
+        symbol.innerText = '−'; // En dash (looks cleaner than a hyphen)
+    } else {
+        content.classList.add('hidden');
+        symbol.innerText = '+';
+    }
+}
+
     }
 
     function requestBooking() {
@@ -719,6 +730,7 @@ const emailBody = `Hiring Request Details:\n` +
 </script>
 </body>
 </html>
+
 
 
 
