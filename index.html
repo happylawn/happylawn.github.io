@@ -63,28 +63,6 @@
         }
     </style>
 
-    .product-grid-card {
-        display: flex;
-        flex-direction: column;
-        height: 100%;
-    }
-
-    .product-info-wrapper {
-        flex-grow: 1;
-        display: flex;
-        flex-direction: column;
-        /* This ensures the title stays at top and text spreads out */
-        justify-content: flex-start; 
-    }
-#floating-cart {
-    animation: slideIn 0.3s ease-out;
-}
-
-@keyframes slideIn {
-    from { transform: translateY(20px); opacity: 0; }
-    to { transform: translateY(0); opacity: 1; }
-}
-</style>
 <!-- Meta Pixel Code -->
 <script>
 !function(f,b,e,v,n,t,s)
@@ -772,6 +750,7 @@ src="https://www.facebook.com/tr?id=1479906689908468&ev=PageView&noscript=1"
         if(picker) picker.min = new Date().toISOString().split("T")[0];
     });
 </script>
+
 
 
 
