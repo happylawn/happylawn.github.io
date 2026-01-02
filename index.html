@@ -505,8 +505,11 @@ src="https://www.facebook.com/tr?id=1479906689908468&ev=PageView&noscript=1"
                     <label class="block text-xs font-bold text-gray-500 uppercase mb-1">Contact Phone</label>
                     <input type="tel" id="customer-phone" placeholder="Enter phone number..." class="w-full border rounded-lg p-2 text-sm outline-none border-gray-200">
                 </div>
-            </div>
-
+<div>
+    <label class="block text-xs font-bold text-gray-500 uppercase mb-1">Email Address</label>
+    <input type="email" id="customer-email" placeholder="Enter email..." class="w-full border rounded-lg p-2 text-sm outline-none border-gray-200">
+</div>
+      </div>
             <div id="bond-notice" class="bg-blue-50 p-3 rounded-lg border border-blue-100 mb-4 hidden">
                 <div class="flex justify-between text-xs text-blue-800 font-bold">
                     <span class="underline">Refundable Bond:</span>
@@ -668,53 +671,74 @@ src="https://www.facebook.com/tr?id=1479906689908468&ev=PageView&noscript=1"
     function clearCart() { cart = []; updateCartUI(); }
 
     async function requestBooking() {
-    const dateVal = document.getElementById('pickup-date').value;
-    const nameVal = document.getElementById('customer-name').value;
-    const phoneVal = document.getElementById('customer-phone').value;
+    const dateEl = document.getElementById('pickup-date');
+    const nameEl = document.getElementById('customer-name');
+    const phoneEl = document.getElementById('customer-phone');
+    const emailEl = document.getElementById('customer-email'); // Added email
     const timeVal = document.getElementById('pickup-time').value;
 
-    if (!dateVal || !nameVal || !phoneVal) {
-        alert("Please fill in Name, Phone, and Date.");
-        return;
-    }
-
-    // Build the item list for the form
-    let itemSummary = cart.map(item => `${item.name} (${item.duration}) - $${item.price}`).join(", ");
-    let hireTotal = cart.reduce((sum, item) => sum + item.price, 0);
-
-    // Prepare the data to send
-    const formData = {
-        name: nameVal,
-        phone: phoneVal,
-        pickup_date: dateVal,
-        pickup_window: timeVal,
-        items: itemSummary,
-        total_price: "$" + hireTotal,
-        _subject: `New Hire Request from ${nameVal}`
-    };
-
-    // Send the data to Formspree (Replace 'YOUR_FORM_ID' with your actual ID)
-    const response = await fetch("https://formspree.io/f/xwvpoenl", {
-        method: "POST",
-        body: JSON.stringify(formData),
-        headers: {
-            'Content-Type': 'application/json'
+    // 1. Validation
+    let isValid = true;
+    [dateEl, nameEl, phoneEl, emailEl].forEach(el => {
+        if (!el.value.trim()) {
+            el.style.border = "2px solid red";
+            isValid = false;
+        } else {
+            el.style.border = "1px solid #e5e7eb";
         }
     });
 
-    if (response.ok) {
-        alert("Thank you! Your hire request has been sent. We will contact you shortly.");
-        clearCart();
-    } else {
-        alert("Oops! There was a problem submitting your request.");
+    if (!isValid) {
+        alert("Please fill in all contact details and a pickup date.");
+        return;
+    }
+
+    // 2. Prepare Data
+    let itemSummary = cart.map(item => `${item.name} [${item.duration}] - $${item.price}`).join("\n");
+    let hireTotal = cart.reduce((sum, item) => sum + item.price, 0);
+    let needsBond = cart.some(item => item.type === 'power');
+
+    // 3. Construct the Data Object for Formspree
+    const formData = {
+        name: nameEl.value,
+        email: emailEl.value, // Formspree uses this for "Reply-To"
+        phone: phoneEl.value,
+        pickup_date: dateEl.value,
+        pickup_window: timeVal,
+        items_requested: itemSummary,
+        total_hire_fee: "$" + hireTotal,
+        bond_required: needsBond ? "$50 Cash Bond" : "No Bond Required",
+        _subject: `New Hire Request: ${nameEl.value}`
+    };
+
+    // 4. Send to Formspree
+    try {
+        const response = await fetch("https://formspree.io/f/xwvpoenl", {
+            method: "POST",
+            body: JSON.stringify(formData),
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            }
+        });
+
+        if (response.ok) {
+            alert("Success! Your hire request has been sent. We'll be in touch shortly.");
+            clearCart();
+            toggleCart(true); // Minimize cart
+        } else {
+            alert("Submission failed. Please check your internet or try again later.");
+        }
+    } catch (error) {
+        alert("There was an error connecting to the server. Please try again.");
     }
 }
-
     document.addEventListener('DOMContentLoaded', () => {
         const picker = document.getElementById('pickup-date');
         if(picker) picker.min = new Date().toISOString().split("T")[0];
     });
 </script>
+
 
 
 
