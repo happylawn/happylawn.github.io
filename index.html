@@ -93,31 +93,21 @@ src="https://www.facebook.com/tr?id=1479906689908468&ev=PageView&noscript=1"
         <p class="text-xs opacity-90">Check your email for a confirmation soon.</p>
     </div>
     <div id="upsell-modal" class="fixed inset-0 z-[110] hidden flex items-center justify-center p-4">
-    <div class="absolute inset-0 bg-black/60 backdrop-blur-sm"></div>
-    <div class="relative bg-white rounded-2xl shadow-2xl max-w-sm w-full overflow-hidden transform transition-all">
-        <div class="p-6 text-center">
-            <h3 class="text-xl font-bold text-gray-900 mb-2">Need Extra Reach?</h3>
-            <p class="text-gray-600 text-sm mb-4">Add a 1-meter extension pole giving you 4+metres reach for <b>$5</b>!</p>
-            
-            <div id="upsell-modal" class="fixed inset-0 z-[110] hidden flex items-center justify-center p-4">
     <div class="absolute inset-0 bg-black/70 backdrop-blur-sm"></div>
-    <div class="relative bg-white rounded-2xl shadow-2xl max-w-sm w-full overflow-hidden transform transition-all border-4 border-[#1B2A13]">
+    <div class="relative bg-white rounded-2xl shadow-2xl max-w-sm w-full overflow-hidden border-4 border-[#1B2A13]">
         <div class="p-6 text-center">
-            <h3 class="text-xl font-bold text-[#1B2A13] mb-2 uppercase tracking-tight">Need Extra Reach?</h3>
+            <h3 class="text-xl font-bold text-[#1B2A13] mb-2 uppercase">Need Extra Reach?</h3>
             <p class="text-gray-600 text-sm mb-4">Add a 1-meter extension pole for those extra high branches for just <b>$5</b>!</p>
             
-            <div class="bg-gray-50 rounded-xl p-4 mb-6 border border-gray-100 flex justify-center items-center min-h-[160px]">
-                <img src="extension.png" 
-                     alt="Extension Pole" 
-                     style="display: block !important; max-width: 150px !important; height: auto !important; margin: 0 auto !important;"
-                     class="relative z-50">
+            <div class="bg-gray-100 rounded-xl p-4 mb-6 flex justify-center items-center">
+                <img src="extension.png" alt="Extension Pole" class="h-32 w-auto block mx-auto">
             </div>
             
             <div class="flex flex-col gap-3">
-                <button onclick="addExtension(true)" class="bg-[#1B2A13] text-[#E5E7BE] font-bold py-3 rounded-lg hover:bg-[#273B1B] transition-colors shadow-lg">
+                <button onclick="addExtension(true)" class="bg-[#1B2A13] text-[#E5E7BE] font-bold py-3 rounded-lg shadow-lg">
                     Yes, Add Extension (+$5)
                 </button>
-                <button onclick="addExtension(false)" class="text-gray-500 text-sm font-semibold hover:text-[#1B2A13] transition-colors py-2">
+                <button onclick="addExtension(false)" class="text-gray-500 text-sm font-semibold py-2">
                     No thanks
                 </button>
             </div>
@@ -823,6 +813,7 @@ function addExtension(wantExtension) {
         if(picker) picker.min = new Date().toISOString().split("T")[0];
     });
 </script>
+
 
 
 
