@@ -807,7 +807,6 @@ src="https://www.facebook.com/tr?id=1479906689908468&ev=PageView&noscript=1"
     
     // Redirect to the Thank You page
     window.location.href = 'thank-you.html'; 
-}
             } else { alert("Submission failed."); }
         } catch (e) { alert("Connection error."); }
         finally { btn.innerText = "Request to Book"; btn.disabled = false; }
@@ -818,6 +817,7 @@ src="https://www.facebook.com/tr?id=1479906689908468&ev=PageView&noscript=1"
         if(picker) picker.min = new Date().toISOString().split("T")[0];
     });
 </script>
+
 
 
 
