@@ -82,22 +82,25 @@ src="https://www.facebook.com/tr?id=1479906689908468&ev=PageView&noscript=1"
 <!-- End Meta Pixel Code -->
 </head>
 <body class="bg-gray-50">
-   <div id="promo-banner" class="fixed top-0 left-0 right-0 bg-[#E5E7BE] text-[#1B2A13] z-[150] shadow-md border-b border-[#1B2A13]/20">
-    <div class="container mx-auto py-2 px-10 relative">
-        <div class="flex flex-col md:flex-row items-center justify-center text-center gap-1 md:gap-3">
+   <div id="promo-banner" class="fixed top-0 left-0 right-0 bg-[#E5E7BE] text-[#1B2A13] z-[200] shadow-md border-b border-[#1B2A13]/20">
+    <div class="container mx-auto py-2 px-12 relative min-h-[50px] flex items-center justify-center">
+        <div class="text-center">
             <p class="font-extrabold text-sm md:text-base leading-tight">
                 ✨ New here? Use code 
-                <span class="bg-[#1B2A13] text-[#E5E7BE] px-2 py-0.5 rounded inline-block my-1 md:my-0">FIRSTHIRE</span> 
+                <span class="bg-[#1B2A13] text-[#E5E7BE] px-2 py-0.5 rounded inline-block mx-1">FIRSTHIRE</span> 
                 for $5 off! ✨
             </p>
         </div>
-        <button onclick="closeBanner()" class="absolute right-0 top-0 bottom-0 px-4 flex items-center justify-center text-[#1B2A13] hover:bg-black/5 transition-colors" aria-label="Close banner">
-            <span class="text-2xl font-light">✕</span>
+        
+        <button onclick="closeBanner()" 
+                class="absolute right-0 top-0 bottom-0 w-12 flex items-center justify-center bg-[#d8dab2] hover:bg-[#1B2A13] hover:text-[#E5E7BE] transition-all z-[210]" 
+                style="cursor: pointer !important; -webkit-appearance: none;">
+            <span class="text-2xl font-bold">✕</span>
         </button>
     </div>
 </div>
 
-<div id="banner-spacer" class="h-[60px] md:h-[45px]"></div>
+<div id="banner-spacer" class="h-[50px] md:h-[45px]"></div>
 
 <div id="upsell-modal" class="fixed inset-0 z-[110] hidden flex items-center justify-center p-4">
     <div class="absolute inset-0 bg-black/70 backdrop-blur-sm"></div>
@@ -905,6 +908,7 @@ final_total: document.getElementById('cart-total').innerText
         if(picker) picker.min = new Date().toISOString().split("T")[0];
     });
 </script>
+
 
 
 
