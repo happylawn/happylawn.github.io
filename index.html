@@ -106,16 +106,16 @@ src="https://www.facebook.com/tr?id=1479906689908468&ev=PageView&noscript=1"
     <div class="absolute inset-0 bg-black/70 backdrop-blur-sm"></div>
     <div class="relative bg-white rounded-2xl shadow-2xl max-w-sm w-full overflow-hidden border-4 border-[#1B2A13]">
         <div class="p-6 text-center">
-            <h3 class="text-xl font-bold text-[#1B2A13] mb-2 uppercase">Need Extra Reach?</h3>
-            <p class="text-gray-600 text-sm mb-4">Add a 1-metre extension pole and reach 4metres high safely from the ground. <b></b></p>
+            <h3 class="text-xl font-bold text-[#1B2A13] mb-2 uppercase">Need A Harness?</h3>
+            <p class="text-gray-600 text-sm mb-4">Add a professional dual shoulder harness to reduce fatigue and stress on upper body. <b></b></p>
             
             <div class="bg-gray-100 rounded-xl p-4 mb-6 flex justify-center items-center">
-                <img src="extension.png" alt="Extension Pole" class="h-32 w-auto block mx-auto">
+                <img src="harness.png" alt="Harness" class="h-32 w-auto block mx-auto">
             </div>
             
             <div class="flex flex-col gap-3">
                 <button onclick="addExtension(true)" class="bg-[#1B2A13] text-[#E5E7BE] font-bold py-3 rounded-lg shadow-lg">
-                    Yes, Add Extension (+$5)
+                    Yes, Add Harness (+$5)
                 </button>
                 <button onclick="addExtension(false)" class="text-gray-500 text-sm font-semibold py-2">
                     No thanks
@@ -677,7 +677,7 @@ src="https://www.facebook.com/tr?id=1479906689908468&ev=PageView&noscript=1"
         if (pendingPoleTool) {
             let finalName = pendingPoleTool.name;
             let finalPrice = pendingPoleTool.selection.price;
-            if (wantExtension) { finalName += " + Extension"; finalPrice += 5; }
+            if (wantExtension) { finalName += " + Harness"; finalPrice += 5; }
             cart.push({ name: finalName, duration: pendingPoleTool.selection.duration, price: finalPrice, type: pendingPoleTool.selection.type });
             updateCartUI();
             if (window.innerWidth < 768) { toggleCart(false); }
@@ -817,6 +817,7 @@ src="https://www.facebook.com/tr?id=1479906689908468&ev=PageView&noscript=1"
         if(picker) picker.min = new Date().toISOString().split("T")[0];
     });
 </script>
+
 
 
 
