@@ -552,7 +552,13 @@ src="https://www.facebook.com/tr?id=1479906689908468&ev=PageView&noscript=1"
                 <span class="font-bold">Total:</span>
                 <span id="cart-total" class="text-2xl font-black">$0</span>
             </div>
-
+<div class="mt-4 p-3 bg-gray-50 rounded-lg border border-dashed border-gray-300">
+    <div class="flex gap-2">
+        <input type="text" id="promo-input" placeholder="Promo Code" class="flex-grow p-2 text-sm border rounded-md uppercase">
+        <button onclick="applyPromo()" class="bg-gray-800 text-white px-4 py-2 rounded-md text-sm font-bold hover:bg-black transition">Apply</button>
+    </div>
+    <p id="promo-message" class="text-xs mt-2 hidden"></p>
+</div>
             <button onclick="requestBooking()" class="w-full bg-[#1B2A13] text-[#E5E7BE] font-bold py-3 rounded-lg hover:bg-black transition mb-2">
                 Request to Book
             </button>
@@ -615,7 +621,33 @@ src="https://www.facebook.com/tr?id=1479906689908468&ev=PageView&noscript=1"
         }
         priceDisplay.innerText = `$${price}`;
     }
+let appliedDiscount = 0;
+let discountType = 'flat'; // 'flat' for dollars, 'percent' for percentage
 
+const PROMO_CODES = {
+    'FIRSTHIRE': { value: 5, type: 'flat' },
+    'COMBO10': { value: 0.10, type: 'percent' }
+  
+};
+
+function applyPromo() {
+    const input = document.getElementById('promo-input').value.toUpperCase().trim();
+    const msg = document.getElementById('promo-message');
+    
+    if (PROMO_CODES[input]) {
+        appliedDiscount = PROMO_CODES[input].value;
+        discountType = PROMO_CODES[input].type;
+        
+        msg.innerText = "Code applied successfully!";
+        msg.className = "text-xs mt-2 text-green-600 font-bold block";
+        updateCartUI(); // Refresh the total
+    } else {
+        appliedDiscount = 0;
+        msg.innerText = "Invalid code.";
+        msg.className = "text-xs mt-2 text-red-500 block";
+        updateCartUI();
+    }
+}
    // This tracks if we are currently "holding" a pole tool for the upsell
 let pendingPoleTool = null;
 
@@ -667,32 +699,32 @@ function addExtension(wantExtension) {
     document.getElementById('upsell-modal').classList.add('hidden');
     pendingPoleTool = null;
 }
-
-    function updateCartUI() {
+function updateCartUI() {
     const cartEl = document.getElementById('floating-cart');
     const itemsEl = document.getElementById('cart-items');
     const totalEl = document.getElementById('cart-total');
     const countEl = document.getElementById('cart-count');
     const bondNotice = document.getElementById('bond-notice');
-    const timeLabel = document.getElementById('time-selector-label'); // Added
 
+    // 1. Handle Cart Visibility
     if (cart.length > 0) {
         cartEl.classList.remove('hidden');
         countEl.classList.remove('hidden');
         countEl.innerText = cart.length;
     } else {
         cartEl.classList.add('hidden');
+        countEl.classList.add('hidden');
     }
 
+    // 2. Reset calculations
     itemsEl.innerHTML = '';
-    let total = 0;
+    let subtotal = 0;
     let needsBond = false;
-    let hasShortHire = false; // Added
 
+    // 3. Build item list and calculate subtotal
     cart.forEach((item, index) => {
-        total += item.price;
+        subtotal += item.price;
         if (item.type === 'power') needsBond = true;
-        if (item.duration === '4 Hours') hasShortHire = true; // Check for 4hr items
 
         itemsEl.innerHTML += `
             <div class="flex justify-between items-center text-sm mb-2 text-[#1B2A13]">
@@ -702,11 +734,40 @@ function addExtension(wantExtension) {
                 </div>
                 <div class="flex items-center">
                     <span class="font-bold mr-2">$${item.price}</span>
-                    <button onclick="removeItem(${index})" class="text-red-500 font-bold px-1">✕</button>
+                    <button onclick="removeItem(${index})" class="text-red-500 font-bold px-1 hover:scale-110 transition">✕</button>
                 </div>
             </div>`;
     });
 
+    // 4. Calculate Discount
+    let discountAmount = 0;
+    if (discountType === 'flat') {
+        discountAmount = appliedDiscount;
+    } else if (discountType === 'percent') {
+        discountAmount = subtotal * appliedDiscount;
+    }
+
+    // 5. Final Total calculation (Subtotal - Discount)
+    const finalTotal = Math.max(0, subtotal - discountAmount);
+
+    // 6. Update the Display
+    // We use toFixed(2) to keep the price looking professional (e.g., $45.00)
+    totalEl.innerText = `$${finalTotal.toFixed(2)}`;
+
+    // Show/Hide Bond Notice based on items
+    if (bondNotice) {
+        bondNotice.classList.toggle('hidden', !needsBond);
+    }
+
+    // Optional: Add a small "Savings" line if a discount is active
+    if (discountAmount > 0) {
+        itemsEl.innerHTML += `
+            <div class="flex justify-between items-center text-xs mt-2 pt-2 border-t border-dashed border-gray-300 text-green-600 font-bold">
+                <span>Discount Applied:</span>
+                <span>-$${discountAmount.toFixed(2)}</span>
+            </div>`;
+    }
+}
     // Dynamic Label Logic: 
     // If they ONLY have Full Day items, change the label to "Preferred Pickup Time"
     if (timeLabel) {
@@ -778,6 +839,8 @@ function addExtension(wantExtension) {
         pickup_date: dateEl.value,
         pickup_window: timeVal,
         items: itemSummary,
+        promo_code: document.getElementById('promo-input').value.toUpperCase() || "None",
+final_total: document.getElementById('cart-total').innerText
         total: "$" + hireTotal,
         bond: needsBond ? "$50 Cash" : "None",
         _subject: `HappyLawn Request: ${nameEl.value}`
@@ -817,6 +880,7 @@ function addExtension(wantExtension) {
         if(picker) picker.min = new Date().toISOString().split("T")[0];
     });
 </script>
+
 
 
 
