@@ -800,11 +800,14 @@ src="https://www.facebook.com/tr?id=1479906689908468&ev=PageView&noscript=1"
                 headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' }
             });
 
-            if (response.ok) {
-                const note = document.getElementById('success-notification');
-                note.style.top = '24px';
-                clearCart();
-                setTimeout(() => { note.style.top = '-100px'; }, 4000);
+         if (response.ok) {
+    // Optional: Clear the cart before leaving
+    cart = [];
+    localStorage.removeItem('cart'); // If you use localStorage
+    
+    // Redirect to the Thank You page
+    window.location.href = 'thank-you.html'; 
+}
             } else { alert("Submission failed."); }
         } catch (e) { alert("Connection error."); }
         finally { btn.innerText = "Request to Book"; btn.disabled = false; }
@@ -815,6 +818,7 @@ src="https://www.facebook.com/tr?id=1479906689908468&ev=PageView&noscript=1"
         if(picker) picker.min = new Date().toISOString().split("T")[0];
     });
 </script>
+
 
 
 
