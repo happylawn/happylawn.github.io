@@ -82,13 +82,13 @@ src="https://www.facebook.com/tr?id=1479906689908468&ev=PageView&noscript=1"
 <!-- End Meta Pixel Code -->
 </head>
 <body class="bg-gray-50">
-    <div id="promo-banner" class="bg-[#E5E7BE] text-[#1B2A13] py-2 px-4 relative z-[120] font-bold text-center text-sm md:text-base border-b border-[#1B2A13]/20">
-    <div class="container mx-auto flex justify-center items-center gap-2">
-        <span class="animate-pulse">✨</span>
-        <p>New here? Use code <span class="bg-[#1B2A13] text-[#E5E7BE] px-2 py-0.5 rounded mx-1">FIRSTHIRE</span> for $5 off your first booking!</p>
-        <span class="animate-pulse">✨</span>
+    <div id="promo-banner" class="bg-[#E5E7BE] text-[#1B2A13] py-2 px-8 relative z-[120] font-bold text-center text-xs md:text-base border-b border-[#1B2A13]/20">
+    <div class="flex justify-center items-center gap-1 md:gap-2">
+        <span class="animate-pulse hidden xs:inline">✨</span>
+        <p>New here? Use code <span class="bg-[#1B2A13] text-[#E5E7BE] px-1.5 py-0.5 rounded mx-1">FIRSTHIRE</span> for $5 off!</p>
+        <span class="animate-pulse hidden xs:inline">✨</span>
     </div>
-    <button onclick="closeBanner()" class="absolute right-4 top-1/2 -translate-y-1/2 text-[#1B2A13] opacity-60 hover:opacity-100 font-bold text-xl">✕</button>
+    <button onclick="closeBanner()" class="absolute right-2 top-0 bottom-0 px-2 flex items-center text-[#1B2A13] opacity-60 hover:opacity-100 font-bold text-lg" aria-label="Close banner">✕</button>
 </div>
 
 <div id="upsell-modal" class="fixed inset-0 z-[110] hidden flex items-center justify-center p-4">
@@ -586,8 +586,13 @@ src="https://www.facebook.com/tr?id=1479906689908468&ev=PageView&noscript=1"
     }
 </style>
 <script>
-    function closeBanner() {
-    document.getElementById('promo-banner').style.display = 'none';
+   function closeBanner() {
+    const banner = document.getElementById('promo-banner');
+    if (banner) {
+        banner.style.display = 'none';
+        // Optional: Trigger a layout refresh for the hero section
+        window.dispatchEvent(new Event('resize'));
+    }
 }
     let cart = [];
     let currentSelections = {
@@ -891,6 +896,7 @@ final_total: document.getElementById('cart-total').innerText
         if(picker) picker.min = new Date().toISOString().split("T")[0];
     });
 </script>
+
 
 
 
