@@ -569,6 +569,11 @@ src="https://www.facebook.com/tr?id=1479906689908468&ev=PageView&noscript=1"
                 <span class="font-bold">Total:</span>
                 <span id="cart-total" class="text-2xl font-black">$0</span>
             </div>
+            <div class="mt-4">
+    <label for="booking-notes" class="block text-xs font-bold text-[#1B2A13] uppercase mb-1">Special Instructions / Notes:</label>
+    <textarea id="booking-notes" rows="2" placeholder="e.g. Please can you deliver? or preferred pickup time..." 
+        class="w-full p-2 text-sm border border-gray-300 rounded-lg focus:ring-1 focus:ring-[#1B2A13] outline-none resize-none"></textarea>
+</div>
 <div class="mt-4 p-3 bg-gray-50 rounded-lg border border-dashed border-gray-300">
     <div class="flex gap-2">
         <input type="text" id="promo-input" placeholder="Promo Code" class="flex-grow p-2 text-sm border rounded-md uppercase">
@@ -815,6 +820,7 @@ src="https://www.facebook.com/tr?id=1479906689908468&ev=PageView&noscript=1"
         if(picker) picker.min = new Date().toISOString().split("T")[0];
     });
 </script>
+
 
 
 
