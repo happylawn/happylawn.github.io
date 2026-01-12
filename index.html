@@ -874,7 +874,17 @@ src="https://www.facebook.com/tr?id=1479906689908468&ev=PageView&noscript=1"
         btn.disabled = false; 
     }
 }
+document.addEventListener('DOMContentLoaded', () => {
+        const picker = document.getElementById('pickup-date');
+        if (picker) {
+            // Sets today's date in local NZ format (YYYY-MM-DD)
+            const today = new Date().toLocaleDateString('en-CA'); 
+            picker.min = today;
+            picker.value = today;
+        }
+    });
 </script>
+
 
 
 
