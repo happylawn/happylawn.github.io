@@ -296,37 +296,36 @@ src="https://www.facebook.com/tr?id=1479906689908468&ev=PageView&noscript=1"
     </div>
 </div>
 
-<div class="relative h-full">
-
-    <div class="absolute top-6 -right-10 w-40 bg-red-600 text-white text-center py-1.5 rotate-45 z-30 font-bold shadow-xl tracking-wider text-xs border-y border-red-400">
+<div class="relative bg-white rounded-xl shadow-md border border-gray-100 flex flex-col h-full overflow-hidden">
+    
+    <div class="absolute top-5 -right-12 w-44 bg-red-600 text-white text-center py-1.5 rotate-45 z-30 font-bold shadow-lg tracking-wider text-xs">
         COMING SOON
     </div>
 
-    <div class="overflow-hidden bg-white rounded-xl shadow-md border border-gray-100 opacity-70 grayscale pointer-events-none flex flex-col h-full z-10">
+    <div class="relative h-48 bg-gray-50 flex items-center justify-center p-4">
+        <img src="chainsaw.png" alt="Makita 40V Chainsaw" class="max-h-full object-contain">
         
-        <div class="relative h-48 bg-gray-50 flex items-center justify-center p-4">
-            <img src="chainsaw.png" alt="Coming Soon" class="max-h-full object-contain">
+        <div class="absolute inset-0 bg-white/20"></div>
+    </div>
+
+    <div class="p-5 flex-grow">
+        <h3 class="text-xl font-bold text-gray-900">Makita 40V Chainsaw</h3>
+        <p class="text-gray-500 text-sm mt-2">Equivalent to 50cc Petrol models! <br>Available with 16" or 20" bar<br><br>Available for hire soon!</p>
+    </div>
+
+    <div class="p-5 border-t border-gray-100 bg-gray-50/50">
+        <div class="flex bg-white rounded-lg p-1 mb-4 border border-gray-200 opacity-50">
+            <div class="flex-1 text-center py-1.5 rounded-md bg-gray-100 text-gray-400 text-xs font-medium">4 Hours</div>
+            <div class="flex-1 text-center py-1.5 text-gray-300 text-xs font-medium">Full Day</div>
         </div>
 
-        <div class="p-5 flex-grow">
-            <h3 class="text-xl font-bold text-gray-900">Makita 40V Chainsaw</h3>
-            <p class="text-gray-500 text-sm mt-2 italic">Available for hire very soon. Stay tuned!</p>
-        </div>
-
-        <div class="p-5 border-t border-gray-100 bg-gray-50/50">
-            <div class="flex bg-white rounded-lg p-1 mb-4 border border-gray-200">
-                <div class="flex-1 text-center py-1.5 rounded-md bg-gray-100 text-gray-400 text-xs font-medium">4 Hours</div>
-                <div class="flex-1 text-center py-1.5 text-gray-300 text-xs font-medium">Full Day</div>
+        <div class="flex items-center justify-between">
+            <div>
+                <span class="text-2xl font-bold text-gray-400">$50</span>
             </div>
-
-            <div class="flex items-center justify-between">
-                <div>
-                    <span class="text-2xl font-bold text-gray-400">$50</span>
-                </div>
-                <button class="bg-gray-300 text-white px-4 py-2 rounded-lg font-bold text-sm shadow-sm" disabled>
-                    Unavailable
-                </button>
-            </div>
+            <button class="bg-gray-300 text-white px-4 py-2 rounded-lg font-bold text-sm shadow-sm pointer-events-none" disabled>
+                Unavailable
+            </button>
         </div>
     </div>
 </div>
@@ -928,6 +927,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 </script>
+
 
 
 
