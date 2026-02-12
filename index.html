@@ -296,26 +296,38 @@ src="https://www.facebook.com/tr?id=1479906689908468&ev=PageView&noscript=1"
     </div>
 </div>
 
-            <div class="relative overflow-hidden bg-white rounded-lg shadow-md border border-gray-200 opacity-60 grayscale pointer-events-none">
+<div class="relative overflow-hidden bg-white rounded-xl shadow-md border border-gray-100 opacity-70 grayscale pointer-events-none flex flex-col h-full">
     
-    <div class="absolute top-4 -right-12 w-40 bg-red-600 text-white text-center py-1 rotate-45 z-10 font-bold shadow-lg">
+    <div class="absolute top-6 -right-12 w-44 bg-red-600 text-white text-center py-1.5 rotate-45 z-20 font-bold shadow-lg tracking-wider text-sm">
         COMING SOON
     </div>
 
-    <img src="chainsaw.png" alt="New Tool Coming Soon" class="w-full h-48 object-cover">
+    <div class="relative h-48 bg-gray-50">
+        <img src="chainsaw.png" alt="Coming Soon" class="w-full h-full object-contain p-4">
+    </div>
 
-    <div class="p-4">
-        <h3 class="text-xl font-bold text-gray-800">Makita 40V Chainsaw</h3>
-        <p class="text-gray-600 text-sm mt-2">Available for hire very soon!</p>
-        
-        <div class="mt-4 flex items-center justify-between">
-            <span class="text-lg font-bold text-gray-400">$50 / 4 Hours</span>
-            <button class="bg-gray-400 text-white px-4 py-2 rounded cursor-not-allowed" disabled>
+    <div class="p-5 flex-grow">
+        <h3 class="text-xl font-bold text-gray-900">Makita 40V Chainsaw</h3>
+        <p class="text-gray-500 text-sm mt-2 italic">Available for hire very soon. Stay tuned!</p>
+    </div>
+
+    <div class="p-5 border-t border-gray-100 bg-gray-50/50">
+        <div class="flex bg-white rounded-lg p-1 mb-4 border border-gray-200">
+            <div class="flex-1 text-center py-1.5 rounded-md bg-gray-100 text-gray-400 text-sm font-medium">4 Hours</div>
+            <div class="flex-1 text-center py-1.5 text-gray-300 text-sm font-medium">Full Day</div>
+        </div>
+
+        <div class="flex items-center justify-between">
+            <div>
+                <span class="text-2xl font-bold text-gray-400">$50</span>
+            </div>
+            <button class="bg-gray-300 text-white px-6 py-2 rounded-lg font-bold shadow-sm" disabled>
                 Unavailable
             </button>
         </div>
     </div>
 </div>
+            
             <div class="product-grid-card bg-white rounded-lg shadow-lg overflow-hidden transform hover:scale-105 transition-transform duration-300 ease-in-out">
                 <div class="h-56 overflow-hidden flex items-center justify-center">
                     <img class="w-full h-full object-contain p-4" src="blower.png" alt="Makita 40V Leaf Blower">
@@ -913,6 +925,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 </script>
+
 
 
 
