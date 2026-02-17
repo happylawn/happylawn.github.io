@@ -925,6 +925,7 @@ src="https://www.facebook.com/tr?id=1479906689908468&ev=PageView&noscript=1"
         email: emailEl.value,
         pickup_date: dateEl.value,
         pickup_time: timeVal,
+        collection: collectionMethod,
         items: cart.map(i => `${i.name} (${i.duration})`).join(', '),
         promo_used: document.getElementById('promo-input')?.value || "None",
         notes: notesEl.value || "No special instructions",
@@ -964,6 +965,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 </script>
+
 
 
 
