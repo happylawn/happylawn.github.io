@@ -899,13 +899,17 @@ src="https://www.facebook.com/tr?id=1479906689908468&ev=PageView&noscript=1"
 
     // 4. Booking Logic
     async function requestBooking() {
-    // 1. Get references to the actual HTML IDs you used
+    // 1. Get references to your HTML elements
     const dateEl = document.getElementById('pickup-date');
-    const nameEl = document.getElementById('customer-name'); // Matches your HTML
-    const phoneEl = document.getElementById('customer-phone'); // Matches your HTML
-    const emailEl = document.getElementById('customer-email'); // Matches your HTML
-    const timeVal = document.getElementById('pickup-time').value;
+    const nameEl = document.getElementById('customer-name'); 
+    const phoneEl = document.getElementById('customer-phone');
+    const emailEl = document.getElementById('customer-email');
     const notesEl = document.getElementById('booking-notes');
+    const timeVal = document.getElementById('pickup-time').value;
+
+    // New: Get Pickup/Delivery choice safely
+    const collectionInput = document.querySelector('input[name="collection_method"]:checked');
+    const collectionVal = collectionInput ? collectionInput.value : "Pickup";
 
     // 2. Validation
     if (!nameEl.value || !phoneEl.value || !emailEl.value || !dateEl.value) {
@@ -915,7 +919,45 @@ src="https://www.facebook.com/tr?id=1479906689908468&ev=PageView&noscript=1"
 
     // 3. UI State
     const btn = event.target;
+    const originalText = btn.innerText;
     btn.innerText = "Sending...";
+    btn.disabled = true;
+
+    // 4. Prepare Data for Formspree
+    const formData = {
+        Name: nameEl.value,
+        Email: emailEl.value,
+        Phone: phoneEl.value,
+        Date: dateEl.value,
+        Time: timeVal,
+        Collection: collectionVal,
+        Items: cart.map(item => `${item.name} (${item.period})`).join(', '),
+        Total: document.getElementById('cart-total').innerText,
+        Notes: notesEl.value
+    };
+
+    // 5. Send to Formspree
+    try {
+        const response = await fetch("https://formspree.io/f/YOUR_ID_HERE", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(formData)
+        });
+
+        if (response.ok) {
+            alert("Booking request sent! We will be in touch shortly.");
+            clearCart();
+            // Close cart if you have a toggle function
+        } else {
+            alert("Oops! There was a problem. Please try again.");
+        }
+    } catch (error) {
+        alert("Error sending request. Please check your connection.");
+    } finally {
+        btn.innerText = originalText;
+        btn.disabled = false;
+    }
+}
     btn.disabled = true;
 
     // 4. Data Collection (Updated with correct IDs and Pickup details)
@@ -965,6 +1007,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 </script>
+
 
 
 
