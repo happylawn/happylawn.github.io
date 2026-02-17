@@ -659,188 +659,209 @@ src="https://www.facebook.com/tr?id=1479906689908468&ev=PageView&noscript=1"
     </div>
 </div>
 
-// 1. General Variables
-let cart = [];
-let appliedDiscount = 0;
-let discountType = 'flat';
-let pendingPoleTool = null;
+<script>
+    // 1. GLOBAL VARIABLES & SETTINGS
+    let cart = [];
+    let appliedDiscount = 0;
+    let discountType = 'flat';
+    let pendingPoleTool = null;
 
-const PROMO_CODES = {
-    'FIRSTHIRE': { value: 5, type: 'flat' },
-    'COMBO10': { value: 0.10, type: 'percent' },
-    'HAPPY10': { value: 0.10, type: 'percent' }
-};
-
-let currentSelections = {
-    scarifier: { duration: '4 Hours', price: 45, type: 'power' },
-    mower: { duration: '4 Hours', price: 35, type: 'power' },
-    blower: { duration: '4 Hours', price: 25, type: 'power' },
-    trimmer: { duration: '4 Hours', price: 35, type: 'power' },
-    hedge: { duration: '4 Hours', price: 30, type: 'power' },
-    polehedge: { duration: '4 Hours', price: 50, type: 'power' },
-    polesaw: { duration: '4 Hours', price: 50, type: 'power' },
-    polecombo: { duration: '4 Hours', price: 70, type: 'power' },
-    roller: { duration: '4 Hours', price: 15, type: 'hand' },
-    sprayer: { duration: '4 Hours', price: 15, type: 'hand' },
-    spreader: { duration: '4 Hours', price: 10, type: 'hand' },
-    rake: { duration: '4 Hours', price: 10, type: 'hand' },
-    levelrake: { duration: '4 Hours', price: 10, type: 'hand' },
-    barrow: { duration: '4 Hours', price: 15, type: 'hand' }
-};
-
-// 2. UI & Cart Logic
-function setToggle(id, duration, price) {
-    const slider = document.getElementById(`slider-${id}`);
-    const priceDisplay = document.getElementById(`price-${id}`);
-    const btn4hr = document.getElementById(`btn-${id}-4hr`);
-    const btnDay = document.getElementById(`btn-${id}-day`);
-    if (!slider || !priceDisplay) return;
-
-    if (duration === '4hr') {
-        slider.style.transform = 'translateX(0%)';
-        btn4hr.classList.replace('text-gray-400', 'text-gray-800');
-        btnDay.classList.replace('text-gray-800', 'text-gray-400');
-        currentSelections[id].duration = '4 Hours';
-    } else {
-        slider.style.transform = 'translateX(100%)';
-        btnDay.classList.replace('text-gray-400', 'text-gray-800');
-        btn4hr.classList.replace('text-gray-800', 'text-gray-400');
-        currentSelections[id].duration = 'Full Day';
-    }
-    currentSelections[id].price = price;
-    priceDisplay.innerText = `$${price}`;
-}
-
-function updateCartUI() {
-    const cartEl = document.getElementById('floating-cart');
-    const itemsEl = document.getElementById('cart-items');
-    const totalEl = document.getElementById('cart-total');
-    const countEl = document.getElementById('cart-count');
-    const bondNotice = document.getElementById('bond-notice');
-    const timeSelect = document.getElementById('pickup-time');
-
-    if (cart.length > 0) {
-        cartEl.classList.remove('hidden');
-        countEl.classList.remove('hidden');
-        countEl.innerText = cart.length;
-    } else {
-        cartEl.classList.add('hidden');
-        countEl.classList.add('hidden');
-    }
-
-    itemsEl.innerHTML = '';
-    let subtotal = 0;
-    let needsBond = false;
-    let hasFullDay = false;
-
-    cart.forEach((item, index) => {
-        subtotal += item.price;
-        if (item.type === 'power') needsBond = true;
-        if (item.duration === 'Full Day') hasFullDay = true;
-
-        itemsEl.innerHTML += `
-            <div class="flex justify-between items-center text-sm mb-2 text-[#1B2A13]">
-                <div class="flex flex-col text-left">
-                    <span class="font-bold">${item.name}</span>
-                    <span class="text-[10px] uppercase text-gray-500">${item.duration}</span>
-                </div>
-                <div class="flex items-center">
-                    <span class="font-bold mr-2">$${item.price}</span>
-                    <button onclick="removeItem(${index})" class="text-red-500 font-bold px-1">✕</button>
-                </div>
-            </div>`;
-    });
-
-    // Update Time Dropdown based on Hire Type
-    const currentTime = timeSelect.value;
-    timeSelect.innerHTML = '';
-    if (hasFullDay) {
-        ['9:00 am', '10:00 am', '11:00 am', '12:00 pm', '1:00 pm', '2:00 pm', '3:00 pm', '4:00 pm', '5:00 pm'].forEach(t => {
-            timeSelect.add(new Option(t, t));
-        });
-    } else {
-        timeSelect.add(new Option('Morning (9am - 1pm)', 'Morning (9am - 1pm)'));
-        timeSelect.add(new Option('Afternoon (2pm - 6pm)', 'Afternoon (2pm - 6pm)'));
-    }
-
-    let discountAmount = (discountType === 'flat') ? appliedDiscount : subtotal * appliedDiscount;
-    totalEl.innerText = `$${Math.max(0, subtotal - discountAmount).toFixed(2)}`;
-    if (bondNotice) bondNotice.classList.toggle('hidden', !needsBond);
-}
-
-// 3. Booking & Formspree
-async function requestBooking() {
-    const btn = event.target;
-    const nameEl = document.getElementById('customer-name');
-    const phoneEl = document.getElementById('customer-phone');
-    const emailEl = document.getElementById('customer-email');
-    const dateEl = document.getElementById('pickup-date');
-    const collectionInput = document.querySelector('input[name="collection_method"]:checked');
-
-    if (!nameEl.value || !phoneEl.value || !emailEl.value || !dateEl.value) {
-        alert("Please fill in all details.");
-        return;
-    }
-
-    btn.innerText = "Sending...";
-    btn.disabled = true;
-
-    const formData = {
-        name: nameEl.value,
-        phone: phoneEl.value,
-        email: emailEl.value,
-        date: dateEl.value,
-        time: document.getElementById('pickup-time').value,
-        collection: collectionInput ? collectionInput.value : "Pickup",
-        items: cart.map(i => `${i.name} (${i.duration})`).join(', '),
-        notes: document.getElementById('booking-notes').value,
-        total: document.getElementById('cart-total').innerText
+    const PROMO_CODES = {
+        'FIRSTHIRE': { value: 5, type: 'flat' },
+        'COMBO10': { value: 0.10, type: 'percent' },
+        'HAPPY10': { value: 0.10, type: 'percent' }
     };
 
-    try {
-        const response = await fetch("https://formspree.io/f/xwvpoenl", {
-            method: "POST",
-            body: JSON.stringify(formData),
-            headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' }
+    let currentSelections = {
+        scarifier: { duration: '4 Hours', price: 45, type: 'power' },
+        mower: { duration: '4 Hours', price: 35, type: 'power' },
+        blower: { duration: '4 Hours', price: 25, type: 'power' },
+        trimmer: { duration: '4 Hours', price: 35, type: 'power' },
+        hedge: { duration: '4 Hours', price: 30, type: 'power' },
+        polehedge: { duration: '4 Hours', price: 50, type: 'power' },
+        polesaw: { duration: '4 Hours', price: 50, type: 'power' },
+        polecombo: { duration: '4 Hours', price: 70, type: 'power' },
+        roller: { duration: '4 Hours', price: 15, type: 'hand' },
+        sprayer: { duration: '4 Hours', price: 15, type: 'hand' },
+        spreader: { duration: '4 Hours', price: 10, type: 'hand' },
+        rake: { duration: '4 Hours', price: 10, type: 'hand' },
+        levelrake: { duration: '4 Hours', price: 10, type: 'hand' },
+        barrow: { duration: '4 Hours', price: 15, type: 'hand' }
+    };
+
+    // 2. TOGGLE LOGIC (Fixes the 4hr vs Day buttons)
+    function setToggle(id, duration, price) {
+        const slider = document.getElementById(`slider-${id}`);
+        const priceDisplay = document.getElementById(`price-${id}`);
+        const btn4hr = document.getElementById(`btn-${id}-4hr`);
+        const btnDay = document.getElementById(`btn-${id}-day`);
+        
+        if (!slider || !priceDisplay) return;
+
+        if (duration === '4hr') {
+            slider.style.transform = 'translateX(0%)';
+            btn4hr.classList.replace('text-gray-400', 'text-gray-800');
+            btnDay.classList.replace('text-gray-800', 'text-gray-400');
+            currentSelections[id].duration = '4 Hours';
+        } else {
+            slider.style.transform = 'translateX(100%)';
+            btnDay.classList.replace('text-gray-400', 'text-gray-800');
+            btn4hr.classList.replace('text-gray-800', 'text-gray-400');
+            currentSelections[id].duration = 'Full Day';
+        }
+        currentSelections[id].price = price;
+        priceDisplay.innerText = `$${price}`;
+    }
+
+    // 3. CART UI & HOURLY TIME LOGIC
+    function updateCartUI() {
+        const cartEl = document.getElementById('floating-cart');
+        const itemsEl = document.getElementById('cart-items');
+        const totalEl = document.getElementById('cart-total');
+        const countEl = document.getElementById('cart-count');
+        const bondNotice = document.getElementById('bond-notice');
+        const timeSelect = document.getElementById('pickup-time');
+
+        if (cart.length > 0) {
+            cartEl.classList.remove('hidden');
+            countEl.classList.remove('hidden');
+            countEl.innerText = cart.length;
+        } else {
+            cartEl.classList.add('hidden');
+            countEl.classList.add('hidden');
+            return;
+        }
+
+        itemsEl.innerHTML = '';
+        let subtotal = 0;
+        let needsBond = false;
+        let hasFullDay = false;
+
+        cart.forEach((item, index) => {
+            subtotal += item.price;
+            if (item.type === 'power') needsBond = true;
+            if (item.duration === 'Full Day') hasFullDay = true;
+
+            itemsEl.innerHTML += `
+                <div class="flex justify-between items-center text-sm mb-2 text-[#1B2A13]">
+                    <div class="flex flex-col text-left">
+                        <span class="font-bold">${item.name}</span>
+                        <span class="text-[10px] uppercase text-gray-500">${item.duration}</span>
+                    </div>
+                    <div class="flex items-center">
+                        <span class="font-bold mr-2">$${item.price}</span>
+                        <button onclick="removeItem(${index})" class="text-red-500 font-bold px-1">✕</button>
+                    </div>
+                </div>`;
         });
 
-        if (response.ok) {
-            alert("Booking request sent! We will be in touch shortly.");
-            clearCart();
+        // Update Time Dropdown
+        const savedTime = timeSelect.value;
+        timeSelect.innerHTML = '';
+        if (hasFullDay) {
+            ['9:00 am', '10:00 am', '11:00 am', '12:00 pm', '1:00 pm', '2:00 pm', '3:00 pm', '4:00 pm', '5:00 pm'].forEach(t => {
+                timeSelect.add(new Option(t, t));
+            });
         } else {
-            alert("Submission failed. Please try again.");
+            timeSelect.add(new Option('Morning (9am - 1pm)', 'Morning (9am - 1pm)'));
+            timeSelect.add(new Option('Afternoon (2pm - 6pm)', 'Afternoon (2pm - 6pm)'));
         }
-    } catch (e) {
-        alert("Connection error.");
-    } finally {
-        btn.innerText = "Request to Book";
-        btn.disabled = false;
-    }
-}
 
-// 4. Utility Functions
-function addCurrentSelection(productName, id) {
-    cart.push({ ...currentSelections[id], name: productName });
-    updateCartUI();
-}
-function removeItem(index) { cart.splice(index, 1); updateCartUI(); }
-function clearCart() { cart = []; appliedDiscount = 0; updateCartUI(); }
-function toggleCart() { document.getElementById('cart-content').classList.toggle('hidden'); }
-
-document.addEventListener('DOMContentLoaded', () => {
-    const picker = document.getElementById('pickup-date');
-    if (picker) {
-        picker.min = new Date().toLocaleDateString('en-CA');
-        picker.value = picker.min;
+        let discountAmount = (discountType === 'flat') ? appliedDiscount : subtotal * appliedDiscount;
+        totalEl.innerText = `$${Math.max(0, subtotal - discountAmount).toFixed(2)}`;
+        if (bondNotice) bondNotice.classList.toggle('hidden', !needsBond);
     }
+
+    // 4. BOOKING SUBMISSION (Formspree)
+    async function requestBooking() {
+        const nameEl = document.getElementById('customer-name');
+        const phoneEl = document.getElementById('customer-phone');
+        const emailEl = document.getElementById('customer-email');
+        const dateEl = document.getElementById('pickup-date');
+        const collectionInput = document.querySelector('input[name="collection_method"]:checked');
+        const btn = event.target;
+
+        if (!nameEl.value || !phoneEl.value || !emailEl.value || !dateEl.value) {
+            alert("Please fill in all details.");
+            return;
+        }
+
+        btn.innerText = "Sending...";
+        btn.disabled = true;
+
+        const formData = {
+            Name: nameEl.value,
+            Phone: phoneEl.value,
+            Email: emailEl.value,
+            Date: dateEl.value,
+            Time: document.getElementById('pickup-time').value,
+            Collection: collectionInput ? collectionInput.value : "Pickup",
+            Items: cart.map(i => `${i.name} (${i.duration})`).join(', '),
+            Notes: document.getElementById('booking-notes').value,
+            Total: document.getElementById('cart-total').innerText
+        };
+
+        try {
+            const response = await fetch("https://formspree.io/f/xwvpoenl", {
+                method: "POST",
+                body: JSON.stringify(formData),
+                headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' }
+            });
+
+            if (response.ok) {
+                alert("Booking request sent! We will be in touch shortly.");
+                clearCart();
+            } else {
+                alert("Submission failed. Please try again.");
+            }
+        } catch (e) {
+            alert("Connection error.");
+        } finally {
+            btn.innerText = "Request to Book";
+            btn.disabled = false;
+        }
+    }
+
+    // 5. UTILITY FUNCTIONS
+    function addCurrentSelection(productName, id) {
+        cart.push({ ...currentSelections[id], name: productName });
+        updateCartUI();
+    }
+    function removeItem(index) { cart.splice(index, 1); updateCartUI(); }
+    function clearCart() { cart = []; appliedDiscount = 0; updateCartUI(); }
+    function toggleCart() { document.getElementById('cart-content').classList.toggle('hidden'); }
+    function closeBanner() { document.getElementById('promo-banner').style.display = 'none'; }
     
-    // Setup Delivery Warning Listener
-    document.querySelectorAll('input[name="collection_method"]').forEach((elem) => {
-        elem.addEventListener("change", (e) => {
-            document.getElementById("delivery-warning").classList.toggle("hidden", e.target.value !== "Delivery");
+    function applyPromo() {
+        const input = document.getElementById('promo-input').value.toUpperCase().trim();
+        const msg = document.getElementById('promo-message');
+        if (PROMO_CODES[input]) {
+            appliedDiscount = PROMO_CODES[input].value;
+            discountType = PROMO_CODES[input].type;
+            msg.innerText = "Code applied!";
+            msg.className = "text-xs mt-2 text-green-600 font-bold block";
+        } else {
+            appliedDiscount = 0;
+            msg.innerText = "Invalid code.";
+            msg.className = "text-xs mt-2 text-red-500 block";
+        }
+        updateCartUI();
+    }
+
+    // 6. INITIALIZATION
+    document.addEventListener('DOMContentLoaded', () => {
+        const picker = document.getElementById('pickup-date');
+        if (picker) {
+            picker.min = new Date().toLocaleDateString('en-CA');
+            picker.value = picker.min;
+        }
+        document.querySelectorAll('input[name="collection_method"]').forEach((elem) => {
+            elem.addEventListener("change", (e) => {
+                document.getElementById("delivery-warning").classList.toggle("hidden", e.target.value !== "Delivery");
+            });
         });
     });
-});
+</script>
 
 
 
