@@ -638,6 +638,40 @@ src="https://www.facebook.com/tr?id=1479906689908468&ev=PageView&noscript=1"
     <option value="Afternoon (2pm - 6pm)">Afternoon (2pm - 6pm)</option>
 </select>
                 </div>
+                <div class="mb-4 collection-container">
+    <label class="block text-xs font-bold text-gray-700 uppercase mb-2 tracking-wide">Collection Method</label>
+    <div class="grid grid-cols-2 gap-2">
+        <label class="flex items-center justify-center py-2 px-3 border rounded-lg cursor-pointer transition-all has-[:checked]:border-[#1B2A13] has-[:checked]:bg-green-50">
+            <input type="radio" name="collection_method" value="Pickup" class="hidden peer" checked>
+            <span class="text-xs font-semibold text-gray-700">🏠 I'll Pickup</span>
+        </label>
+        
+        <label class="flex items-center justify-center py-2 px-3 border rounded-lg cursor-pointer transition-all has-[:checked]:border-[#1B2A13] has-[:checked]:bg-green-50 group">
+            <input type="radio" name="collection_method" value="Delivery" class="hidden peer" id="delivery-radio">
+            <span class="text-xs font-semibold text-gray-700">🚚 Delivery</span>
+        </label>
+    </div>
+
+    <div id="delivery-warning" class="mt-3 p-2 bg-amber-50 border border-amber-200 rounded-md hidden">
+        <p class="text-[10px] text-amber-800 leading-tight">
+            <strong>⚠️ Delivery Info:</strong> Available <strong>weekends only</strong>. Additional charges apply based on location. Delivery is subject to availability and not always possible.
+        </p>
+    </div>
+</div>
+
+<script>
+    // Simple script to show/hide the note
+    document.querySelectorAll('input[name="collection_method"]').forEach((elem) => {
+        elem.addEventListener("change", function(event) {
+            var warning = document.getElementById("delivery-warning");
+            if (event.target.value === "Delivery") {
+                warning.classList.remove("hidden");
+            } else {
+                warning.classList.add("hidden");
+            }
+        });
+    });
+</script>
                 <div>
                     <label class="block text-xs font-bold text-gray-500 uppercase mb-1">Your Full Name</label>
                     <input type="text" id="customer-name" placeholder="Enter name..." class="w-full border rounded-lg p-2 text-sm outline-none border-gray-200">
@@ -930,6 +964,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 </script>
+
 
 
 
