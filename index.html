@@ -658,7 +658,51 @@ src="https://www.facebook.com/tr?id=1479906689908468&ev=PageView&noscript=1"
         </p>
     </div>
 </div>
+<div class="space-y-3 mb-4">
+                    <div>
+                        <label class="block text-xs font-bold text-gray-500 uppercase mb-1">Your Full Name</label>
+                        <input type="text" id="customer-name" placeholder="Enter name..." class="w-full border rounded-lg p-2 text-sm outline-none border-gray-200">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-gray-500 uppercase mb-1">Contact Phone</label>
+                        <input type="tel" id="customer-phone" placeholder="Enter phone number..." class="w-full border rounded-lg p-2 text-sm outline-none border-gray-200">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-gray-500 uppercase mb-1">Email Address</label>
+                        <input type="email" id="customer-email" placeholder="Enter email..." class="w-full border rounded-lg p-2 text-sm outline-none border-gray-200">
+                    </div>
+                </div>
 
+                <div id="bond-notice" class="bg-blue-50 p-3 rounded-lg border border-blue-100 mb-4 hidden">
+                    <div class="flex justify-between text-xs text-blue-800 font-bold">
+                        <span class="underline">Refundable Bond:</span>
+                        <span>$50 Cash</span>
+                    </div>
+                    <p class="text-[10px] text-blue-600 mt-1 leading-tight">Payable on pickup. Fully refunded when equipment is returned clean & undamaged.</p>
+                </div>
+
+                <div class="flex justify-between items-center mb-4 pt-2 border-t text-[#1B2A13]">
+                    <span class="font-bold">Total:</span>
+                    <span id="cart-total" class="text-2xl font-black">$0</span>
+                </div>
+
+                <div class="mt-4">
+                    <label for="booking-notes" class="block text-xs font-bold text-[#1B2A13] uppercase mb-1">Special Instructions / Notes:</label>
+                    <textarea id="booking-notes" rows="2" placeholder="e.g. Please can you deliver? or preferred pickup time..." class="w-full p-2 text-sm border border-gray-300 rounded-lg focus:ring-1 focus:ring-[#1B2A13] outline-none resize-none"></textarea>
+                </div>
+
+                <div class="mt-4 p-3 bg-gray-50 rounded-lg border border-dashed border-gray-300">
+                    <div class="flex gap-2">
+                        <input type="text" id="promo-input" placeholder="Promo Code" class="flex-grow p-2 text-sm border rounded-md uppercase">
+                        <button onclick="applyPromo()" class="bg-gray-800 text-white px-4 py-2 rounded-md text-sm font-bold hover:bg-black transition">Apply</button>
+                    </div>
+                    <p id="promo-message" class="text-xs mt-2 hidden"></p>
+                </div>
+
+                <button onclick="requestBooking()" class="w-full bg-[#1B2A13] text-[#E5E7BE] font-bold py-3 rounded-lg hover:bg-black transition mb-2">
+                    Request to Book
+                </button>
+                <button onclick="clearCart()" class="w-full text-xs text-red-600 hover:underline mb-2 text-center">Clear List</button>
 <script>
     // 1. GLOBAL VARIABLES & SETTINGS
     let cart = [];
@@ -862,6 +906,7 @@ src="https://www.facebook.com/tr?id=1479906689908468&ev=PageView&noscript=1"
         });
     });
 </script>
+
 
 
 
