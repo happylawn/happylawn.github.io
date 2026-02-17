@@ -841,6 +841,8 @@ src="https://www.facebook.com/tr?id=1479906689908468&ev=PageView&noscript=1"
             Time: document.getElementById('pickup-time').value,
             Collection: collectionInput ? collectionInput.value : "Pickup",
             Items: cart.map(i => `${i.name} (${i.duration})`).join(', '),
+            Promo_Code: document.getElementById('promo-input').value || "None", // Captures the code used
+            Discount_Value: appliedDiscount > 0 ? (discountType === 'percent' ? (appliedDiscount * 100) + '%' : '$' + appliedDiscount) : "0",
             Notes: document.getElementById('booking-notes').value,
             Total: document.getElementById('cart-total').innerText
         };
@@ -906,6 +908,7 @@ src="https://www.facebook.com/tr?id=1479906689908468&ev=PageView&noscript=1"
         });
     });
 </script>
+
 
 
 
