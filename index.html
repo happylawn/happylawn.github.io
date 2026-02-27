@@ -590,7 +590,117 @@ src="https://www.facebook.com/tr?id=1479906689908468&ev=PageView&noscript=1"
         <a href="#products" class="inline-block bg-[#E5E7BE] text-[#1B2A13] font-bold py-4 px-10 rounded-full shadow-2xl hover:scale-105 transition transform mb-16">
             Browse All Equipment
         </a>
+<section id="contact-section" class="py-16 px-4 bg-white border-t border-gray-100">
+    <div class="max-w-4xl mx-auto">
+        <div id="contact-container" class="grid md:grid-cols-2 gap-12">
+            
+            <div class="animate-fadeIn">
+                <h2 class="text-3xl font-black text-[#1B2A13] mb-4">Get in Touch</h2>
+                <p class="text-gray-600 mb-6">
+                    Have a question about our hire gear or looking for professional <strong>NZLA Products</strong>? 
+                </p>
+                
+                <div class="bg-amber-50 border-l-4 border-amber-400 p-4 mb-8">
+                    <p class="text-sm text-amber-900 font-bold uppercase tracking-wider mb-1">📅 Appointment Only</p>
+                    <p class="text-xs text-amber-800 leading-relaxed">
+                        As a specialist hire company operating from a private workshop, we do not have a traditional storefront. Please contact us to arrange a specific time for equipment pickup or product collection.
+                    </p>
+                </div>
 
+                <h4 class="font-bold text-[#1B2A13] mb-4 uppercase text-xs tracking-widest">Currently in Stock:</h4>
+                <div class="space-y-4 mb-8">
+                    <div>
+                        <p class="text-sm font-bold text-[#1B2A13]">NZLA All Seasons / N+ (4kg)</p>
+                        <p class="text-xs text-gray-600">Premium slow-release fertilizers for year-round health or a high-nitrogen growth boost.</p>
+                    </div>
+                    <div>
+                        <p class="text-sm font-bold text-[#1B2A13]">NZLA Starter Fert (4kg)</p>
+                        <p class="text-xs text-gray-600">High-phosphorus formula designed to help new seed establish strong roots quickly.</p>
+                    </div>
+                    <div>
+                        <p class="text-sm font-bold text-[#1B2A13]">NZLA RSR Seed (5kg)</p>
+                        <p class="text-xs text-gray-600">Regenerating Perennial Ryegrass. Extremely hard-wearing and self-repairing seed.</p>
+                    </div>
+                    <div>
+                        <p class="text-sm font-bold text-[#1B2A13]">NZLA Charger (1L)</p>
+                        <p class="text-xs text-gray-600">Iron and Magnesium blend that gives your lawn an instant, deep green "pop" without surge growth.</p>
+                    </div>
+                    <div>
+                        <p class="text-sm font-bold text-[#1B2A13]">NZLA Liquid Boost (1L)</p>
+                        <p class="text-xs text-gray-600">A liquid foliar feed that provides rapid nutrient uptake for a quick health correction.</p>
+                    </div>
+                    <p class="text-[10px] text-gray-400 italic">Don't see what you need? We can order specific NZLA products on request.</p>
+                </div>
+            </div>
+
+            <div id="form-wrapper" class="bg-gray-50 p-6 md:p-8 rounded-2xl border border-gray-200 shadow-sm transition-all duration-500">
+                <form id="enquiry-form" action="https://formspree.io/f/xwvpoenl" method="POST" class="space-y-4">
+                    <div>
+                        <label class="block text-xs font-bold text-gray-500 uppercase mb-1">Name</label>
+                        <input type="text" name="name" required class="w-full border rounded-lg p-3 text-sm outline-none focus:ring-2 focus:ring-[#1B2A13] border-gray-200">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-gray-500 uppercase mb-1">Email Address</label>
+                        <input type="email" name="email" required class="w-full border rounded-lg p-3 text-sm outline-none focus:ring-2 focus:ring-[#1B2A13] border-gray-200">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-gray-500 uppercase mb-1">Phone Number</label>
+                        <input type="tel" name="phone" class="w-full border rounded-lg p-3 text-sm outline-none focus:ring-2 focus:ring-[#1B2A13] border-gray-200">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-gray-500 uppercase mb-1">Your Message</label>
+                        <textarea name="message" rows="4" required placeholder="Tell us what you need..." class="w-full border rounded-lg p-3 text-sm outline-none focus:ring-2 focus:ring-[#1B2A13] border-gray-200 resize-none"></textarea>
+                    </div>
+                    
+                    <input type="text" name="_gotcha" style="display:none">
+                    
+                    <button type="submit" id="submit-btn" class="w-full bg-[#1B2A13] text-[#E5E7BE] font-bold py-3 rounded-lg hover:bg-black transition-all shadow-md">
+                        Send Message
+                    </button>
+                </form>
+
+                <div id="success-msg" class="hidden text-center py-12">
+                    <div class="text-4xl mb-4">✅</div>
+                    <h3 class="text-xl font-bold text-[#1B2A13] mb-2">Message Sent!</h3>
+                    <p class="text-sm text-gray-600">Thanks for reaching out. We'll be in touch shortly to discuss your request or arrange an appointment time.</p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<script>
+    const form = document.getElementById('enquiry-form');
+    const formWrapper = document.getElementById('form-wrapper');
+    const successMsg = document.getElementById('success-msg');
+    const submitBtn = document.getElementById('submit-btn');
+
+    form.onsubmit = async (e) => {
+        e.preventDefault();
+        submitBtn.innerText = "Sending...";
+        submitBtn.disabled = true;
+
+        const formData = new FormData(form);
+        const response = await fetch(form.action, {
+            method: 'POST',
+            body: formData,
+            headers: { 'Accept': 'application/json' }
+        });
+
+        if (response.ok) {
+            form.classList.add('hidden');
+            successMsg.classList.remove('hidden');
+            formWrapper.classList.replace('bg-gray-50', 'bg-green-50');
+            formWrapper.classList.add('border-green-200');
+        } else {
+            alert("Oops! There was a problem submitting your form.");
+            submitBtn.innerText = "Send Message";
+            submitBtn.disabled = false;
+        }
+    };
+</script>
+        
         <div class="grid grid-cols-1 md:grid-cols-3 gap-12 border-t border-white/10 pt-12 text-sm items-start">
             
            <div class="flex flex-col items-center md:items-start gap-4">
@@ -933,6 +1043,7 @@ src="https://www.facebook.com/tr?id=1479906689908468&ev=PageView&noscript=1"
         });
     });
 </script>
+
 
 
 
