@@ -1081,17 +1081,19 @@ src="https://www.facebook.com/tr?id=1479906689908468&ev=PageView&noscript=1"
     function clearCart() { cart = []; appliedDiscount = 0; updateCartUI(); }
     function toggleCart() { document.getElementById('cart-content').classList.toggle('hidden'); }
     function closeBanner() { document.getElementById('promo-banner').style.display = 'none'; }
-    
+
     function applyPromo() {
-        const input = document.getElementById('promo-input').value.toUpperCase().trim();
-        // 1. Check if the "Full Reno" bundle is in the cart
-    const hasSpecial = cart.some(item => item.id === 'reno_special');
+    const input = document.getElementById('promo-input').value.toUpperCase().trim();
+    
+    // Check by NAME instead of ID
+    const hasSpecial = cart.some(item => item.name === 'Full Reno Package');
 
     if (hasSpecial) {
         alert("Autumn Specials are already at our lowest price. Further promo codes cannot be applied to these bundles.");
-        document.getElementById('promo-input').value = ""; // Clear the input
-        return; // EXIT the function immediately - nothing below will run
+        document.getElementById('promo-input').value = "";
+        return; 
     }
+    // ... rest of your code ...
 
     // 2. Only if NO special is found, run your normal codes:
         const msg = document.getElementById('promo-message');
@@ -1122,6 +1124,7 @@ src="https://www.facebook.com/tr?id=1479906689908468&ev=PageView&noscript=1"
         });
     });
 </script>
+
 
 
 
