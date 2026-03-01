@@ -1084,18 +1084,21 @@ src="https://www.facebook.com/tr?id=1479906689908468&ev=PageView&noscript=1"
     
     function applyPromo() {
         const input = document.getElementById('promo-input').value.toUpperCase().trim();
-        // Check if the Autumn Special is in the cart
+        // 1. Check if the "Full Reno" bundle is in the cart
     const hasSpecial = cart.some(item => item.id === 'reno_special');
 
     if (hasSpecial) {
-        alert("Sorry, promo codes cannot be applied to 'Autumn Special' bundles as they are already heavily discounted!");
-        return; // This stops the function from applying any discount
+        alert("Autumn Specials are already at our lowest price. Further promo codes cannot be applied to these bundles.");
+        document.getElementById('promo-input').value = ""; // Clear the input
+        return; // EXIT the function immediately - nothing below will run
     }
+
+    // 2. Only if NO special is found, run your normal codes:
         const msg = document.getElementById('promo-message');
         if (PROMO_CODES[input]) {
             appliedDiscount = PROMO_CODES[input].value;
             discountType = PROMO_CODES[input].type;
-            msg.innerText = "Code applied!";
+            msg.innerText = "Success! Code applied!";
             msg.className = "text-xs mt-2 text-green-600 font-bold block";
         } else {
             appliedDiscount = 0;
@@ -1119,6 +1122,7 @@ src="https://www.facebook.com/tr?id=1479906689908468&ev=PageView&noscript=1"
         });
     });
 </script>
+
 
 
 
