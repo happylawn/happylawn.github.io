@@ -890,9 +890,9 @@ src="https://www.facebook.com/tr?id=1479906689908468&ev=PageView&noscript=1"
                 </div>
 
                 <div class="mt-4 p-3 bg-gray-50 rounded-lg border border-dashed border-gray-300">
-                    <div class="flex gap-2">
-                        <input type="text" id="promo-input" placeholder="Promo Code" class="flex-grow p-2 text-sm border rounded-md uppercase">
-                        <button onclick="applyPromo()" class="bg-gray-800 text-white px-4 py-2 rounded-md text-sm font-bold hover:bg-black transition">Apply</button>
+                    <div class="grid grid-cols-1 sm:grid-cols-4 gap-2">
+    <input type="text" id="promo-input" placeholder="Promo Code" class="sm:col-span-3 border rounded-md p-2 text-sm uppercase">
+    <button onclick="applyPromo()" class="sm:col-span-1 bg-gray-800 text-white px-4 py-2 rounded-md text-sm font-bold hover:bg-black transition">Apply</button>
                     </div>
                     <p id="promo-message" class="text-xs mt-2 hidden"></p>
                     <p class="text-[10px] text-gray-500 mt-2 italic leading-relaxed">
@@ -1124,6 +1124,7 @@ src="https://www.facebook.com/tr?id=1479906689908468&ev=PageView&noscript=1"
         });
     });
 </script>
+
 
 
 
