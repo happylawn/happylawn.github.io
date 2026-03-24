@@ -890,49 +890,35 @@ src="https://www.facebook.com/tr?id=1479906689908468&ev=PageView&noscript=1"
                 </button>
                 <button onclick="clearCart()" class="w-full text-xs text-red-600 hover:underline mb-2 text-center">Clear List</button>
 <script>
-    // 1. GLOBAL VARIABLES & SETTINGS
+   // 1. GLOBAL VARIABLES & SETTINGS
     let cart = [];
     let appliedDiscount = 0;
     let discountType = 'flat';
-    let pendingPoleTool = null;
-
-    // --- FIXED HARNESS MODAL LOGIC ---
     let pendingToolName = null;
     let pendingToolId = null;
 
+    // 2. HARNESS MODAL LOGIC
     function openHarnessModal(toolName, id) {
-        // Clear any old data first
         pendingToolName = toolName;
         pendingToolId = id;
-        
         const modal = document.getElementById('harness-modal');
-        
         if (modal) {
-            // Force the modal to show immediately
             modal.classList.remove('hidden');
             modal.classList.add('flex');
-            
-            // Log for debugging (you can check this in F12 console)
-            console.log("Opening modal for: " + toolName); 
-        } else {
-            // If the modal isn't found, add the tool anyway so the button "works"
-            console.error("Modal ID not found! Adding tool directly.");
-            addCurrentSelection(toolName, id);
         }
     }
 
     function handleHarnessSelection(addHarness) {
         if (!pendingToolName || !pendingToolId) return;
 
-        // 1. Add the main tool
+        // Add main tool
         addCurrentSelection(pendingToolName, pendingToolId);
         
-        // 2. Add harness if requested
+        // Add harness if requested
         if (addHarness) {
             cart.push({ name: 'Pro Shoulder Harness', price: 5.00, duration: 'Add-on' });
             updateCartUI();
         }
-        
         closeHarnessModal();
     }
 
@@ -942,10 +928,10 @@ src="https://www.facebook.com/tr?id=1479906689908468&ev=PageView&noscript=1"
             modal.classList.add('hidden');
             modal.classList.remove('flex');
         }
-        // Reset variables so it's fresh for the next click
         pendingToolName = null;
         pendingToolId = null;
     }
+
     const PROMO_CODES = {
         'FIRSTHIRE': { value: 5, type: 'flat' },
         'COMBO10': { value: 0.10, type: 'percent' },
@@ -973,13 +959,11 @@ src="https://www.facebook.com/tr?id=1479906689908468&ev=PageView&noscript=1"
         barrow: { duration: '4 Hours', price: 15, type: 'hand' }
     };
 
-    // 2. TOGGLE LOGIC (Fixes the 4hr vs Day buttons)
     function setToggle(id, duration, price) {
         const slider = document.getElementById(`slider-${id}`);
         const priceDisplay = document.getElementById(`price-${id}`);
         const btn4hr = document.getElementById(`btn-${id}-4hr`);
         const btnDay = document.getElementById(`btn-${id}-day`);
-        
         if (!slider || !priceDisplay) return;
 
         if (duration === '4hr') {
@@ -997,7 +981,6 @@ src="https://www.facebook.com/tr?id=1479906689908468&ev=PageView&noscript=1"
         priceDisplay.innerText = `$${price}`;
     }
 
-    // 3. CART UI & HOURLY TIME LOGIC
     function updateCartUI() {
         const cartEl = document.getElementById('floating-cart');
         const itemsEl = document.getElementById('cart-items');
@@ -1039,24 +1022,11 @@ src="https://www.facebook.com/tr?id=1479906689908468&ev=PageView&noscript=1"
                 </div>`;
         });
 
-        // Update Time Dropdown
-        const savedTime = timeSelect.value;
-        timeSelect.innerHTML = '';
-        if (hasFullDay) {
-            ['9:00 am', '10:00 am', '11:00 am', '12:00 pm', '1:00 pm', '2:00 pm', '3:00 pm', '4:00 pm', '5:00 pm'].forEach(t => {
-                timeSelect.add(new Option(t, t));
-            });
-        } else {
-            timeSelect.add(new Option('Morning (9am - 1pm)', 'Morning (9am - 1pm)'));
-            timeSelect.add(new Option('Afternoon (2pm - 6pm)', 'Afternoon (2pm - 6pm)'));
-        }
-
         let discountAmount = (discountType === 'flat') ? appliedDiscount : subtotal * appliedDiscount;
         totalEl.innerText = `$${Math.max(0, subtotal - discountAmount).toFixed(2)}`;
         if (bondNotice) bondNotice.classList.toggle('hidden', !needsBond);
     }
 
-    // 4. BOOKING SUBMISSION (Formspree)
     async function requestBooking() {
         const nameEl = document.getElementById('customer-name');
         const phoneEl = document.getElementById('customer-phone');
@@ -1081,9 +1051,7 @@ src="https://www.facebook.com/tr?id=1479906689908468&ev=PageView&noscript=1"
             Time: document.getElementById('pickup-time').value,
             Collection: collectionInput ? collectionInput.value : "Pickup",
             Items: cart.map(i => `${i.name} (${i.duration})`).join(', '),
-            Promo_Code: document.getElementById('promo-input').value || "None", // Captures the code used
-            Discount_Value: appliedDiscount > 0 ? (discountType === 'percent' ? (appliedDiscount * 100) + '%' : '$' + appliedDiscount) : "0",
-            Notes: document.getElementById('booking-notes').value,
+            Promo_Code: document.getElementById('promo-input').value || "None",
             Total: document.getElementById('cart-total').innerText
         };
 
@@ -1093,7 +1061,6 @@ src="https://www.facebook.com/tr?id=1479906689908468&ev=PageView&noscript=1"
                 body: JSON.stringify(formData),
                 headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' }
             });
-
             if (response.ok) {
                 alert("Booking request sent! We will be in touch shortly.");
                 clearCart();
@@ -1108,7 +1075,6 @@ src="https://www.facebook.com/tr?id=1479906689908468&ev=PageView&noscript=1"
         }
     }
 
-    // 5. UTILITY FUNCTIONS
     function addCurrentSelection(productName, id) {
         cart.push({ ...currentSelections[id], name: productName });
         updateCartUI();
@@ -1116,22 +1082,14 @@ src="https://www.facebook.com/tr?id=1479906689908468&ev=PageView&noscript=1"
     function removeItem(index) { cart.splice(index, 1); updateCartUI(); }
     function clearCart() { cart = []; appliedDiscount = 0; updateCartUI(); }
     function toggleCart() { document.getElementById('cart-content').classList.toggle('hidden'); }
-    function closeBanner() { document.getElementById('promo-banner').style.display = 'none'; }
-
-    function applyPromo() {
-    const input = document.getElementById('promo-input').value.toUpperCase().trim();
     
-    // Check by NAME instead of ID
-    const hasSpecial = cart.some(item => item.name === 'Full Reno Package');
-
-    if (hasSpecial) {
-        alert("Autumn Specials are already at our lowest price. Further promo codes cannot be applied to these bundles.");
-        document.getElementById('promo-input').value = "";
-        return; 
-    }
-    // ... rest of your code ...
-
-    // 2. Only if NO special is found, run your normal codes:
+    function applyPromo() {
+        const input = document.getElementById('promo-input').value.toUpperCase().trim();
+        const hasSpecial = cart.some(item => item.name === 'Full Reno Package');
+        if (hasSpecial) {
+            alert("Autumn Specials are already at our lowest price.");
+            return; 
+        }
         const msg = document.getElementById('promo-message');
         if (PROMO_CODES[input]) {
             appliedDiscount = PROMO_CODES[input].value;
@@ -1146,7 +1104,6 @@ src="https://www.facebook.com/tr?id=1479906689908468&ev=PageView&noscript=1"
         updateCartUI();
     }
 
-    // 6. INITIALIZATION
     document.addEventListener('DOMContentLoaded', () => {
         const picker = document.getElementById('pickup-date');
         if (picker) {
@@ -1160,25 +1117,17 @@ src="https://www.facebook.com/tr?id=1479906689908468&ev=PageView&noscript=1"
         });
     });
 </script>
-</script>
 
-   <div id="harness-modal" class="fixed inset-0 z-[100] hidden items-center justify-center bg-black/50 backdrop-blur-sm p-4 text-center">
+<div id="harness-modal" class="fixed inset-0 z-[100] hidden items-center justify-center bg-black/50 backdrop-blur-sm p-4 text-center">
     <div class="bg-white rounded-2xl max-w-sm w-full p-8 shadow-2xl border border-gray-100">
-        
         <div class="mb-4">
             <img src="harness.png" alt="Shoulder Harness" class="w-32 h-32 object-contain mx-auto">
         </div>
-
         <h3 class="text-xl font-bold text-[#1B2A13] mb-2">Comfort is King!</h3>
         <p class="text-gray-600 text-sm mb-6">Would you like to add a Dual Shoulder Harness for better control and less fatigue?</p>
-        
         <div class="flex flex-col gap-3">
-            <button onclick="handleHarnessSelection(true)" class="bg-[#1B2A13] text-[#E5E7BE] font-bold py-3 rounded-xl hover:bg-black transition-all">
-                Yes, add +$5
-            </button>
-            <button onclick="handleHarnessSelection(false)" class="text-gray-400 font-bold py-2 hover:text-gray-600 transition-all text-sm">
-                No thanks
-            </button>
+            <button onclick="handleHarnessSelection(true)" class="bg-[#1B2A13] text-[#E5E7BE] font-bold py-3 rounded-xl hover:bg-black transition-all">Yes, add +$5</button>
+            <button onclick="handleHarnessSelection(false)" class="text-gray-400 font-bold py-2 hover:text-gray-600 transition-all text-sm">No thanks</button>
         </div>
     </div>
 </div>
