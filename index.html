@@ -1106,18 +1106,28 @@ function openHarnessModal(toolName, toolId) {
     if (modal) {
         modal.classList.remove('hidden');
         modal.classList.add('flex');
-    } else {
-        console.error("Harness modal HTML not found at bottom of page!");
     }
 }
 
 function handleHarnessSelection(addHarness) {
-    // 1. Add the main tool to the list using your existing logic
+    // 1. Add the main tool (Pole Saw, Hedge Trimmer, etc.)
     addCurrentSelection(pendingToolName, pendingToolId);
     
-    // 2. If they chose the harness, add the $5 line item
+    // 2. If they clicked 'Yes', add the $5 harness as a separate item
     if (addHarness) {
-        // This assumes you have an 'addToCart' or similar function for extra items
+        addCurrentSelection('Pro Shoulder Harness', 'harness_extra'); 
+    }
+    
+    closeHarnessModal();
+}
+
+function closeHarnessModal() {
+    const modal = document.getElementById('harness-modal');
+    if (modal) {
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+    }
+}
         if (typeof addToCart === "function") {
             addToCart('Pro Shoulder Harness', 5.00);
         } else {
