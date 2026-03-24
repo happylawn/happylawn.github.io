@@ -891,42 +891,26 @@ src="https://www.facebook.com/tr?id=1479906689908468&ev=PageView&noscript=1"
                 <button onclick="clearCart()" class="w-full text-xs text-red-600 hover:underline mb-2 text-center">Clear List</button>
 <script>
   <script>
-  // 1. GLOBAL VARIABLES
-    let cart = [];
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    // 1. DATA
+    window.cart = [];
     let appliedDiscount = 0;
     let discountType = 'flat';
     let pendingToolName = null;
     let pendingToolId = null;
 
-    const PROMO_CODES = {
-        'FIRSTHIRE': { value: 5, type: 'flat' },
-        'COMBO10': { value: 0.10, type: 'percent' },
-        'HAPPY10': { value: 0.10, type: 'percent' },
-        'HAPPYHOME': { value: 0.40, type: 'percent' }
-    };
-
-    let currentSelections = {
+    const currentSelections = {
         reno_special: { duration: 'Full Day', price: 189.90, type: 'power' }, 
         scarifier: { duration: '4 Hours', price: 45, type: 'power' },
         mower: { duration: '4 Hours', price: 35, type: 'power' },
         chainsaw: { duration: '4 Hours', price: 50, type: 'power' },
-        blower: { duration: '4 Hours', price: 25, type: 'power' },
-        trimmer: { duration: '4 Hours', price: 35, type: 'power' },
-        hedge: { duration: '4 Hours', price: 30, type: 'power' },
-        polehedge: { duration: '4 Hours', price: 50, type: 'power' },
-        polesaw: { duration: '4 Hours', price: 50, type: 'power' },
-        polecombo: { duration: '4 Hours', price: 70, type: 'power' },
-        roller: { duration: '4 Hours', price: 15, type: 'hand' },
-        aerator: { duration: '4 Hours', price: 20, type: 'hand' },
-        sprayer: { duration: '4 Hours', price: 15, type: 'hand' },
-        spreader: { duration: '4 Hours', price: 10, type: 'hand' },
-        rake: { duration: '4 Hours', price: 10, type: 'hand' },
-        levelrake: { duration: '4 Hours', price: 10, type: 'hand' },
-        barrow: { duration: '4 Hours', price: 15, type: 'hand' }
+        polesaw: { duration: '4 Hours', price: 50, type: 'power' }
+        // ... add the rest of your tools here
     };
 
-    // 2. MODAL LOGIC
-    function openHarnessModal(toolName, id) {
+    // 2. MODAL FUNCTIONS
+    window.openHarnessModal = function(toolName, id) {
         pendingToolName = toolName;
         pendingToolId = id;
         const modal = document.getElementById('harness-modal');
@@ -934,144 +918,80 @@ src="https://www.facebook.com/tr?id=1479906689908468&ev=PageView&noscript=1"
             modal.classList.remove('hidden');
             modal.classList.add('flex');
         }
-    }
+    };
 
-    function handleHarnessSelection(addHarness) {
-        if (!pendingToolName || !pendingToolId) return;
+    window.handleHarnessSelection = function(addHarness) {
         addCurrentSelection(pendingToolName, pendingToolId);
         if (addHarness) {
             cart.push({ name: 'Pro Shoulder Harness', price: 5.00, duration: 'Add-on', type: 'extra' });
-            updateCartUI();
         }
+        updateCartUI();
         closeHarnessModal();
-    }
+    };
 
-    function closeHarnessModal() {
+    window.closeHarnessModal = function() {
         const modal = document.getElementById('harness-modal');
         if (modal) {
             modal.classList.add('hidden');
             modal.classList.remove('flex');
         }
-        pendingToolName = null;
-        pendingToolId = null;
-    }
+    };
 
-    // 3. CART LOGIC
-    function addCurrentSelection(productName, id) {
+    // 3. CORE LOGIC
+    window.addCurrentSelection = function(productName, id) {
         if (currentSelections[id]) {
             cart.push({ ...currentSelections[id], name: productName });
             updateCartUI();
         }
-    }
+    };
 
-    function updateCartUI() {
+    window.updateCartUI = function() {
         const cartEl = document.getElementById('floating-cart');
+        const countEl = document.getElementById('cart-count');
         const itemsEl = document.getElementById('cart-items');
         const totalEl = document.getElementById('cart-total');
-        const countEl = document.getElementById('cart-count');
-        const bondNotice = document.getElementById('bond-notice');
 
         if (cart.length > 0) {
             cartEl.classList.remove('hidden');
-            countEl.classList.remove('hidden');
             countEl.innerText = cart.length;
         } else {
             cartEl.classList.add('hidden');
-            countEl.classList.add('hidden');
             return;
         }
 
-        itemsEl.innerHTML = '';
-        let subtotal = 0;
-        let needsBond = false;
+        itemsEl.innerHTML = cart.map((item, index) => `
+            <div class="flex justify-between items-center mb-2">
+                <span>${item.name}</span>
+                <button onclick="removeItem(${index})" class="text-red-500">✕</button>
+            </div>
+        `).join('');
+        
+        let subtotal = cart.reduce((sum, item) => sum + item.price, 0);
+        totalEl.innerText = `$${subtotal.toFixed(2)}`;
+    };
 
-        cart.forEach((item, index) => {
-            subtotal += item.price;
-            if (item.type === 'power') needsBond = true;
-            itemsEl.innerHTML += `
-                <div class="flex justify-between items-center text-sm mb-2">
-                    <div class="flex flex-col text-left">
-                        <span class="font-bold text-[#1B2A13]">${item.name}</span>
-                        <span class="text-[10px] uppercase text-gray-500">${item.duration || ''}</span>
-                    </div>
-                    <div class="flex items-center">
-                        <span class="font-bold mr-2">$${item.price}</span>
-                        <button onclick="removeItem(${index})" class="text-red-500 font-bold px-1">✕</button>
-                    </div>
-                </div>`;
-        });
-
-        let discountAmount = (discountType === 'flat') ? appliedDiscount : subtotal * appliedDiscount;
-        totalEl.innerText = `$${Math.max(0, subtotal - discountAmount).toFixed(2)}`;
-        if (bondNotice) bondNotice.classList.toggle('hidden', !needsBond);
-    }
-
-    // 4. UTILITY FUNCTIONS
-    function setToggle(id, duration, price) {
-        const slider = document.getElementById(`slider-${id}`);
-        const priceDisplay = document.getElementById(`price-${id}`);
-        const btn4hr = document.getElementById(`btn-${id}-4hr`);
-        const btnDay = document.getElementById(`btn-${id}-day`);
-        if (!slider || !priceDisplay) return;
-
-        if (duration === '4hr') {
-            slider.style.transform = 'translateX(0%)';
-            btn4hr.classList.replace('text-gray-400', 'text-gray-800');
-            btnDay.classList.replace('text-gray-800', 'text-gray-400');
-            currentSelections[id].duration = '4 Hours';
-        } else {
-            slider.style.transform = 'translateX(100%)';
-            btnDay.classList.replace('text-gray-400', 'text-gray-800');
-            btn4hr.classList.replace('text-gray-800', 'text-gray-400');
-            currentSelections[id].duration = 'Full Day';
-        }
-        currentSelections[id].price = price;
-        priceDisplay.innerText = `$${price}`;
-    }
-
-    function removeItem(index) { cart.splice(index, 1); updateCartUI(); }
-    function clearCart() { cart = []; appliedDiscount = 0; updateCartUI(); }
-    function toggleCart() { document.getElementById('cart-content').classList.toggle('hidden'); }
-
-    function applyPromo() {
-        const input = document.getElementById('promo-input').value.toUpperCase().trim();
-        const msg = document.getElementById('promo-message');
-        if (PROMO_CODES[input]) {
-            appliedDiscount = PROMO_CODES[input].value;
-            discountType = PROMO_CODES[input].type;
-            msg.innerText = "Success!";
-            msg.className = "text-xs mt-2 text-green-600 block";
-        } else {
-            appliedDiscount = 0;
-            msg.innerText = "Invalid.";
-            msg.className = "text-xs mt-2 text-red-500 block";
-        }
+    window.removeItem = function(index) {
+        cart.splice(index, 1);
         updateCartUI();
-    }
+    };
 
-    document.addEventListener('DOMContentLoaded', () => {
-        const picker = document.getElementById('pickup-date');
-        if (picker) {
-            picker.min = new Date().toLocaleDateString('en-CA');
-            picker.value = picker.min;
-        }
-    });
+    window.setToggle = function(id, duration, price) {
+        const priceDisplay = document.getElementById(`price-${id}`);
+        if(priceDisplay) priceDisplay.innerText = `$${price}`;
+        currentSelections[id].duration = (duration === '4hr') ? '4 Hours' : 'Full Day';
+        currentSelections[id].price = price;
+    };
+});
 </script>
 
-<div id="harness-modal" class="fixed inset-0 z-[100] hidden items-center justify-center bg-black/50 backdrop-blur-sm p-4 text-center">
-    <div class="bg-white rounded-2xl max-w-sm w-full p-8 shadow-2xl border border-gray-100">
-        <div class="mb-4">
-            <img src="harness.png" alt="Shoulder Harness" class="w-32 h-32 object-contain mx-auto">
-        </div>
-        <h3 class="text-xl font-bold text-[#1B2A13] mb-2">Comfort is King!</h3>
-        <p class="text-gray-600 text-sm mb-6">Would you like to add a Dual Shoulder Harness for better control and less fatigue?</p>
-        <div class="flex flex-col gap-3">
-            <button onclick="handleHarnessSelection(true)" class="bg-[#1B2A13] text-[#E5E7BE] font-bold py-3 rounded-xl hover:bg-black transition-all">Yes, add +$5</button>
-            <button onclick="handleHarnessSelection(false)" class="text-gray-400 font-bold py-2 hover:text-gray-600 transition-all text-sm">No thanks</button>
-        </div>
+<div id="harness-modal" class="fixed inset-0 z-[100] hidden items-center justify-center bg-black/50 backdrop-blur-sm">
+    <div class="bg-white p-8 rounded-2xl max-w-sm w-full text-center">
+        <h3 class="text-xl font-bold mb-4">Add Harness?</h3>
+        <p class="mb-6">Save your back for just $5 extra.</p>
+        <button onclick="handleHarnessSelection(true)" class="bg-green-700 text-white px-6 py-2 rounded-lg mb-2 w-full">Yes, Add +$5</button>
+        <button onclick="handleHarnessSelection(false)" class="text-gray-500 w-full">No thanks</button>
     </div>
 </div>
-
 
 
 
