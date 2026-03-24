@@ -370,49 +370,25 @@ src="https://www.facebook.com/tr?id=1479906689908468&ev=PageView&noscript=1"
     </div>
 </div>
 
-<div class="bg-white rounded-2xl shadow-sm overflow-hidden border border-gray-100 flex flex-col relative group transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
-    
-    <div class="absolute top-4 left-4 z-20">
-        <span class="bg-[#1B2A13] text-[#E5E7BE] text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-widest">Power</span>
+<div class="product-grid-card bg-white rounded-lg shadow-lg overflow-hidden transform hover:scale-105 transition-transform duration-300 ease-in-out">
+    <div class="h-56 overflow-hidden flex items-center justify-center">
+        <img class="w-full h-full object-contain p-4" src="chainsaw.png" alt="Makita 40V Chainsaw">
     </div>
-
-    <div class="relative h-64 bg-gray-50 flex items-center justify-center p-8">
-        <img src="chainsaw.png" alt="Makita 40V Chainsaw" class="w-full h-full object-contain transition-transform duration-500 group-hover:scale-105">
-    </div>
-
-    <div class="p-6 flex flex-col flex-grow">
-        <div class="flex justify-between items-start mb-2">
-            <div>
-                <h3 class="text-xl font-bold text-[#1B2A13]">Makita 40V Chainsaw</h3>
-                <p class="text-xs text-gray-500 font-bold uppercase tracking-tight">Model UC030G</p>
-            </div>
-            <div class="text-right">
-                <span class="text-2xl font-black text-[#1B2A13]">$50</span>
-                <span class="block text-[10px] text-gray-400 uppercase font-bold text-right">From</span>
-            </div>
+    <div class="p-6 flex-grow flex flex-col">
+        <div class="product-info-wrapper mb-4">
+            <h3 class="text-xl font-semibold text-gray-800 mb-2">Makita 40V Chainsaw</h3>
+            <p class="text-gray-600 text-sm">Equivalent to 50cc petrol power. Professional grade cutting with zero emissions. <br> <br> Hire includes: <br> - 16" or 20" Bar setup <br> - 8ah & 4ah batteries <br> - Fast charger & oil</p>
         </div>
         
-        <p class="text-gray-600 text-sm mb-6 leading-relaxed">
-            Equivalent to 50cc petrol power. Choose your setup:
-•16" Bar: Perfect for most homeowners. Lightweight, agile and ideal for firewood and general cleanup.
+        <div class="relative bg-gray-100 p-1 rounded-xl flex mb-4 w-full border border-gray-200">
+            <div id="slider-chainsaw" class="absolute top-1 left-1 bottom-1 w-[calc(50%-4px)] bg-white rounded-lg shadow-sm transition-all duration-300 ease-in-out"></div>
+            <button onclick="setToggle('chainsaw', '4hr', 50)" class="relative z-10 w-1/2 py-2 text-sm font-bold transition-colors duration-300 text-gray-800" id="btn-chainsaw-4hr">4 Hours</button>
+            <button onclick="setToggle('chainsaw', 'day', 75)" class="relative z-10 w-1/2 py-2 text-sm font-bold transition-colors duration-300 text-gray-400" id="btn-chainsaw-day">Full Day</button>
+        </div>
 
-•20" Bar: For the big jobs. Extra reach for felling trees and bucking large logs in a single pass.
-
-Hire Includes:
-- 8ah Battery (x1)
-- 4ah Battery (x1)
-- Fast Charger
-- Chain & Bar oil
-
-        <div class="mt-auto">
-            <div class="grid grid-cols-2 gap-2">
-                <button onclick="addCurrentSelection('Makita 40V Chainsaw', 'chainsaw_4hr')" class="bg-[#1B2A13] text-[#E5E7BE] font-bold py-3 rounded-xl hover:bg-black transition-all text-xs">
-                    4hrs ($50)
-                </button>
-                <button onclick="addCurrentSelection('Makita 40V Chainsaw', 'chainsaw_day')" class="border-2 border-[#1B2A13] text-[#1B2A13] font-bold py-3 rounded-xl hover:bg-gray-50 transition-all text-xs">
-                    Full Day ($75)
-                </button>
-            </div>
+        <div class="flex justify-between items-center mt-2">
+            <span class="text-2xl font-black text-[#1B2A13]" id="price-chainsaw">$50</span>
+            <button onclick="addCurrentSelection('Makita 40V Chainsaw', 'chainsaw')" class="bg-[#1B2A13] text-[#E5E7BE] font-semibold py-2 px-6 rounded-lg shadow-md hover:bg-[#131D0D] transition">Add to List</button>
         </div>
     </div>
 </div>
