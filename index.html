@@ -1095,55 +1095,40 @@ src="https://www.facebook.com/tr?id=1479906689908468&ev=PageView&noscript=1"
         }
         updateCartUI();
     }
-let pendingToolName = null;
-let pendingToolId = null;
+// --- HARNESS MODAL LOGIC ---
+    let pendingToolName = null;
+    let pendingToolId = null;
 
-function openHarnessModal(toolName, toolId) {
-    pendingToolName = toolName;
-    pendingToolId = toolId;
-    
-    const modal = document.getElementById('harness-modal');
-    if (modal) {
-        modal.classList.remove('hidden');
-        modal.classList.add('flex');
-    }
-}
-
-function handleHarnessSelection(addHarness) {
-    // 1. Add the main tool (Pole Saw, Hedge Trimmer, etc.)
-    addCurrentSelection(pendingToolName, pendingToolId);
-    
-    // 2. If they clicked 'Yes', add the $5 harness as a separate item
-    if (addHarness) {
-        addCurrentSelection('Pro Shoulder Harness', 'harness_extra'); 
-    }
-    
-    closeHarnessModal();
-}
-
-function closeHarnessModal() {
-    const modal = document.getElementById('harness-modal');
-    if (modal) {
-        modal.classList.add('hidden');
-        modal.classList.remove('flex');
-    }
-}
-        if (typeof addToCart === "function") {
-            addToCart('Pro Shoulder Harness', 5.00);
-        } else {
-            // Fallback: manually add it if your function name is different
-            addCurrentSelection('Pro Shoulder Harness', 'harness_extra'); 
+    function openHarnessModal(toolName, id) {
+        pendingToolName = toolName;
+        pendingToolId = id;
+        const modal = document.getElementById('harness-modal');
+        if (modal) {
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
         }
     }
-    
-    closeHarnessModal();
-}
 
-function closeHarnessModal() {
-    const modal = document.getElementById('harness-modal');
-    modal.classList.add('hidden');
-    modal.classList.remove('flex');
-}
+    function handleHarnessSelection(addHarness) {
+        // 1. Add the main tool first
+        addCurrentSelection(pendingToolName, pendingToolId);
+        
+        // 2. If they wanted the harness, add that too
+        if (addHarness) {
+            // We use a manual entry for the harness
+            cart.push({ name: 'Pro Shoulder Harness', price: 5.00, duration: 'Add-on' });
+            updateCartUI();
+        }
+        closeHarnessModal();
+    }
+
+    function closeHarnessModal() {
+        const modal = document.getElementById('harness-modal');
+        if (modal) {
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+    }
     // 6. INITIALIZATION
     document.addEventListener('DOMContentLoaded', () => {
         const picker = document.getElementById('pickup-date');
