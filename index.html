@@ -889,8 +889,7 @@ src="https://www.facebook.com/tr?id=1479906689908468&ev=PageView&noscript=1"
                     Request to Book
                 </button>
                 <button onclick="clearCart()" class="w-full text-xs text-red-600 hover:underline mb-2 text-center">Clear List</button>
-<script>
-  <script>
+
 <script>
 document.addEventListener('DOMContentLoaded', () => {
     // 1. DATA
@@ -906,7 +905,18 @@ document.addEventListener('DOMContentLoaded', () => {
         mower: { duration: '4 Hours', price: 35, type: 'power' },
         chainsaw: { duration: '4 Hours', price: 50, type: 'power' },
         polesaw: { duration: '4 Hours', price: 50, type: 'power' }
-        // ... add the rest of your tools here
+        polehedge: { duration: '4 Hours', price: 50, type: 'power' },
+        polecombo: { duration: '4 Hours', price: 70, type: 'power' },
+        blower: { duration: '4 Hours', price: 25, type: 'power' },
+        trimmer: { duration: '4 Hours', price: 35, type: 'power' },
+        hedge: { duration: '4 Hours', price: 30, type: 'power' },
+        roller: { duration: '4 Hours', price: 15, type: 'hand' },
+        aerator: { duration: '4 Hours', price: 20, type: 'hand' },
+        sprayer: { duration: '4 Hours', price: 15, type: 'hand' },
+        spreader: { duration: '4 Hours', price: 10, type: 'hand' },
+        rake: { duration: '4 Hours', price: 10, type: 'hand' },
+        levelrake: { duration: '4 Hours', price: 10, type: 'hand' },
+        barrow: { duration: '4 Hours', price: 15, type: 'hand' }
     };
 
     // 2. MODAL FUNCTIONS
@@ -958,7 +968,60 @@ document.addEventListener('DOMContentLoaded', () => {
             cartEl.classList.add('hidden');
             return;
         }
+window.requestBooking = function() {
+    const btn = event.target; // The button that was clicked
+    
+    if (window.cart.length === 0) {
+        alert("Your hire list is empty! Please add some tools first.");
+        return;
+    }
 
+    // Collect Data
+    const customerData = {
+        name: document.getElementById('customer-name').value,
+        phone: document.getElementById('customer-phone').value,
+        email: document.getElementById('customer-email').value,
+        pickupDate: document.getElementById('pickup-date').value,
+        pickupTime: document.getElementById('pickup-time').value,
+        collection: document.querySelector('input[name="collection_method"]:checked')?.value || 'Pickup',
+        promo: document.getElementById('promo-input').value || 'None',
+        notes: document.getElementById('booking-notes').value,
+        total: document.getElementById('cart-total').innerText,
+        items: window.cart.map(item => `${item.name} (${item.duration}) - $${item.price}`).join(', ')
+    };
+
+    if (!customerData.name || !customerData.phone || !customerData.email) {
+        alert("Please fill in your name, phone, and email.");
+        return;
+    }
+
+    // Change button text to show it's working
+    const originalText = btn.innerText;
+    btn.innerText = "Sending...";
+    btn.disabled = true;
+
+    // SEND TO FORMSPREE
+    fetch("https://formspree.io/f/xwvpoenl", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(customerData)
+    })
+    .then(response => {
+        if (response.ok) {
+            alert("Success! Request sent to HappyLawn. I'll be in touch shortly.");
+            window.clearCart(); // Optional: Clear the cart after success
+        } else {
+            alert("Oops! Something went wrong. Please try again or text me directly.");
+        }
+    })
+    .catch(error => {
+        alert("Connection error. Please check your internet.");
+    })
+    .finally(() => {
+        btn.innerText = originalText;
+        btn.disabled = false;
+    });
+};
         itemsEl.innerHTML = cart.map((item, index) => `
             <div class="flex justify-between items-center mb-2">
                 <span>${item.name}</span>
@@ -976,12 +1039,25 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     window.setToggle = function(id, duration, price) {
-        const priceDisplay = document.getElementById(`price-${id}`);
-        if(priceDisplay) priceDisplay.innerText = `$${price}`;
-        currentSelections[id].duration = (duration === '4hr') ? '4 Hours' : 'Full Day';
-        currentSelections[id].price = price;
-    };
-});
+    const slider = document.getElementById(`slider-${id}`);
+    const priceDisplay = document.getElementById(`price-${id}`);
+    const btn4hr = document.getElementById(`btn-${id}-4hr`);
+    const btnDay = document.getElementById(`btn-${id}-day`);
+
+    if (duration === '4hr') {
+        if(slider) slider.style.transform = 'translateX(0%)';
+        if(btn4hr) btn4hr.classList.replace('text-gray-400', 'text-gray-800');
+        if(btnDay) btnDay.classList.replace('text-gray-800', 'text-gray-400');
+        currentSelections[id].duration = '4 Hours';
+    } else {
+        if(slider) slider.style.transform = 'translateX(100%)';
+        if(btnDay) btnDay.classList.replace('text-gray-400', 'text-gray-800');
+        if(btn4hr) btn4hr.classList.replace('text-gray-800', 'text-gray-400');
+        currentSelections[id].duration = 'Full Day';
+    }
+    currentSelections[id].price = price;
+    if(priceDisplay) priceDisplay.innerText = `$${price}`;
+};
 </script>
 
 <div id="harness-modal" class="fixed inset-0 z-[100] hidden items-center justify-center bg-black/50 backdrop-blur-sm">
