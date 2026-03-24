@@ -939,7 +939,7 @@ src="https://www.facebook.com/tr?id=1479906689908468&ev=PageView&noscript=1"
 
         window.handleHarnessSelection = function(addHarness) {
             if (pendingToolId && currentSelections[pendingToolId]) {
-                addCurrentSelection(pendingToolName, pendingToolId);
+                window.addCurrentSelection(pendingToolName, pendingToolId);
             }
             if (addHarness) {
                 window.cart.push({ name: 'Pro Shoulder Harness', price: 5.00, duration: 'Add-on', type: 'extra' });
