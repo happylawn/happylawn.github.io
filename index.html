@@ -891,10 +891,10 @@ src="https://www.facebook.com/tr?id=1479906689908468&ev=PageView&noscript=1"
                 <button onclick="clearCart()" class="w-full text-xs text-red-600 hover:underline mb-2 text-center">Clear List</button>
 
 <script>
-    // --- 1. GLOBAL VARIABLES (Must be outside the listener to work) ---
-    window.cart = [];
-    let pendingToolName = null;
-    let pendingToolId = null;
+    // --- 1. GLOBAL VARIABLES ---
+    window.cart = window.cart || [];
+    window.pendingToolName = null;
+    window.pendingToolId = null;
 
     const currentSelections = {
         reno_special: { duration: 'Full Day', price: 189.90, type: 'power' }, 
@@ -918,54 +918,60 @@ src="https://www.facebook.com/tr?id=1479906689908468&ev=PageView&noscript=1"
 
     document.addEventListener('DOMContentLoaded', () => {
         
-   // 1. MODAL LOGIC (DIRECT-DRIVE)
-    window.openHarnessModal = function(toolName, id) {
-        // Force the variables to lock in immediately
-        window.pendingToolName = toolName;
-        window.pendingToolId = id;
-        
-        const modal = document.getElementById('harness-modal');
-        if (modal) {
-            // Remove 'hidden' and force 'flex' display
-            modal.classList.remove('hidden');
-            modal.style.display = 'flex'; 
-            console.log("Modal should be visible now for:", toolName);
-        }
-    };
-
-    window.handleHarnessSelection = function(addHarness) {
-        // Use the window-level variables we just locked in
-        if (window.pendingToolId && currentSelections[window.pendingToolId]) {
-            // Add the tool itself
-            window.cart.push({ 
-                ...currentSelections[window.pendingToolId], 
-                name: window.pendingToolName 
-            });
+        // --- 2. MODAL LOGIC (FORCE REFRESH) ---
+        window.openHarnessModal = function(toolName, id) {
+            window.pendingToolName = toolName;
+            window.pendingToolId = id;
             
-            // Add the harness if they clicked "Yes"
-            if (addHarness) {
-                window.cart.push({ 
-                    name: 'Pro Shoulder Harness', 
-                    price: 5.00, 
-                    duration: 'Add-on', 
-                    type: 'extra' 
-                });
+            const modal = document.getElementById('harness-modal');
+            if (modal) {
+                // Force display even if Tailwind is stuck
+                modal.style.display = 'flex'; 
+                modal.classList.remove('hidden');
+                console.log("Modal engaged for: " + toolName);
             }
-            
-            // CLEANUP: Close, Reset, and Refresh
-            closeHarnessModal();
-            updateCartUI();
-            
-            window.pendingToolName = null;
-            window.pendingToolId = null;
-        }
-    };
+        };
+
+        window.closeHarnessModal = function() {
+            const modal = document.getElementById('harness-modal');
+            if (modal) {
+                modal.style.display = 'none';
+                modal.classList.add('hidden');
+            }
+        };
+
+        window.handleHarnessSelection = function(addHarness) {
+            if (window.pendingToolId && currentSelections[window.pendingToolId]) {
+                // 1. Add the tool immediately
+                window.cart.push({ 
+                    ...currentSelections[window.pendingToolId], 
+                    name: window.pendingToolName 
+                });
+                
+                // 2. Add harness if requested
+                if (addHarness) {
+                    window.cart.push({ 
+                        name: 'Pro Shoulder Harness', 
+                        price: 5.00, 
+                        duration: 'Add-on', 
+                        type: 'extra' 
+                    });
+                }
+                
+                // 3. Close, Refresh, and Clear
+                window.closeHarnessModal();
+                window.updateCartUI();
+                
+                window.pendingToolName = null;
+                window.pendingToolId = null;
+            }
+        };
 
         // --- 3. CART CORE ---
         window.addCurrentSelection = function(productName, id) {
             if (currentSelections[id]) {
                 window.cart.push({ ...currentSelections[id], name: productName });
-                updateCartUI();
+                window.updateCartUI();
             }
         };
 
@@ -1000,12 +1006,12 @@ src="https://www.facebook.com/tr?id=1479906689908468&ev=PageView&noscript=1"
 
         window.removeItem = function(index) {
             window.cart.splice(index, 1);
-            updateCartUI();
+            window.updateCartUI();
         };
 
         window.clearCart = function() {
             window.cart = [];
-            updateCartUI();
+            window.updateCartUI();
         };
 
         window.setToggle = function(id, duration, price) {
@@ -1020,9 +1026,11 @@ src="https://www.facebook.com/tr?id=1479906689908468&ev=PageView&noscript=1"
             }
         };
 
-        // --- 4. BOOKING SUBMISSION ---
-        window.requestBooking = function() {
-            const btn = event.target;
+        // --- 4. BOOKING SUBMISSION (FIXED FOR FIREFOX) ---
+        window.requestBooking = function(e) {
+            // Get the button correctly across all browsers
+            const btn = e?.target || window.event?.target || document.activeElement;
+            
             if (window.cart.length === 0) return alert("Your list is empty!");
 
             const customerData = {
@@ -1061,15 +1069,14 @@ src="https://www.facebook.com/tr?id=1479906689908468&ev=PageView&noscript=1"
     });
 </script>
 
-<div id="harness-modal" class="fixed inset-0 z-[100] hidden items-center justify-center bg-black/50 backdrop-blur-sm">
-    <div class="bg-white p-8 rounded-2xl max-w-sm w-full text-center border-2 border-[#1B2A13]">
-        <h3 class="text-xl font-bold mb-4 text-[#1B2A13]">Add Shoulder Harness?</h3>
-        <p class="mb-6 text-gray-600">This makes using the gear much easier on your back for just $5 extra.</p>
-        <button onclick="handleHarnessSelection(true)" class="bg-[#1B2A13] text-[#E5E7BE] px-6 py-3 rounded-lg mb-3 w-full font-bold hover:bg-black transition">Yes, Add Harness +$5</button>
-        <button onclick="handleHarnessSelection(false)" class="text-gray-500 w-full hover:underline">No thanks, just the tool</button>
+<div id="harness-modal" style="display: none;" class="fixed inset-0 z-[9999] items-center justify-center bg-black/60 backdrop-blur-sm">
+    <div class="bg-white p-8 rounded-2xl max-w-sm w-full text-center shadow-2xl border-2 border-[#1B2A13]">
+        <h3 class="text-2xl font-black mb-2 text-[#1B2A13]">Add Shoulder Harness?</h3>
+        <p class="mb-6 text-gray-700 font-medium">This makes using the gear much easier on your back for just $5 extra.</p>
+        <button onclick="handleHarnessSelection(true)" class="bg-[#1B2A13] text-[#E5E7BE] px-6 py-4 rounded-xl mb-3 w-full font-bold text-lg hover:scale-105 transition-transform">Yes, Add Harness +$5</button>
+        <button onclick="handleHarnessSelection(false)" class="text-gray-500 w-full font-bold hover:underline">No thanks, just the tool</button>
     </div>
 </div>
-
 
 
 
