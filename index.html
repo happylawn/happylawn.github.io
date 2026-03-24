@@ -891,7 +891,7 @@ src="https://www.facebook.com/tr?id=1479906689908468&ev=PageView&noscript=1"
                 <button onclick="clearCart()" class="w-full text-xs text-red-600 hover:underline mb-2 text-center">Clear List</button>
 <script>
   <script>
-   // 1. GLOBAL VARIABLES
+  // 1. GLOBAL VARIABLES
     let cart = [];
     let appliedDiscount = 0;
     let discountType = 'flat';
@@ -925,7 +925,7 @@ src="https://www.facebook.com/tr?id=1479906689908468&ev=PageView&noscript=1"
         barrow: { duration: '4 Hours', price: 15, type: 'hand' }
     };
 
-    // 2. MODAL FUNCTIONS
+    // 2. MODAL LOGIC
     function openHarnessModal(toolName, id) {
         pendingToolName = toolName;
         pendingToolId = id;
@@ -956,7 +956,7 @@ src="https://www.facebook.com/tr?id=1479906689908468&ev=PageView&noscript=1"
         pendingToolId = null;
     }
 
-    // 3. CART FUNCTIONS
+    // 3. CART LOGIC
     function addCurrentSelection(productName, id) {
         if (currentSelections[id]) {
             cart.push({ ...currentSelections[id], name: productName });
@@ -989,9 +989,9 @@ src="https://www.facebook.com/tr?id=1479906689908468&ev=PageView&noscript=1"
             subtotal += item.price;
             if (item.type === 'power') needsBond = true;
             itemsEl.innerHTML += `
-                <div class="flex justify-between items-center text-sm mb-2 text-[#1B2A13]">
+                <div class="flex justify-between items-center text-sm mb-2">
                     <div class="flex flex-col text-left">
-                        <span class="font-bold">${item.name}</span>
+                        <span class="font-bold text-[#1B2A13]">${item.name}</span>
                         <span class="text-[10px] uppercase text-gray-500">${item.duration || ''}</span>
                     </div>
                     <div class="flex items-center">
@@ -1006,6 +1006,7 @@ src="https://www.facebook.com/tr?id=1479906689908468&ev=PageView&noscript=1"
         if (bondNotice) bondNotice.classList.toggle('hidden', !needsBond);
     }
 
+    // 4. UTILITY FUNCTIONS
     function setToggle(id, duration, price) {
         const slider = document.getElementById(`slider-${id}`);
         const priceDisplay = document.getElementById(`price-${id}`);
@@ -1032,7 +1033,22 @@ src="https://www.facebook.com/tr?id=1479906689908468&ev=PageView&noscript=1"
     function clearCart() { cart = []; appliedDiscount = 0; updateCartUI(); }
     function toggleCart() { document.getElementById('cart-content').classList.toggle('hidden'); }
 
-    // INITIALIZATION
+    function applyPromo() {
+        const input = document.getElementById('promo-input').value.toUpperCase().trim();
+        const msg = document.getElementById('promo-message');
+        if (PROMO_CODES[input]) {
+            appliedDiscount = PROMO_CODES[input].value;
+            discountType = PROMO_CODES[input].type;
+            msg.innerText = "Success!";
+            msg.className = "text-xs mt-2 text-green-600 block";
+        } else {
+            appliedDiscount = 0;
+            msg.innerText = "Invalid.";
+            msg.className = "text-xs mt-2 text-red-500 block";
+        }
+        updateCartUI();
+    }
+
     document.addEventListener('DOMContentLoaded', () => {
         const picker = document.getElementById('pickup-date');
         if (picker) {
