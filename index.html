@@ -917,34 +917,46 @@ document.addEventListener('DOMContentLoaded', () => {
         barrow: { duration: '4 Hours', price: 15, type: 'hand' }
     };
 
-    // 2. MODAL FUNCTIONS
+   // 2. MODAL FUNCTIONS (RE-SYNCED)
     window.openHarnessModal = function(toolName, id) {
+        // LOCK THESE IN FIRST
         pendingToolName = toolName;
         pendingToolId = id;
+        
         const modal = document.getElementById('harness-modal');
         if (modal) {
             modal.classList.remove('hidden');
             modal.classList.add('flex');
+        } else {
+            // Fallback: If modal is missing, just add the tool normally
+            addCurrentSelection(toolName, id);
         }
     };
 
     window.handleHarnessSelection = function(addHarness) {
-        addCurrentSelection(pendingToolName, pendingToolId);
-        if (addHarness) {
-            window.cart.push({ name: 'Pro Shoulder Harness', price: 5.00, duration: 'Add-on', type: 'extra' });
+        // 1. Add the actual tool first using the locked-in IDs
+        if (pendingToolName && pendingToolId) {
+            addCurrentSelection(pendingToolName, pendingToolId);
         }
+
+        // 2. Add the harness if they said yes
+        if (addHarness) {
+            window.cart.push({ 
+                name: 'Pro Shoulder Harness', 
+                price: 5.00, 
+                duration: 'Add-on', 
+                type: 'extra' 
+            });
+        }
+
+        // 3. Refresh UI and Reset for the next tool
         updateCartUI();
         closeHarnessModal();
+        
+        // Clear the "pending" slot so it doesn't double-up later
+        pendingToolName = null;
+        pendingToolId = null;
     };
-
-    window.closeHarnessModal = function() {
-        const modal = document.getElementById('harness-modal');
-        if (modal) {
-            modal.classList.add('hidden');
-            modal.classList.remove('flex');
-        }
-    };
-
     // 3. CORE LOGIC
     window.addCurrentSelection = function(productName, id) {
         if (currentSelections[id]) {
