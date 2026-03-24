@@ -1095,25 +1095,37 @@ src="https://www.facebook.com/tr?id=1479906689908468&ev=PageView&noscript=1"
         }
         updateCartUI();
     }
-let pendingTool = null;
-let pendingId = null;
+let pendingToolName = null;
+let pendingToolId = null;
 
 function openHarnessModal(toolName, toolId) {
-    pendingTool = toolName;
-    pendingId = toolId;
+    pendingToolName = toolName;
+    pendingToolId = toolId;
+    
     const modal = document.getElementById('harness-modal');
-    modal.classList.remove('hidden');
-    modal.classList.add('flex');
+    if (modal) {
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+    } else {
+        console.error("Harness modal HTML not found at bottom of page!");
+    }
 }
 
 function handleHarnessSelection(addHarness) {
-    // This adds the base tool
-    addCurrentSelection(pendingTool, pendingId);
+    // 1. Add the main tool to the list using your existing logic
+    addCurrentSelection(pendingToolName, pendingToolId);
     
-    // This adds the $5 harness if they clicked 'Yes'
+    // 2. If they chose the harness, add the $5 line item
     if (addHarness) {
-        addToCart('Pro Shoulder Harness', 5.00); 
+        // This assumes you have an 'addToCart' or similar function for extra items
+        if (typeof addToCart === "function") {
+            addToCart('Pro Shoulder Harness', 5.00);
+        } else {
+            // Fallback: manually add it if your function name is different
+            addCurrentSelection('Pro Shoulder Harness', 'harness_extra'); 
+        }
     }
+    
     closeHarnessModal();
 }
 
