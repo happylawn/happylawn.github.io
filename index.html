@@ -896,6 +896,56 @@ src="https://www.facebook.com/tr?id=1479906689908468&ev=PageView&noscript=1"
     let discountType = 'flat';
     let pendingPoleTool = null;
 
+    // --- FIXED HARNESS MODAL LOGIC ---
+    let pendingToolName = null;
+    let pendingToolId = null;
+
+    function openHarnessModal(toolName, id) {
+        // Clear any old data first
+        pendingToolName = toolName;
+        pendingToolId = id;
+        
+        const modal = document.getElementById('harness-modal');
+        
+        if (modal) {
+            // Force the modal to show immediately
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            
+            // Log for debugging (you can check this in F12 console)
+            console.log("Opening modal for: " + toolName); 
+        } else {
+            // If the modal isn't found, add the tool anyway so the button "works"
+            console.error("Modal ID not found! Adding tool directly.");
+            addCurrentSelection(toolName, id);
+        }
+    }
+
+    function handleHarnessSelection(addHarness) {
+        if (!pendingToolName || !pendingToolId) return;
+
+        // 1. Add the main tool
+        addCurrentSelection(pendingToolName, pendingToolId);
+        
+        // 2. Add harness if requested
+        if (addHarness) {
+            cart.push({ name: 'Pro Shoulder Harness', price: 5.00, duration: 'Add-on' });
+            updateCartUI();
+        }
+        
+        closeHarnessModal();
+    }
+
+    function closeHarnessModal() {
+        const modal = document.getElementById('harness-modal');
+        if (modal) {
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+        // Reset variables so it's fresh for the next click
+        pendingToolName = null;
+        pendingToolId = null;
+    }
     const PROMO_CODES = {
         'FIRSTHIRE': { value: 5, type: 'flat' },
         'COMBO10': { value: 0.10, type: 'percent' },
@@ -1095,56 +1145,7 @@ src="https://www.facebook.com/tr?id=1479906689908468&ev=PageView&noscript=1"
         }
         updateCartUI();
     }
-// --- FIXED HARNESS MODAL LOGIC ---
-    let pendingToolName = null;
-    let pendingToolId = null;
 
-    function openHarnessModal(toolName, id) {
-        // Clear any old data first
-        pendingToolName = toolName;
-        pendingToolId = id;
-        
-        const modal = document.getElementById('harness-modal');
-        
-        if (modal) {
-            // Force the modal to show immediately
-            modal.classList.remove('hidden');
-            modal.classList.add('flex');
-            
-            // Log for debugging (you can check this in F12 console)
-            console.log("Opening modal for: " + toolName); 
-        } else {
-            // If the modal isn't found, add the tool anyway so the button "works"
-            console.error("Modal ID not found! Adding tool directly.");
-            addCurrentSelection(toolName, id);
-        }
-    }
-
-    function handleHarnessSelection(addHarness) {
-        if (!pendingToolName || !pendingToolId) return;
-
-        // 1. Add the main tool
-        addCurrentSelection(pendingToolName, pendingToolId);
-        
-        // 2. Add harness if requested
-        if (addHarness) {
-            cart.push({ name: 'Pro Shoulder Harness', price: 5.00, duration: 'Add-on' });
-            updateCartUI();
-        }
-        
-        closeHarnessModal();
-    }
-
-    function closeHarnessModal() {
-        const modal = document.getElementById('harness-modal');
-        if (modal) {
-            modal.classList.add('hidden');
-            modal.classList.remove('flex');
-        }
-        // Reset variables so it's fresh for the next click
-        pendingToolName = null;
-        pendingToolId = null;
-    }
     // 6. INITIALIZATION
     document.addEventListener('DOMContentLoaded', () => {
         const picker = document.getElementById('pickup-date');
