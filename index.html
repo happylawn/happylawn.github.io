@@ -872,16 +872,16 @@ src="https://www.facebook.com/tr?id=1479906689908468&ev=PageView&noscript=1"
                     <textarea id="booking-notes" rows="2" placeholder="e.g. Please can you deliver? or preferred pickup time..." class="w-full p-2 text-sm border border-gray-300 rounded-lg focus:ring-1 focus:ring-[#1B2A13] outline-none resize-none"></textarea>
                 </div>
 
-                <div class="mt-4 p-3 bg-gray-50 rounded-lg border border-dashed border-gray-300">
-                    <div class="grid grid-cols-1 sm:grid-cols-4 gap-2">
-    <input type="text" id="promo-input" placeholder="Promo Code" class="sm:col-span-3 border rounded-md p-2 text-sm uppercase">
-    <button onclick="applyPromo()" class="sm:col-span-1 bg-gray-800 text-white px-4 py-2 rounded-md text-sm font-bold hover:bg-black transition">Apply</button>
-                    </div>
-                    <p id="promo-message" class="text-xs mt-2 hidden"></p>
-                    <p class="text-[10px] text-gray-500 mt-2 italic leading-relaxed">
-    *Voucher promo codes apply to Equipment Hire only. Discounts exclude all NZLA products, pre-discounted seasonal bundles, delivery fees & refundable bond. One use per person.
-</p>
-                </div>
+               <div class="mt-4 p-3 bg-gray-50 rounded-lg border border-dashed border-gray-300">
+    <div class="grid grid-cols-1 sm:grid-cols-4 gap-2">
+        <input type="text" id="promo-code-input" placeholder="Promo Code" class="sm:col-span-3 border rounded-md p-2 text-sm uppercase">
+        <button onclick="applyPromoCode()" class="sm:col-span-1 bg-gray-800 text-white px-4 py-2 rounded-md text-sm font-bold hover:bg-black transition">Apply</button>
+    </div>
+    <p id="promo-message" class="text-xs mt-2"></p>
+    <p class="text-[10px] text-gray-400 mt-2 italic leading-relaxed">
+        *Voucher promo codes apply to Equipment Hire only. Discounts exclude NZLA products, delivery fees & bond.
+    </p>
+</div>
 
                 <button onclick="requestBooking()" class="w-full bg-[#1B2A13] text-[#E5E7BE] font-bold py-3 rounded-lg hover:bg-black transition mb-2">
                     Request to Book
