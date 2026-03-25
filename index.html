@@ -889,17 +889,16 @@ src="https://www.facebook.com/tr?id=1479906689908468&ev=PageView&noscript=1"
                 <button onclick="clearCart()" class="w-full text-xs text-red-600 hover:underline mb-2 text-center">Clear List</button>
 
 <script>
-    // --- 1. GLOBAL STATE (THE REGISTRY) ---
+    // --- 1. GLOBAL STATE ---
     window.cart = window.cart || [];
-    window.appliedDiscount = 0;         // For fixed $ off
-    window.appliedDiscountPercent = 0;  // For % off
+    window.appliedDiscount = 0;
+    window.appliedDiscountPercent = 0;
     window.pendingToolName = null;
     window.pendingToolId = null;
 
-    // Pricing Database
     const currentSelections = {
-        reno_special: { duration: 'Full Day', price: 189.90, type: 'power' }, 
-        scarifier: { duration: '4 Hours', price: 60, type: 'power' },
+        reno_special: { duration: 'Full Day', price: 189.90, type: 'bundle' }, 
+        scarifier: { duration: '4 Hours', price: 45, type: 'power' },
         mower: { duration: '4 Hours', price: 35, type: 'power' },
         chainsaw: { duration: '4 Hours', price: 50, type: 'power' },
         polesaw: { duration: '4 Hours', price: 50, type: 'power' },
@@ -917,7 +916,7 @@ src="https://www.facebook.com/tr?id=1479906689908468&ev=PageView&noscript=1"
         barrow: { duration: '4 Hours', price: 15, type: 'hand' }
     };
 
-    // --- 2. THE CALCULATION ENGINE (updateCartUI) ---
+    // --- 2. THE CALCULATION ENGINE (With Bundle Exclusion) ---
     window.updateCartUI = function() {
         const cartEl = document.getElementById('floating-cart');
         const countEl = document.getElementById('cart-count');
@@ -937,61 +936,66 @@ src="https://www.facebook.com/tr?id=1479906689908468&ev=PageView&noscript=1"
             return;
         }
 
-        // Render Cart Items
         itemsEl.innerHTML = window.cart.map((item, index) => `
             <div class="flex justify-between items-center mb-2 text-sm border-b pb-1 text-[#1B2A13]">
                 <span>${item.name} <small class="text-gray-400">(${item.duration})</small></span>
                 <div class="flex items-center gap-2">
                     <span class="font-bold">$${item.price.toFixed(2)}</span>
-                    <button onclick="removeItem(${index})" class="text-red-500 hover:scale-120">✕</button>
+                    <button onclick="removeItem(${index})" class="text-red-500 hover:scale-110">✕</button>
                 </div>
             </div>
         `).join('');
         
-        // MATH LOGIC
-        let subtotal = window.cart.reduce((sum, item) => sum + item.price, 0);
-        
-        // Calculate total: (Subtotal - Fixed $) * (1 - %)
-        let afterFixed = subtotal - (window.appliedDiscount || 0);
-        let finalTotal = afterFixed * (1 - (window.appliedDiscountPercent || 0));
+        // --- SMART MATH ---
+        // 1. Calculate Total of items that CAN be discounted
+        let discountableSubtotal = window.cart
+            .filter(item => item.type !== 'bundle')
+            .reduce((sum, item) => sum + item.price, 0);
 
-        // Safety: Don't go below zero
-        totalEl.innerText = `$${Math.max(0, finalTotal).toFixed(2)}`;
+        // 2. Calculate Total of items that CANNOT be discounted (The Reno Bundle)
+        let nonDiscountableSubtotal = window.cart
+            .filter(item => item.type === 'bundle')
+            .reduce((sum, item) => sum + item.price, 0);
+        
+        // 3. Apply discounts ONLY to the discountable part
+        let discountedPart = (discountableSubtotal - (window.appliedDiscount || 0)) * (1 - (window.appliedDiscountPercent || 0));
+        
+        // 4. Final Total = (Discounted items) + (Full Price Bundle)
+        let finalTotal = Math.max(0, discountedPart) + nonDiscountableSubtotal;
+
+        totalEl.innerText = `$${finalTotal.toFixed(2)}`;
     };
 
-    // --- 3. PROMO CODE SENSOR ---
+    // --- 3. PROMO CODE LOGIC ---
     window.applyPromoCode = function() {
         const codeInput = document.getElementById('promo-code-input');
         const promoMsg = document.getElementById('promo-message');
         if (!codeInput || !promoMsg) return;
 
         const code = codeInput.value.trim().toUpperCase();
-
-        // Reset first so codes don't "stack"
         window.appliedDiscount = 0;
         window.appliedDiscountPercent = 0;
 
         if (code === 'FIRSTHIRE') {
             window.appliedDiscount = 5.00;
-            promoMsg.innerText = "Applied: $5.00 off!";
-            promoMsg.className = "text-green-600 text-sm mt-1 font-bold";
+            promoMsg.innerText = "Discount Applied: $5.00 off!";
+            promoMsg.className = "text-green-600 text-xs mt-1 font-bold";
         } else if (code === 'HAPPY10') {
             window.appliedDiscountPercent = 0.10;
-            promoMsg.innerText = "Applied: 10% off!";
-            promoMsg.className = "text-green-600 text-sm mt-1 font-bold";
+            promoMsg.innerText = "Discount Applied: 10% off!";
+            promoMsg.className = "text-green-600 text-xs mt-1 font-bold";
         } else if (code === 'HAPPYHOME') {
             window.appliedDiscountPercent = 0.40;
-            promoMsg.innerText = "Applied: 40% VIP Discount!";
-            promoMsg.className = "text-green-600 text-sm mt-1 font-bold";
+            promoMsg.innerText = "Discount Applied: 40% VIP Discount!";
+            promoMsg.className = "text-green-600 text-xs mt-1 font-bold";
         } else {
             promoMsg.innerText = "Invalid code.";
-            promoMsg.className = "text-red-500 text-sm mt-1";
+            promoMsg.className = "text-red-500 text-xs mt-1";
         }
-
         window.updateCartUI();
     };
 
-    // --- 4. UTILITY FUNCTIONS ---
+    // --- 4. UTILITIES ---
     window.removeItem = function(index) {
         window.cart.splice(index, 1);
         window.updateCartUI();
@@ -1023,23 +1027,16 @@ src="https://www.facebook.com/tr?id=1479906689908468&ev=PageView&noscript=1"
         }
     };
 
-    // --- 5. HARNESS MODAL HANDLERS ---
     window.openHarnessModal = function(toolName, id) {
         window.pendingToolName = toolName;
         window.pendingToolId = id;
         const modal = document.getElementById('harness-modal');
-        if (modal) {
-            modal.style.display = 'flex';
-            modal.classList.remove('hidden');
-        }
+        if (modal) { modal.style.display = 'flex'; modal.classList.remove('hidden'); }
     };
 
     window.closeHarnessModal = function() {
         const modal = document.getElementById('harness-modal');
-        if (modal) {
-            modal.style.display = 'none';
-            modal.classList.add('hidden');
-        }
+        if (modal) { modal.style.display = 'none'; modal.classList.add('hidden'); }
     };
 
     window.handleHarnessSelection = function(addHarness) {
@@ -1050,13 +1047,10 @@ src="https://www.facebook.com/tr?id=1479906689908468&ev=PageView&noscript=1"
             }
             window.closeHarnessModal();
             window.updateCartUI();
-            window.pendingToolName = null;
-            window.pendingToolId = null;
         }
     };
 
-    // --- 6. FORM SUBMISSION ---
-    window.requestBooking = function(e) {
+    window.requestBooking = function() {
         const btn = document.activeElement; 
         if (window.cart.length === 0) return alert("Your list is empty!");
 
@@ -1095,15 +1089,22 @@ src="https://www.facebook.com/tr?id=1479906689908468&ev=PageView&noscript=1"
     };
 </script>
 
+<div class="mt-4 p-3 bg-gray-50 rounded-lg border border-dashed border-gray-300">
+    <div class="grid grid-cols-1 sm:grid-cols-4 gap-2">
+        <input type="text" id="promo-code-input" placeholder="Promo Code" class="sm:col-span-3 border rounded-md p-2 text-sm uppercase">
+        <button onclick="applyPromoCode()" class="sm:col-span-1 bg-gray-800 text-white px-4 py-2 rounded-md text-sm font-bold hover:bg-black transition">Apply</button>
+    </div>
+    <p id="promo-message" class="text-xs mt-2"></p>
+</div>
+
 <div id="harness-modal" style="display: none;" class="fixed inset-0 z-[9999] items-center justify-center bg-black/60 backdrop-blur-sm">
     <div class="bg-white p-8 rounded-2xl max-w-sm w-full text-center shadow-2xl border-2 border-[#1B2A13]">
         <h3 class="text-2xl font-black mb-2 text-[#1B2A13]">Add Shoulder Harness?</h3>
-        <p class="mb-6 text-gray-700 font-medium">This makes using the gear much easier on your back for just $5 extra.</p>
+        <p class="mb-6 text-gray-700 font-medium">Reduces the strain on your back, for just $5 extra.</p>
         <button onclick="handleHarnessSelection(true)" class="bg-[#1B2A13] text-[#E5E7BE] px-6 py-4 rounded-xl mb-3 w-full font-bold text-lg hover:scale-105 transition-transform">Yes, Add Harness +$5</button>
-        <button onclick="handleHarnessSelection(false)" class="text-gray-500 w-full font-bold hover:underline">No thanks, just the tool</button>
+        <button onclick="handleHarnessSelection(false)" class="text-gray-500 w-full font-bold hover:underline">No thanks</button>
     </div>
 </div>
-
 
 
 
