@@ -959,38 +959,47 @@ src="https://www.facebook.com/tr?id=1479906689908468&ev=PageView&noscript=1"
         };
 
         window.updateCartUI = function() {
-            const cartEl = document.getElementById('floating-cart');
-            const countEl = document.getElementById('cart-count');
-            const itemsEl = document.getElementById('cart-items');
-            const totalEl = document.getElementById('cart-total');
+    const cartEl = document.getElementById('floating-cart');
+    const countEl = document.getElementById('cart-count');
+    const itemsEl = document.getElementById('cart-items');
+    const totalEl = document.getElementById('cart-total');
 
-            if (window.cart.length > 0) {
-                cartEl.classList.remove('hidden');
-                countEl.classList.remove('hidden');
-                countEl.innerText = window.cart.length;
-            } else {
-                cartEl.classList.add('hidden');
-                return;
-            }
+    // 1. Check if the cart is empty first
+    if (window.cart.length > 0) {
+        cartEl.classList.remove('hidden');
+        countEl.classList.remove('hidden');
+        countEl.innerText = window.cart.length;
+    } else {
+        cartEl.classList.add('hidden');
+        return; // Exit if empty
+    }
 
-            // Render Items
-            itemsEl.innerHTML = window.cart.map((item, index) => `
-                <div class="flex justify-between items-center mb-2 text-sm border-b pb-1">
-                    <span>${item.name} <small class="text-gray-400">(${item.duration})</small></span>
-                    <div class="flex items-center gap-2">
-                        <span class="font-bold">$${item.price}</span>
-                        <button onclick="removeItem(${index})" class="text-red-500">✕</button>
-                    </div>
-                </div>
-            `).join('');
-            
-            // MATH ENGINE: Calculate Subtotal -> Subtract Fixed -> Multiply Percent
-            let subtotal = window.cart.reduce((sum, item) => sum + item.price, 0);
-            let total = subtotal - (window.appliedDiscount || 0);
-            total = total * (1 - (window.appliedDiscountPercent || 0));
+    // 2. Render the items in the list
+    itemsEl.innerHTML = window.cart.map((item, index) => `
+        <div class="flex justify-between items-center mb-2 text-sm border-b pb-1">
+            <span>${item.name} <small class="text-gray-400">(${item.duration})</small></span>
+            <div class="flex items-center gap-2">
+                <span class="font-bold">$${item.price.toFixed(2)}</span>
+                <button onclick="removeItem(${index})" class="text-red-500">✕</button>
+            </div>
+        </div>
+    `).join('');
+    
+    // 3. THE MATH ENGINE (The Order Matters!)
+    // First: Calculate the raw total of items
+    let subtotal = window.cart.reduce((sum, item) => sum + item.price, 0);
 
-            totalEl.innerText = `$${Math.max(0, total).toFixed(2)}`;
-        };
+    // Second: Calculate the discount value (handles both $5 off and 10% off)
+    let fixedDiscount = window.appliedDiscount || 0;
+    let percentDiscount = subtotal * (window.appliedDiscountPercent || 0);
+    let totalDiscount = fixedDiscount + percentDiscount;
+
+    // Third: Subtract discount from subtotal
+    let finalTotal = subtotal - totalDiscount;
+
+    // 4. Update the display (Safety: Ensure price never goes below $0)
+    totalEl.innerText = `$${Math.max(0, finalTotal).toFixed(2)}`;
+};
 
         window.removeItem = function(index) {
             window.cart.splice(index, 1);
