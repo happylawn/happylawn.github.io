@@ -889,13 +889,14 @@ src="https://www.facebook.com/tr?id=1479906689908468&ev=PageView&noscript=1"
                 <button onclick="clearCart()" class="w-full text-xs text-red-600 hover:underline mb-2 text-center">Clear List</button>
 
 <script>
-    // --- 1. GLOBAL VARIABLES ---
+    // --- 1. GLOBAL STATE (THE REGISTRY) ---
     window.cart = window.cart || [];
-    window.appliedDiscount = 0;        // Fixed dollar discount (e.g. $5)
-    window.appliedDiscountPercent = 0; // Percentage discount (e.g. 0.10)
+    window.appliedDiscount = 0;         // For fixed $ off
+    window.appliedDiscountPercent = 0;  // For % off
     window.pendingToolName = null;
     window.pendingToolId = null;
 
+    // Pricing Database
     const currentSelections = {
         reno_special: { duration: 'Full Day', price: 189.90, type: 'power' }, 
         scarifier: { duration: '4 Hours', price: 60, type: 'power' },
@@ -916,180 +917,182 @@ src="https://www.facebook.com/tr?id=1479906689908468&ev=PageView&noscript=1"
         barrow: { duration: '4 Hours', price: 15, type: 'hand' }
     };
 
-    document.addEventListener('DOMContentLoaded', () => {
-        
-        // --- 2. MODAL LOGIC ---
-        window.openHarnessModal = function(toolName, id) {
-            window.pendingToolName = toolName;
-            window.pendingToolId = id;
-            const modal = document.getElementById('harness-modal');
-            if (modal) {
-                modal.style.display = 'flex'; 
-                modal.classList.remove('hidden');
+    // --- 2. THE CALCULATION ENGINE (updateCartUI) ---
+    window.updateCartUI = function() {
+        const cartEl = document.getElementById('floating-cart');
+        const countEl = document.getElementById('cart-count');
+        const itemsEl = document.getElementById('cart-items');
+        const totalEl = document.getElementById('cart-total');
+
+        if (!cartEl || !totalEl) return;
+
+        if (window.cart.length > 0) {
+            cartEl.classList.remove('hidden');
+            if (countEl) {
+                countEl.classList.remove('hidden');
+                countEl.innerText = window.cart.length;
             }
-        };
+        } else {
+            cartEl.classList.add('hidden');
+            return;
+        }
 
-        window.closeHarnessModal = function() {
-            const modal = document.getElementById('harness-modal');
-            if (modal) {
-                modal.style.display = 'none';
-                modal.classList.add('hidden');
-            }
-        };
-
-        window.handleHarnessSelection = function(addHarness) {
-            if (window.pendingToolId && currentSelections[window.pendingToolId]) {
-                window.cart.push({ ...currentSelections[window.pendingToolId], name: window.pendingToolName });
-                if (addHarness) {
-                    window.cart.push({ name: 'Pro Shoulder Harness', price: 5.00, duration: 'Add-on', type: 'extra' });
-                }
-                window.closeHarnessModal();
-                window.updateCartUI();
-                window.pendingToolName = null;
-                window.pendingToolId = null;
-            }
-        };
-
-        // --- 3. CART CORE ---
-        window.addCurrentSelection = function(productName, id) {
-            if (currentSelections[id]) {
-                window.cart.push({ ...currentSelections[id], name: productName });
-                window.updateCartUI();
-            }
-        };
-
-        window.updateCartUI = function() {
-    const cartEl = document.getElementById('floating-cart');
-    const countEl = document.getElementById('cart-count');
-    const itemsEl = document.getElementById('cart-items');
-    const totalEl = document.getElementById('cart-total');
-
-    // 1. Check if the cart is empty first
-    if (window.cart.length > 0) {
-        cartEl.classList.remove('hidden');
-        countEl.classList.remove('hidden');
-        countEl.innerText = window.cart.length;
-    } else {
-        cartEl.classList.add('hidden');
-        return; // Exit if empty
-    }
-
-    // 2. Render the items in the list
-    itemsEl.innerHTML = window.cart.map((item, index) => `
-        <div class="flex justify-between items-center mb-2 text-sm border-b pb-1">
-            <span>${item.name} <small class="text-gray-400">(${item.duration})</small></span>
-            <div class="flex items-center gap-2">
-                <span class="font-bold">$${item.price.toFixed(2)}</span>
-                <button onclick="removeItem(${index})" class="text-red-500">✕</button>
+        // Render Cart Items
+        itemsEl.innerHTML = window.cart.map((item, index) => `
+            <div class="flex justify-between items-center mb-2 text-sm border-b pb-1 text-[#1B2A13]">
+                <span>${item.name} <small class="text-gray-400">(${item.duration})</small></span>
+                <div class="flex items-center gap-2">
+                    <span class="font-bold">$${item.price.toFixed(2)}</span>
+                    <button onclick="removeItem(${index})" class="text-red-500 hover:scale-120">✕</button>
+                </div>
             </div>
-        </div>
-    `).join('');
-    
-    // 3. THE MATH ENGINE (The Order Matters!)
-    // First: Calculate the raw total of items
-    let subtotal = window.cart.reduce((sum, item) => sum + item.price, 0);
+        `).join('');
+        
+        // MATH LOGIC
+        let subtotal = window.cart.reduce((sum, item) => sum + item.price, 0);
+        
+        // Calculate total: (Subtotal - Fixed $) * (1 - %)
+        let afterFixed = subtotal - (window.appliedDiscount || 0);
+        let finalTotal = afterFixed * (1 - (window.appliedDiscountPercent || 0));
 
-    // Second: Calculate the discount value (handles both $5 off and 10% off)
-    let fixedDiscount = window.appliedDiscount || 0;
-    let percentDiscount = subtotal * (window.appliedDiscountPercent || 0);
-    let totalDiscount = fixedDiscount + percentDiscount;
+        // Safety: Don't go below zero
+        totalEl.innerText = `$${Math.max(0, finalTotal).toFixed(2)}`;
+    };
 
-    // Third: Subtract discount from subtotal
-    let finalTotal = subtotal - totalDiscount;
+    // --- 3. PROMO CODE SENSOR ---
+    window.applyPromoCode = function() {
+        const codeInput = document.getElementById('promo-code-input');
+        const promoMsg = document.getElementById('promo-message');
+        if (!codeInput || !promoMsg) return;
 
-    // 4. Update the display (Safety: Ensure price never goes below $0)
-    totalEl.innerText = `$${Math.max(0, finalTotal).toFixed(2)}`;
-};
+        const code = codeInput.value.trim().toUpperCase();
 
-        window.removeItem = function(index) {
-            window.cart.splice(index, 1);
+        // Reset first so codes don't "stack"
+        window.appliedDiscount = 0;
+        window.appliedDiscountPercent = 0;
+
+        if (code === 'FIRSTHIRE') {
+            window.appliedDiscount = 5.00;
+            promoMsg.innerText = "Applied: $5.00 off!";
+            promoMsg.className = "text-green-600 text-sm mt-1 font-bold";
+        } else if (code === 'HAPPY10') {
+            window.appliedDiscountPercent = 0.10;
+            promoMsg.innerText = "Applied: 10% off!";
+            promoMsg.className = "text-green-600 text-sm mt-1 font-bold";
+        } else if (code === 'HAPPYHOME') {
+            window.appliedDiscountPercent = 0.40;
+            promoMsg.innerText = "Applied: 40% VIP Discount!";
+            promoMsg.className = "text-green-600 text-sm mt-1 font-bold";
+        } else {
+            promoMsg.innerText = "Invalid code.";
+            promoMsg.className = "text-red-500 text-sm mt-1";
+        }
+
+        window.updateCartUI();
+    };
+
+    // --- 4. UTILITY FUNCTIONS ---
+    window.removeItem = function(index) {
+        window.cart.splice(index, 1);
+        window.updateCartUI();
+    };
+
+    window.clearCart = function() {
+        window.cart = [];
+        window.appliedDiscount = 0;
+        window.appliedDiscountPercent = 0;
+        window.updateCartUI();
+    };
+
+    window.setToggle = function(id, duration, price) {
+        const slider = document.getElementById(`slider-${id}`);
+        const priceDisplay = document.getElementById(`price-${id}`);
+        if(slider) slider.style.transform = (duration === '4hr') ? 'translateX(0%)' : 'translateX(100%)';
+        if(priceDisplay) priceDisplay.innerText = `$${price}`;
+        
+        if(currentSelections[id]) {
+            currentSelections[id].duration = (duration === '4hr') ? '4 Hours' : 'Full Day';
+            currentSelections[id].price = price;
+        }
+    };
+
+    window.addCurrentSelection = function(productName, id) {
+        if (currentSelections[id]) {
+            window.cart.push({ ...currentSelections[id], name: productName });
             window.updateCartUI();
-        };
+        }
+    };
 
-        window.clearCart = function() {
-            window.cart = [];
-            window.updateCartUI();
-        };
+    // --- 5. HARNESS MODAL HANDLERS ---
+    window.openHarnessModal = function(toolName, id) {
+        window.pendingToolName = toolName;
+        window.pendingToolId = id;
+        const modal = document.getElementById('harness-modal');
+        if (modal) {
+            modal.style.display = 'flex';
+            modal.classList.remove('hidden');
+        }
+    };
 
-        window.setToggle = function(id, duration, price) {
-            const slider = document.getElementById(`slider-${id}`);
-            const priceDisplay = document.getElementById(`price-${id}`);
-            if(slider) slider.style.transform = (duration === '4hr') ? 'translateX(0%)' : 'translateX(100%)';
-            if(priceDisplay) priceDisplay.innerText = `$${price}`;
-            
-            if(currentSelections[id]) {
-                currentSelections[id].duration = (duration === '4hr') ? '4 Hours' : 'Full Day';
-                currentSelections[id].price = price;
+    window.closeHarnessModal = function() {
+        const modal = document.getElementById('harness-modal');
+        if (modal) {
+            modal.style.display = 'none';
+            modal.classList.add('hidden');
+        }
+    };
+
+    window.handleHarnessSelection = function(addHarness) {
+        if (window.pendingToolId && currentSelections[window.pendingToolId]) {
+            window.cart.push({ ...currentSelections[window.pendingToolId], name: window.pendingToolName });
+            if (addHarness) {
+                window.cart.push({ name: 'Pro Shoulder Harness', price: 5.00, duration: 'Add-on', type: 'extra' });
             }
-        };
-
-        // --- 4. PROMO LOGIC ---
-        window.applyPromoCode = function() {
-            const codeInput = document.getElementById('promo-code-input');
-            const promoMsg = document.getElementById('promo-message');
-            const code = codeInput.value.trim().toUpperCase();
-
-            // Reset discounts before checking
-            window.appliedDiscount = 0;
-            window.appliedDiscountPercent = 0;
-
-            if (code === 'FIRSTHIRE') {
-                window.appliedDiscount = 5.00;
-                promoMsg.innerText = "Discount Applied: $5.00 off!";
-                promoMsg.className = "text-green-600 text-sm mt-1 font-bold";
-            } else if (code === 'HAPPY10') {
-                window.appliedDiscountPercent = 0.10;
-                promoMsg.innerText = "Discount Applied: 10% off!";
-                promoMsg.className = "text-green-600 text-sm mt-1 font-bold";
-            } else if (code === 'HAPPYHOME') {
-                window.appliedDiscountPercent = 0.40;
-                promoMsg.innerText = "Discount Applied: 40% off!";
-                promoMsg.className = "text-green-600 text-sm mt-1 font-bold";
-            } else {
-                promoMsg.innerText = "Invalid code.";
-                promoMsg.className = "text-red-500 text-sm mt-1";
-            }
+            window.closeHarnessModal();
             window.updateCartUI();
+            window.pendingToolName = null;
+            window.pendingToolId = null;
+        }
+    };
+
+    // --- 6. FORM SUBMISSION ---
+    window.requestBooking = function(e) {
+        const btn = document.activeElement; 
+        if (window.cart.length === 0) return alert("Your list is empty!");
+
+        const customerData = {
+            name: document.getElementById('customer-name').value,
+            phone: document.getElementById('customer-phone').value,
+            email: document.getElementById('customer-email').value,
+            date: document.getElementById('pickup-date').value,
+            time: document.getElementById('pickup-time').value,
+            method: document.querySelector('input[name="collection_method"]:checked')?.value,
+            items: window.cart.map(i => `${i.name} (${i.duration})`).join(', '),
+            total: document.getElementById('cart-total').innerText,
+            notes: document.getElementById('booking-notes').value
         };
 
-        window.requestBooking = function(e) {
-            const btn = e?.target || window.event?.target || document.activeElement;
-            if (window.cart.length === 0) return alert("Your list is empty!");
+        if (!customerData.name || !customerData.phone) return alert("Name and Phone are required!");
 
-            const customerData = {
-                name: document.getElementById('customer-name').value,
-                phone: document.getElementById('customer-phone').value,
-                email: document.getElementById('customer-email').value,
-                date: document.getElementById('pickup-date').value,
-                time: document.getElementById('pickup-time').value,
-                method: document.querySelector('input[name="collection_method"]:checked')?.value,
-                items: window.cart.map(i => `${i.name} (${i.duration})`).join(', '),
-                total: document.getElementById('cart-total').innerText,
-                notes: document.getElementById('booking-notes').value
-            };
+        btn.innerText = "Sending...";
+        btn.disabled = true;
 
-            if (!customerData.name || !customerData.phone) return alert("Name and Phone are required!");
-
-            btn.innerText = "Sending...";
-            btn.disabled = true;
-
-            fetch("https://formspree.io/f/xwvpoenl", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(customerData)
-            })
-            .then(res => {
-                if (res.ok) {
-                    alert("Success! Request sent to HappyLawn.");
-                    window.clearCart();
-                }
-            })
-            .finally(() => {
-                btn.innerText = "Request to Book";
-                btn.disabled = false;
-            });
-        };
-    });
+        fetch("https://formspree.io/f/xwvpoenl", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(customerData)
+        })
+        .then(res => {
+            if (res.ok) {
+                alert("Success! Request sent to HappyLawn.");
+                window.clearCart();
+            }
+        })
+        .finally(() => {
+            btn.innerText = "Request to Book";
+            btn.disabled = false;
+        });
+    };
 </script>
 
 <div id="harness-modal" style="display: none;" class="fixed inset-0 z-[9999] items-center justify-center bg-black/60 backdrop-blur-sm">
