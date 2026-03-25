@@ -891,7 +891,8 @@ src="https://www.facebook.com/tr?id=1479906689908468&ev=PageView&noscript=1"
 <script>
     // --- 1. GLOBAL VARIABLES ---
     window.cart = window.cart || [];
-    window.appliedDiscount = 0;
+    window.appliedDiscount = 0;        // Fixed dollar discount (e.g. $5)
+    window.appliedDiscountPercent = 0; // Percentage discount (e.g. 0.10)
     window.pendingToolName = null;
     window.pendingToolId = null;
 
@@ -917,17 +918,14 @@ src="https://www.facebook.com/tr?id=1479906689908468&ev=PageView&noscript=1"
 
     document.addEventListener('DOMContentLoaded', () => {
         
-        // --- 2. MODAL LOGIC (FORCE REFRESH) ---
+        // --- 2. MODAL LOGIC ---
         window.openHarnessModal = function(toolName, id) {
             window.pendingToolName = toolName;
             window.pendingToolId = id;
-            
             const modal = document.getElementById('harness-modal');
             if (modal) {
-                // Force display even if Tailwind is stuck
                 modal.style.display = 'flex'; 
                 modal.classList.remove('hidden');
-                console.log("Modal engaged for: " + toolName);
             }
         };
 
@@ -941,26 +939,12 @@ src="https://www.facebook.com/tr?id=1479906689908468&ev=PageView&noscript=1"
 
         window.handleHarnessSelection = function(addHarness) {
             if (window.pendingToolId && currentSelections[window.pendingToolId]) {
-                // 1. Add the tool immediately
-                window.cart.push({ 
-                    ...currentSelections[window.pendingToolId], 
-                    name: window.pendingToolName 
-                });
-                
-                // 2. Add harness if requested
+                window.cart.push({ ...currentSelections[window.pendingToolId], name: window.pendingToolName });
                 if (addHarness) {
-                    window.cart.push({ 
-                        name: 'Pro Shoulder Harness', 
-                        price: 5.00, 
-                        duration: 'Add-on', 
-                        type: 'extra' 
-                    });
+                    window.cart.push({ name: 'Pro Shoulder Harness', price: 5.00, duration: 'Add-on', type: 'extra' });
                 }
-                
-                // 3. Close, Refresh, and Clear
                 window.closeHarnessModal();
                 window.updateCartUI();
-                
                 window.pendingToolName = null;
                 window.pendingToolId = null;
             }
@@ -979,11 +963,6 @@ src="https://www.facebook.com/tr?id=1479906689908468&ev=PageView&noscript=1"
             const countEl = document.getElementById('cart-count');
             const itemsEl = document.getElementById('cart-items');
             const totalEl = document.getElementById('cart-total');
-            let discountAmount = subtotal * (window.appliedDiscountPercent || 0); 
-    let total = subtotal - discountAmount;
-
-    // Then update the total display:
-    totalEl.innerText = `$${total.toFixed(2)}`;
 
             if (window.cart.length > 0) {
                 cartEl.classList.remove('hidden');
@@ -994,6 +973,7 @@ src="https://www.facebook.com/tr?id=1479906689908468&ev=PageView&noscript=1"
                 return;
             }
 
+            // Render Items
             itemsEl.innerHTML = window.cart.map((item, index) => `
                 <div class="flex justify-between items-center mb-2 text-sm border-b pb-1">
                     <span>${item.name} <small class="text-gray-400">(${item.duration})</small></span>
@@ -1004,8 +984,12 @@ src="https://www.facebook.com/tr?id=1479906689908468&ev=PageView&noscript=1"
                 </div>
             `).join('');
             
-            let total = window.cart.reduce((sum, item) => sum + item.price, 0);
-            totalEl.innerText = `$${total.toFixed(2)}`;
+            // MATH ENGINE: Calculate Subtotal -> Subtract Fixed -> Multiply Percent
+            let subtotal = window.cart.reduce((sum, item) => sum + item.price, 0);
+            let total = subtotal - (window.appliedDiscount || 0);
+            total = total * (1 - (window.appliedDiscountPercent || 0));
+
+            totalEl.innerText = `$${Math.max(0, total).toFixed(2)}`;
         };
 
         window.removeItem = function(index) {
@@ -1030,39 +1014,37 @@ src="https://www.facebook.com/tr?id=1479906689908468&ev=PageView&noscript=1"
             }
         };
 
+        // --- 4. PROMO LOGIC ---
         window.applyPromoCode = function() {
-    const codeInput = document.getElementById('promo-code-input');
-    const promoMsg = document.getElementById('promo-message');
-    const code = codeInput.value.trim().toUpperCase();
+            const codeInput = document.getElementById('promo-code-input');
+            const promoMsg = document.getElementById('promo-message');
+            const code = codeInput.value.trim().toUpperCase();
 
-    // Example: "FIRSTHIRE" for $5 off
-    if (code === 'FIRSTHIRE') {
-        window.appliedDiscount = 5.00;
-        promoMsg.innerText = "Discount Applied: $5.00 off!";
-        promoMsg.className = "text-green-600 text-sm mt-1 font-bold";
-    } else if (code === 'HAPPY10') {
-        // Example for your MTB club partnership
-        window.appliedDiscountPercent = 0.10;
-        promoMsg.innerText = "Discount Applied: 10% off!";
-        promoMsg.className = "text-green-600 text-sm mt-1 font-bold";
-    } else if (code === 'HAPPYHOME') {
-        // Example for your RealEstate partnership
-        window.appliedDiscountPercent = 0.40;
-        promoMsg.innerText = "Discount Applied: 40% off!";
-        promoMsg.className = "text-green-600 text-sm mt-1 font-bold";
-    } else {
-        window.appliedDiscount = 0;
-        promoMsg.innerText = "Invalid code.";
-        promoMsg.className = "text-red-500 text-sm mt-1";
-    }
+            // Reset discounts before checking
+            window.appliedDiscount = 0;
+            window.appliedDiscountPercent = 0;
 
-    window.updateCartUI(); // Force the total to recalculate with the discount
-};
-        // --- 4. BOOKING SUBMISSION (FIXED FOR FIREFOX) ---
+            if (code === 'FIRSTHIRE') {
+                window.appliedDiscount = 5.00;
+                promoMsg.innerText = "Discount Applied: $5.00 off!";
+                promoMsg.className = "text-green-600 text-sm mt-1 font-bold";
+            } else if (code === 'HAPPY10') {
+                window.appliedDiscountPercent = 0.10;
+                promoMsg.innerText = "Discount Applied: 10% off!";
+                promoMsg.className = "text-green-600 text-sm mt-1 font-bold";
+            } else if (code === 'HAPPYHOME') {
+                window.appliedDiscountPercent = 0.40;
+                promoMsg.innerText = "Discount Applied: 40% off!";
+                promoMsg.className = "text-green-600 text-sm mt-1 font-bold";
+            } else {
+                promoMsg.innerText = "Invalid code.";
+                promoMsg.className = "text-red-500 text-sm mt-1";
+            }
+            window.updateCartUI();
+        };
+
         window.requestBooking = function(e) {
-            // Get the button correctly across all browsers
             const btn = e?.target || window.event?.target || document.activeElement;
-            
             if (window.cart.length === 0) return alert("Your list is empty!");
 
             const customerData = {
