@@ -123,7 +123,22 @@ src="https://www.facebook.com/tr?id=1479906689908468&ev=PageView&noscript=1"
         <button onclick="handleHarnessSelection(false)" class="text-gray-500 w-full font-bold hover:underline">No thanks</button>
     </div>
 </div>
-
+<div id="safety-modal" style="display: none;" class="fixed inset-0 z-[9999] items-center justify-center bg-black/60 backdrop-blur-sm px-4">
+    <div class="bg-white p-8 rounded-2xl max-w-sm w-full text-center shadow-2xl border-2 border-[#1B2A13]">
+        <img src="safetykit.png" alt="Safety Kit" class="w-32 h-32 mx-auto mb-4 object-contain">
+        
+        <h3 class="text-2xl font-black mb-2 text-[#1B2A13]">Add Safety Kit?</h3>
+        
+        
+        <button onclick="handleSafetySelection(true)" class="bg-[#1B2A13] text-[#E5E7BE] px-6 py-4 rounded-xl mb-3 w-full font-bold text-lg hover:scale-105 transition-transform">
+            Yes +$35
+        </button>
+        <button onclick="handleSafetySelection(false)" class="text-gray-500 w-full font-bold hover:underline">
+            No thanks
+        </button>
+    </div>
+</div>
+    
 <div id="success-notification" class="fixed top-[-100px] left-1/2 -translate-x-1/2 z-[100] w-[90%] md:w-[400px] bg-[#1B2A13] text-[#E5E7BE] p-4 rounded-xl shadow-2xl transition-all duration-500 ease-in-out flex items-center gap-3">
     <div class="bg-green-500 rounded-full p-1">
         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -1038,28 +1053,67 @@ src="https://www.facebook.com/tr?id=1479906689908468&ev=PageView&noscript=1"
         }
     };
 
-    window.openHarnessModal = function(toolName, id) {
-        window.pendingToolName = toolName;
-        window.pendingToolId = id;
-        const modal = document.getElementById('harness-modal');
-        if (modal) { modal.style.display = 'flex'; modal.classList.remove('hidden'); }
-    };
+    // --- 1. HARNESS MODAL FUNCTIONS ---
+window.openHarnessModal = function(toolName, id) {
+    window.pendingToolName = toolName;
+    window.pendingToolId = id;
+    const modal = document.getElementById('harness-modal');
+    if (modal) { modal.style.display = 'flex'; modal.classList.remove('hidden'); }
+};
 
-    window.closeHarnessModal = function() {
-        const modal = document.getElementById('harness-modal');
-        if (modal) { modal.style.display = 'none'; modal.classList.add('hidden'); }
-    };
+window.closeHarnessModal = function() {
+    const modal = document.getElementById('harness-modal');
+    if (modal) { modal.style.display = 'none'; modal.classList.add('hidden'); }
+};
 
-    window.handleHarnessSelection = function(addHarness) {
-        if (window.pendingToolId && currentSelections[window.pendingToolId]) {
-            window.cart.push({ ...currentSelections[window.pendingToolId], name: window.pendingToolName });
-            if (addHarness) {
-                window.cart.push({ name: 'Pro Shoulder Harness', price: 5.00, duration: 'Add-on', type: 'extra' });
-            }
-            window.closeHarnessModal();
-            window.updateCartUI();
+window.handleHarnessSelection = function(addHarness) {
+    if (window.pendingToolId && currentSelections[window.pendingToolId]) {
+        window.cart.push({ ...currentSelections[window.pendingToolId], name: window.pendingToolName });
+        if (addHarness) {
+            window.cart.push({ name: 'Pro Shoulder Harness', price: 5.00, duration: 'Add-on', type: 'extra' });
         }
-    };
+        window.closeHarnessModal();
+        window.updateCartUI();
+    }
+};
+
+// --- 2. NEW SAFETY MODAL FUNCTIONS ---
+window.openSafetyModal = function(toolName, id) {
+    window.pendingSafetyName = toolName;
+    window.pendingSafetyId = id;
+    const modal = document.getElementById('safety-modal');
+    if (modal) { modal.style.display = 'flex'; modal.classList.remove('hidden'); }
+};
+
+window.closeSafetyModal = function() {
+    const modal = document.getElementById('safety-modal');
+    if (modal) { modal.style.display = 'none'; modal.classList.add('hidden'); }
+};
+
+window.handleSafetySelection = function(addKit) {
+    if (window.pendingSafetyId && currentSelections[window.pendingSafetyId]) {
+        window.cart.push({ ...currentSelections[window.pendingSafetyId], name: window.pendingSafetyName });
+        if (addKit) {
+            window.cart.push({ name: 'Chainsaw Safety Kit', price: 35.00, duration: 'Add-on', type: 'extra' });
+        }
+        window.closeSafetyModal();
+        window.updateCartUI();
+    }
+};
+
+// --- 3. THE ROUTER (Replaces your old addCurrentSelection) ---
+window.addCurrentSelection = function(productName, id) {
+    if (!currentSelections[id]) return;
+
+    if (id === 'chainsaw') {
+        window.openSafetyModal(productName, id);
+    } else if (id === 'polesaw' || id === 'polehedge' || id === 'polecombo') {
+        window.openHarnessModal(productName, id);
+    } else {
+        window.cart.push({ ...currentSelections[id], name: productName });
+        window.updateCartUI();
+    }
+};
 
     window.requestBooking = function() {
         const btn = document.activeElement; 
