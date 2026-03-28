@@ -527,6 +527,37 @@ src="https://www.facebook.com/tr?id=1479906689908468&ev=PageView&noscript=1"
                 </div>
             </div>
 
+            <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden flex flex-col hover:shadow-md transition-shadow">
+    <div class="relative h-48 bg-gray-50 p-4">
+        <img src="ryobi.png" alt="Ryobi 18V Spreader" class="w-full h-full object-contain">
+        <div class="absolute top-2 right-2 bg-[#1B2A13] text-[#E5E7BE] text-[10px] font-bold px-2 py-1 rounded-full uppercase">
+            Battery Powered
+        </div>
+    </div>
+
+    <div class="p-4 flex-grow flex flex-col">
+        <h3 class="text-lg font-bold text-[#1B2A13] leading-tight mb-1">Ryobi 18V Spreader</h3>
+        <p class="text-xs text-gray-500 mb-4">Perfect for effortless seed and fertilizer distribution.</p>
+
+        <div class="mt-auto">
+            <div class="bg-gray-100 p-1 rounded-xl flex mb-3 relative">
+                <div id="slider-ryobi_spreader" class="absolute top-1 left-1 bottom-1 w-[calc(50%-4px)] bg-white rounded-lg shadow-sm transition-transform duration-300"></div>
+                
+                <button onclick="setToggle('ryobi_spreader', '4hr', 10)" class="flex-1 py-2 text-xs font-bold z-10 text-[#1B2A13]">4 Hours</button>
+                <button onclick="setToggle('ryobi_spreader', 'day', 15)" class="flex-1 py-2 text-xs font-bold z-10 text-[#1B2A13]">Full Day</button>
+            </div>
+
+            <div class="flex items-center justify-between gap-2">
+                <div class="text-[#1B2A13]">
+                    <span id="price-ryobi_spreader" class="text-2xl font-black">$10</span>
+                </div>
+                <button onclick="addCurrentSelection('Ryobi 18V Spreader', 'ryobi_spreader')" class="flex-1 bg-[#1B2A13] text-[#E5E7BE] font-bold py-3 rounded-xl hover:scale-105 transition-transform text-sm">
+                    Add to List
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
             <div class="product-grid-card bg-white rounded-lg shadow-lg overflow-hidden transform hover:scale-105 transition-transform duration-300 ease-in-out">
                 <div class="h-56 overflow-hidden flex items-center justify-center">
                     <img class="w-full h-full object-contain p-4" src="spreader.png" alt="Chest Mount Spreader">
@@ -937,6 +968,7 @@ src="https://www.facebook.com/tr?id=1479906689908468&ev=PageView&noscript=1"
         roller: { duration: '4 Hours', price: 15, type: 'hand' },
         aerator: { duration: '4 Hours', price: 20, type: 'hand' },
         sprayer: { duration: '4 Hours', price: 15, type: 'hand' },
+        ryobi_spreader: { duration: '4 Hours', price: 10, type: 'hand' },
         spreader: { duration: '4 Hours', price: 10, type: 'hand' },
         rake: { duration: '4 Hours', price: 10, type: 'hand' },
         levelrake: { duration: '4 Hours', price: 10, type: 'hand' },
