@@ -1195,9 +1195,8 @@ window.closeHarnessModal = function() {
 };
 
 window.closeCart = function() {
-    const cartModal = document.getElementById('cart-modal');
+    const cartModal = document.getElementById('floating-cart'); // Changed from 'cart-modal'
     if (cartModal) {
-        // This handles both the 'hidden' class and the display style 
         cartModal.classList.add('hidden');
         cartModal.style.display = 'none';
     }
