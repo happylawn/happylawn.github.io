@@ -940,8 +940,8 @@ src="https://www.facebook.com/tr?id=1479906689908468&ev=PageView&noscript=1"
         🛒 Your Hire List 
         <span id="cart-count" class="ml-2 bg-red-600 text-white text-[10px] font-bold px-2 py-0.5 rounded-full hidden">0</span>
     </span>
-    <button id="cart-toggle-icon" class="w-8 h-8 flex items-center justify-center bg-[#1B2A13] text-white rounded-full transition-transform duration-300">
-        <span id="toggle-symbol" class="text-lg">−</span>
+    <button onclick="event.stopPropagation(); closeCart()" id="cart-toggle-icon" class="w-8 h-8 flex items-center justify-center bg-[#1B2A13] text-white rounded-full transition-transform duration-300">
+        <span id="toggle-symbol" class="text-lg">✕</span>
     </button>
 </h4>
 
@@ -1061,6 +1061,15 @@ src="https://www.facebook.com/tr?id=1479906689908468&ev=PageView&noscript=1"
         barrow: { duration: '4 Hours', price: 15, type: 'hand' }
     };
 
+    // 1. The Close Function (Pasted at line 1063)
+    window.closeCart = function() {
+        const cart = document.getElementById('floating-cart'); // Matches your HTML ID
+        if (cart) {
+            cart.classList.add('hidden');
+            cart.style.display = 'none'; // Extra safety for mobile browsers
+        }
+    };
+    
     // --- 2. THE CALCULATION ENGINE (With Bundle Exclusion) ---
     window.updateCartUI = function() {
         const cartEl = document.getElementById('floating-cart');
@@ -1185,6 +1194,15 @@ window.closeHarnessModal = function() {
     if (modal) { modal.style.display = 'none'; modal.classList.add('hidden'); }
 };
 
+window.closeCart = function() {
+    const cartModal = document.getElementById('cart-modal');
+    if (cartModal) {
+        // This handles both the 'hidden' class and the display style 
+        cartModal.classList.add('hidden');
+        cartModal.style.display = 'none';
+    }
+};
+    
 window.handleHarnessSelection = function(addHarness) {
     if (window.pendingToolId && currentSelections[window.pendingToolId]) {
         window.cart.push({ ...currentSelections[window.pendingToolId], name: window.pendingToolName });
