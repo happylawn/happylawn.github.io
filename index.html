@@ -1081,6 +1081,7 @@ src="https://www.facebook.com/tr?id=1479906689908468&ev=PageView&noscript=1"
 
         if (window.cart.length > 0) {
             cartEl.classList.remove('hidden');
+            cartEl.style.display = 'block'; // This overrides the 'none' we set in closeCart
             if (countEl) {
                 countEl.classList.remove('hidden');
                 countEl.innerText = window.cart.length;
