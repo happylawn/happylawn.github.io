@@ -1143,7 +1143,12 @@ src="https://www.facebook.com/tr?id=1479906689908468&ev=PageView&noscript=1"
             window.appliedDiscountPercent = 0.40;
             promoMsg.innerText = "Discount Applied: 40% VIP Discount!";
             promoMsg.className = "text-green-600 text-xs mt-1 font-bold";
-        } else {
+        } // Add the Netball code here
+    else if (code === 'NETBALL50') {
+        window.appliedDiscount = 50.00;
+        promoMsg.innerText = "Discount Applied: $50.00 off!";
+        promoMsg.className = "text-green-600 text-xs mt-1 font-bold";
+    } else {
             promoMsg.innerText = "Invalid code.";
             promoMsg.className = "text-red-500 text-xs mt-1";
         }
