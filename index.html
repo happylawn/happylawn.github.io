@@ -484,6 +484,27 @@ src="https://www.facebook.com/tr?id=1479906689908468&ev=PageView&noscript=1"
             </div>
 
             <div class="product-grid-card bg-white rounded-lg shadow-lg overflow-hidden transform hover:scale-105 transition-transform duration-300 ease-in-out">
+                <div class="h-56 overflow-hidden flex items-center justify-center">
+                    <img class="w-full h-full object-contain p-4" src="landzie.png" alt="Landzie Spreader">
+                </div>
+                <div class="p-6 flex-grow flex flex-col">
+                    <div class="product-info-wrapper mb-4">
+                        <h3 class="text-xl font-semibold text-gray-800 mb-2">Landzie Topsoil Spreader</h3>
+                        <p class="text-gray-600 text-sm">Delivers consistent, and even distribution of topdressing material, breaking up clumpy materials as it tumbles, leaving behind any large, unwanted residual in the drum for disposal.</p>
+                    </div>
+                    <div class="relative bg-gray-100 p-1 rounded-xl flex mb-4 w-full border border-gray-200">
+                        <div id="slider-landzie_spreader" class="absolute top-1 left-1 bottom-1 w-[calc(50%-4px)] bg-white rounded-lg shadow-sm transition-all duration-300 ease-in-out"></div>
+                        <button onclick="setToggle('landzie_spreader', '4hr', 20)" class="relative z-10 w-1/2 py-2 text-sm font-bold transition-colors duration-300 text-gray-800" id="btn-roller-4hr">4 Hours</button>
+                        <button onclick="setToggle('landzie_spreader', 'day', 30)" class="relative z-10 w-1/2 py-2 text-sm font-bold transition-colors duration-300 text-gray-400" id="btn-roller-day">Full Day</button>
+                    </div>
+                    <div class="flex justify-between items-center mt-2">
+                        <span class="text-2xl font-black text-[#1B2A13]" id="price-landzie_spreader">$20</span>
+                        <button onclick="addCurrentSelection('Landzie Topsoil Spreader', 'landzie_spreader')" class="bg-[#1B2A13] text-[#E5E7BE] font-semibold py-2 px-6 rounded-lg shadow-md hover:bg-[#131D0D] transition">Add to List</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="product-grid-card bg-white rounded-lg shadow-lg overflow-hidden transform hover:scale-105 transition-transform duration-300 ease-in-out">
     <div class="h-56 overflow-hidden flex items-center justify-center">
         <img class="w-full h-full object-contain p-4" src="ew2150.png" alt="Earthway Broadcast Spreader">
     </div>
@@ -1051,6 +1072,7 @@ src="https://www.facebook.com/tr?id=1479906689908468&ev=PageView&noscript=1"
         trimmer: { duration: '4 Hours', price: 35, type: 'power' },
         hedge: { duration: '4 Hours', price: 30, type: 'power' },
         roller: { duration: '4 Hours', price: 15, type: 'hand' },
+        landzie_spreader: { duration: '4 Hours', price: 20, type: 'hand' },
         earthway: { duration: '4 Hours', price: 25, type: 'hand' },
         aerator: { duration: '4 Hours', price: 20, type: 'hand' },
         sprayer: { duration: '4 Hours', price: 15, type: 'hand' },
