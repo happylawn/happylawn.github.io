@@ -90,9 +90,6 @@ src="https://www.facebook.com/tr?id=1479906689908468&ev=PageView&noscript=1"
 /></noscript>
 <!-- End Meta Pixel Code -->
 
-        
-<div id="banner-spacer" class="h-[50px] md:h-[45px]"></div>
-
 <div id="harness-modal" style="display: none;" class="fixed inset-0 z-[9999] items-center justify-center bg-black/60 backdrop-blur-sm">
     <div class="bg-white p-8 rounded-2xl max-w-sm w-full text-center shadow-2xl border-2 border-[#1B2A13]">
         
@@ -1195,6 +1192,18 @@ src="https://www.facebook.com/tr?id=1479906689908468&ev=PageView&noscript=1"
             window.updateCartUI();
         }
     };
+    
+    window.selectCollection = function(method) {
+    const warningBox = document.getElementById('delivery-warning');
+    
+    if (method === 'delivery') {
+        // Show the caution box
+        warningBox.classList.remove('hidden');
+    } else {
+        // Hide it if they switch back to pickup
+        warningBox.classList.add('hidden');
+    }
+};
 
     // --- 1. HARNESS MODAL FUNCTIONS ---
 window.openHarnessModal = function(toolName, id) {
