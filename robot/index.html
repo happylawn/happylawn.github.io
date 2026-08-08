@@ -11,6 +11,7 @@
             --accent-color: #ffb300;  /* Action Yellow */
             --text-dark: #333333;
             --text-light: #ffffff;
+            --nav-bg: rgba(0, 0, 0, 0.85);
         }
 
         body, html {
@@ -19,6 +20,54 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             color: var(--text-dark);
             background-color: #f9f9f9;
+            scroll-behavior: smooth; /* Enables smooth scrolling for anchor links */
+        }
+
+        /* Sticky Navigation Bar */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background-color: var(--nav-bg);
+            z-index: 1000;
+            padding: 15px 0;
+            backdrop-filter: blur(5px); /* Nice modern blur effect */
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+        }
+
+        .logo {
+            color: var(--text-light);
+            font-size: 1.5rem;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .nav-links a {
+            color: var(--text-light);
+            text-decoration: none;
+            margin-left: 25px;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent-color);
+        }
+
+        .nav-btn {
+            background-color: var(--accent-color);
+            color: var(--text-dark) !important;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-weight: bold;
         }
 
         /* Hero Section with Video Background */
@@ -41,30 +90,29 @@
             width: 100%;
             height: 100%;
             z-index: -2;
-            pointer-events: none; /* Stops users from clicking the video */
+            pointer-events: none;
             overflow: hidden;
         }
 
         .hero-video-container iframe {
             width: 100vw;
-            height: 56.25vw; /* 16:9 Aspect Ratio */
+            height: 56.25vw;
             min-height: 100vh;
-            min-width: 177.77vh; /* 16:9 Aspect Ratio */
+            min-width: 177.77vh;
             position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
         }
-    
 
-        /* Dark overlay to make text readable over the video */
+        /* Dark overlay to make text readable */
         .hero-overlay {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.4); 
+            background: rgba(0, 0, 0, 0.5); 
             z-index: -1;
         }
 
@@ -73,6 +121,7 @@
             padding: 20px;
             color: var(--text-light);
             max-width: 800px;
+            margin-top: 60px; /* Offset for nav bar */
         }
 
         .hero h1 {
@@ -96,18 +145,19 @@
             font-weight: bold;
             text-decoration: none;
             border-radius: 50px;
-            transition: background-color 0.3s ease;
+            transition: background-color 0.3s ease, transform 0.2s ease;
             border: none;
             cursor: pointer;
         }
 
         .cta-button:hover {
             background-color: #ffa000;
+            transform: translateY(-2px);
         }
 
         /* Informational Sections */
         section {
-            padding: 80px 20px;
+            padding: 100px 20px; /* Increased top padding to account for fixed header */
             max-width: 1200px;
             margin: 0 auto;
         }
@@ -115,8 +165,15 @@
         .section-title {
             text-align: center;
             font-size: 2.5rem;
-            margin-bottom: 50px;
+            margin-bottom: 15px;
             color: var(--primary-color);
+        }
+        
+        .section-subtitle {
+            text-align: center;
+            font-size: 1.2rem;
+            color: #666;
+            margin-bottom: 50px;
         }
 
         /* How It Works Grid */
@@ -146,6 +203,79 @@
             margin: 0 auto 20px auto;
         }
 
+        /* Pricing Grid */
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 40px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .pricing-card {
+            background: #fff;
+            padding: 40px 30px;
+            border-radius: 12px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+            border-top: 6px solid var(--primary-color);
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .pricing-card h3 {
+            font-size: 1.8rem;
+            margin-top: 0;
+            margin-bottom: 10px;
+        }
+
+        .price {
+            font-size: 3.5rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+        }
+
+        .price span {
+            font-size: 1.2rem;
+            color: #666;
+            font-weight: normal;
+        }
+
+        .pricing-list {
+            list-style: none;
+            padding: 0;
+            margin: 0 0 30px 0;
+            text-align: left;
+            flex-grow: 1;
+        }
+
+        .pricing-list li {
+            padding: 12px 0;
+            border-bottom: 1px solid #eee;
+            font-size: 1.05rem;
+        }
+
+        .pricing-list li:last-child {
+            border-bottom: none;
+        }
+
+        .pricing-list li:before {
+            content: '✓';
+            color: var(--primary-color);
+            font-weight: bold;
+            margin-right: 10px;
+            font-size: 1.2rem;
+        }
+
+        /* Sign Up Section */
+        #sign-up {
+            background-color: #e8f5e9;
+            border-radius: 20px;
+            text-align: center;
+            margin-bottom: 80px;
+        }
+
         /* Footer */
         footer {
             background: #222;
@@ -158,20 +288,85 @@
         @media (max-width: 768px) {
             .hero h1 { font-size: 2.5rem; }
             .hero p { font-size: 1.2rem; }
-            section { padding: 50px 20px; }
+            section { padding: 80px 20px 40px 20px; }
+            .nav-links a:not(.nav-btn) { display: none; } /* Hide text links on mobile, keep button */
+        }
+        /* Contact Form Styles */
+        .contact-form {
+            max-width: 600px;
+            margin: 0 auto;
+            text-align: left;
+            background: #ffffff;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--text-dark);
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-family: inherit;
+            font-size: 1rem;
+            box-sizing: border-box; /* Ensures padding doesn't affect width */
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .submit-btn {
+            width: 100%;
+            text-align: center;
+            margin-top: 10px;
         }
     </style>
 </head>
 <body>
 
+    <!-- Sticky Navigation -->
+    <header>
+        <div class="nav-container">
+            <a href="#" class="logo">HappyLawn</a>
+            <nav class="nav-links">
+                <a href="#how-it-works">How It Works</a>
+                <a href="#pricing">Pricing</a>
+                <a href="#sign-up" class="nav-btn">Sign Up</a>
+            </nav>
+        </div>
+    </header>
+
     <!-- Hero Section -->
     <div class="hero">
         <div class="hero-video-container">
-            <!-- Replace YOUR_VIDEO_ID in BOTH places below -->
             <iframe 
-                src="https://www.youtube.com/embed/M7lc1UVf-VE?autoplay=1&mute=1&loop=1&playlist=M7lc1UVf-VE?&controls=0&disablekb=1&playsinline=1" 
+                src="https://www.youtube.com/embed/M7lc1UVf-VE?autoplay=1&mute=1&loop=1&playlist=M7lc1UVf-VE&controls=0&disablekb=1&playsinline=1" 
                 frameborder="0" 
                 allow="autoplay; encrypted-media" 
+                title="HappyLawn Background Video"
                 allowfullscreen>
             </iframe>
         </div>
@@ -179,18 +374,19 @@
         <div class="hero-content">
             <h1>The Perfect Lawn, Zero Effort.</h1>
             <p>Subscribe to HappyLawn Hire. We install the robot, manage the maintenance, and you wake up to perfect grass every day.</p>
-            <a href="#how-it-works" class="cta-button">See How It Works</a>
+            <a href="#pricing" class="cta-button">View Pricing</a>
         </div>
     </div>
 
     <!-- How It Works Section -->
     <section id="how-it-works">
         <h2 class="section-title">How Robot-as-a-Service Works</h2>
+        <p class="section-subtitle">A completely hands-off experience from day one.</p>
         <div class="grid-3">
             <div class="card">
                 <div class="card-number">1</div>
                 <h3>Lawn Assessment</h3>
-                <p>We map your yard, set up the perimeter wire, and program the optimal mowing schedule for your grass type.</p>
+                <p>We map your yard, set up the perimeter, and program the optimal mowing schedule for your grass type.</p>
             </div>
             <div class="card">
                 <div class="card-number">2</div>
@@ -203,6 +399,83 @@
                 <p>Blade replacements, software updates, and winter storage are entirely handled by us. No hidden fees.</p>
             </div>
         </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section id="pricing">
+        <h2 class="section-title">Transparent Pricing</h2>
+        <p class="section-subtitle">Everything included. Always sharp, always working.</p>
+        <div class="grid-2">
+            
+            <!-- i206 Card -->
+            <div class="pricing-card">
+                <h3>Model i206</h3>
+                <div class="price">$45<span> / week</span></div>
+                <ul class="pricing-list">
+                    <li>Full robot installation & yard mapping</li>
+                    <li><strong>Cleaning & maintenance every 2 months</strong></li>
+                    <li><strong>Regular blade replacements included</strong></li>
+                    <li>Guaranteed to always cut with sharp blades</li>
+                    <li>Remote troubleshooting & support</li>
+                </ul>
+                <a href="#sign-up" class="cta-button">Select i206</a>
+            </div>
+
+            <!-- i210 Card -->
+            <div class="pricing-card">
+                <h3>Model i210</h3>
+                <div class="price">$49<span> / week</span></div>
+                <ul class="pricing-list">
+                    <li>Full robot installation & yard mapping</li>
+                    <li><strong>Cleaning & maintenance every 2 months</strong></li>
+                    <li><strong>Regular blade replacements included</strong></li>
+                    <li>Guaranteed to always cut with sharp blades</li>
+                    <li>Remote troubleshooting & support</li>
+                </ul>
+                <a href="#sign-up" class="cta-button">Select i210</a>
+            </div>
+
+        </div>
+    </section>
+
+<!-- Sign Up / Contact Section -->
+    <section id="sign-up">
+        <h2 class="section-title">Ready for a perfect lawn?</h2>
+        <p class="section-subtitle">Request your free yard assessment today.</p>
+        
+        <form class="contact-form" action="https://formspree.io/f/xwvpoenl" method="POST">
+            
+            <div class="form-group">
+                <label for="name">Full Name</label>
+                <input type="text" id="name" name="name" required placeholder="John Doe">
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email Address</label>
+                <input type="email" id="email" name="email" required placeholder="john@example.com">
+            </div>
+
+            <div class="form-group">
+                <label for="address">Property Address (For Assessment)</label>
+                <input type="text" id="address" name="address" required placeholder="123 Main St, Suburb">
+            </div>
+
+            <div class="form-group">
+                <label for="model">Interested In</label>
+                <select id="model" name="model">
+                    <option value="unsure">Not sure yet - recommend one for me</option>
+                    <option value="i206">Model i206 ($45/week)</option>
+                    <option value="i210">Model i210 ($49/week)</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="message">Anything else we should know about your lawn?</label>
+                <textarea id="message" name="message" placeholder="(e.g., steep hills, pets, multiple zones)"></textarea>
+            </div>
+
+            <button type="submit" class="cta-button submit-btn">Request Assessment</button>
+        </form>
     </section>
 
     <!-- Footer -->
