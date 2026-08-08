@@ -20,7 +20,7 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             color: var(--text-dark);
             background-color: #f9f9f9;
-            scroll-behavior: smooth; /* Enables smooth scrolling for anchor links */
+            scroll-behavior: smooth; 
         }
 
         /* Sticky Navigation Bar */
@@ -30,8 +30,8 @@
             width: 100%;
             background-color: var(--nav-bg);
             z-index: 1000;
-            padding: 15px 0;
-            backdrop-filter: blur(5px); /* Nice modern blur effect */
+            padding: 10px 0; /* Slightly reduced padding to fit the logo nicely */
+            backdrop-filter: blur(5px); 
         }
 
         .nav-container {
@@ -43,11 +43,17 @@
             padding: 0 20px;
         }
 
+        /* Updated Logo Styles */
         .logo {
-            color: var(--text-light);
-            font-size: 1.5rem;
-            font-weight: bold;
+            display: flex;
+            align-items: center;
             text-decoration: none;
+        }
+
+        .logo img {
+            height: 45px; /* Adjust this value if you want the logo bigger or smaller */
+            width: auto;
+            display: block;
         }
 
         .nav-links a {
@@ -70,7 +76,7 @@
             font-weight: bold;
         }
 
-        /* Hero Section with Video Background */
+        /* Hero Section - FIXED STACKING (z-index) */
         .hero {
             position: relative;
             height: 100vh;
@@ -80,16 +86,16 @@
             justify-content: center;
             text-align: center;
             overflow: hidden;
+            background-color: #000; /* Fallback color while video loads */
         }
 
-        /* YouTube Iframe Background Styling */
         .hero-video-container {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            z-index: -2;
+            z-index: 1; /* Fixed: Now positively stacked above the body background */
             pointer-events: none;
             overflow: hidden;
         }
@@ -105,7 +111,6 @@
             transform: translate(-50%, -50%);
         }
 
-        /* Dark overlay to make text readable */
         .hero-overlay {
             position: absolute;
             top: 0;
@@ -113,15 +118,16 @@
             width: 100%;
             height: 100%;
             background: rgba(0, 0, 0, 0.5); 
-            z-index: -1;
+            z-index: 2; /* Fixed: Stacks above the video */
         }
 
         .hero-content {
-            z-index: 1;
+            z-index: 3; /* Fixed: Stacks above the overlay */
+            position: relative;
             padding: 20px;
             color: var(--text-light);
             max-width: 800px;
-            margin-top: 60px; /* Offset for nav bar */
+            margin-top: 60px; 
         }
 
         .hero h1 {
@@ -157,7 +163,7 @@
 
         /* Informational Sections */
         section {
-            padding: 100px 20px; /* Increased top padding to account for fixed header */
+            padding: 100px 20px; 
             max-width: 1200px;
             margin: 0 auto;
         }
@@ -268,7 +274,30 @@
             font-size: 1.2rem;
         }
 
-        /* Sign Up Section */
+        /* FAQ Section */
+        .faq-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .faq-item {
+            background: #fff;
+            margin-bottom: 20px;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        .faq-item h4 {
+            margin: 0 0 10px 0;
+            color: var(--primary-color);
+            font-size: 1.2rem;
+        }
+        .faq-item p {
+            margin: 0;
+            line-height: 1.6;
+            color: #555;
+        }
+
+        /* Form Styles */
         #sign-up {
             background-color: #e8f5e9;
             border-radius: 20px;
@@ -276,22 +305,6 @@
             margin-bottom: 80px;
         }
 
-        /* Footer */
-        footer {
-            background: #222;
-            color: #ccc;
-            text-align: center;
-            padding: 40px 20px;
-        }
-
-        /* Mobile Responsiveness */
-        @media (max-width: 768px) {
-            .hero h1 { font-size: 2.5rem; }
-            .hero p { font-size: 1.2rem; }
-            section { padding: 80px 20px 40px 20px; }
-            .nav-links a:not(.nav-btn) { display: none; } /* Hide text links on mobile, keep button */
-        }
-        /* Contact Form Styles */
         .contact-form {
             max-width: 600px;
             margin: 0 auto;
@@ -322,7 +335,7 @@
             border-radius: 8px;
             font-family: inherit;
             font-size: 1rem;
-            box-sizing: border-box; /* Ensures padding doesn't affect width */
+            box-sizing: border-box; 
             transition: border-color 0.3s;
         }
 
@@ -343,6 +356,22 @@
             text-align: center;
             margin-top: 10px;
         }
+
+        /* Footer */
+        footer {
+            background: #222;
+            color: #ccc;
+            text-align: center;
+            padding: 40px 20px;
+        }
+
+        /* Mobile Responsiveness */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.5rem; }
+            .hero p { font-size: 1.2rem; }
+            section { padding: 80px 20px 40px 20px; }
+            .nav-links a:not(.nav-btn) { display: none; }
+        }
     </style>
 </head>
 <body>
@@ -350,10 +379,15 @@
     <!-- Sticky Navigation -->
     <header>
         <div class="nav-container">
-            <a href="#" class="logo">HappyLawn</a>
+            <!-- REPLACED TEXT WITH LOGO IMAGE -->
+            <a href="#" class="logo">
+                <img src="HappyLawn-Logo-Edit.png" alt="HappyLawn Hire Logo">
+            </a>
             <nav class="nav-links">
                 <a href="#how-it-works">How It Works</a>
                 <a href="#pricing">Pricing</a>
+                <!-- ADDED FAQS LINK -->
+                <a href="#faqs">FAQs</a>
                 <a href="#sign-up" class="nav-btn">Sign Up</a>
             </nav>
         </div>
@@ -362,6 +396,7 @@
     <!-- Hero Section -->
     <div class="hero">
         <div class="hero-video-container">
+            <!-- IMPORTANT: Ensure you have your actual Video ID where 'M7lc1UVf-VE' currently is! -->
             <iframe 
                 src="https://www.youtube.com/embed/M7lc1UVf-VE?autoplay=1&mute=1&loop=1&playlist=M7lc1UVf-VE&controls=0&disablekb=1&playsinline=1" 
                 frameborder="0" 
@@ -407,7 +442,6 @@
         <p class="section-subtitle">Everything included. Always sharp, always working.</p>
         <div class="grid-2">
             
-            <!-- i206 Card -->
             <div class="pricing-card">
                 <h3>Model i206</h3>
                 <div class="price">$45<span> / week</span></div>
@@ -421,7 +455,6 @@
                 <a href="#sign-up" class="cta-button">Select i206</a>
             </div>
 
-            <!-- i210 Card -->
             <div class="pricing-card">
                 <h3>Model i210</h3>
                 <div class="price">$49<span> / week</span></div>
@@ -438,7 +471,26 @@
         </div>
     </section>
 
-<!-- Sign Up / Contact Section -->
+    <!-- NEW FAQ Section -->
+    <section id="faqs">
+        <h2 class="section-title">Frequently Asked Questions</h2>
+        <div class="faq-container">
+            <div class="faq-item">
+                <h4>What happens if the robot gets damaged?</h4>
+                <p>Normal wear and tear is fully covered. If the robot stops working due to a technical fault, we repair or replace it at no extra cost. Intentional damage or theft is handled on a case-by-case basis.</p>
+            </div>
+            <div class="faq-item">
+                <h4>What about my pets?</h4>
+                <p>Modern robot mowers are incredibly safe. They feature collision sensors that cause them to stop and turn around if they bump into an object (or a pet), and lift sensors that instantly stop the blades if the mower is picked up.</p>
+            </div>
+            <div class="faq-item">
+                <h4>Does the robot handle edges and borders?</h4>
+                <p>The robot cuts right up to the perimeter wire. Depending on your landscaping, you may occasionally need to run a quick string trimmer around fences or retaining walls, but the bulk of your lawn is completely automated.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sign Up / Contact Section -->
     <section id="sign-up">
         <h2 class="section-title">Ready for a perfect lawn?</h2>
         <p class="section-subtitle">Request your free yard assessment today.</p>
