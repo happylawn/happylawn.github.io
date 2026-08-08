@@ -365,12 +365,21 @@
             padding: 40px 20px;
         }
 
-        /* Mobile Responsiveness */
+       /* Mobile Responsiveness */
         @media (max-width: 768px) {
             .hero h1 { font-size: 2.5rem; }
             .hero p { font-size: 1.2rem; }
             section { padding: 80px 20px 40px 20px; }
             .nav-links a:not(.nav-btn) { display: none; }
+            
+            /* NEW: Adjust the hero height and video zoom for mobile */
+            .hero {
+                height: 60vh; 
+            }
+            .hero-video-container iframe {
+                min-height: 60vh;
+                min-width: 106.66vh; /* (60vh * 1.777 aspect ratio) */
+            }
         }
     </style>
 </head>
