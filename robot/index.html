@@ -370,6 +370,35 @@
             .hero { height: 75vh; } 
             section { padding: 80px 20px 40px 20px; }
             .nav-links a:not(.nav-btn) { display: none; }
+            /* NEW: Shrink Pricing Cards for Mobile */
+            .pricing-card {
+                padding: 25px 15px; /* Reduces the white space inside the card */
+            }
+            .pricing-image-small {
+                max-width: 100px; /* Scales down the small lawn image */
+                margin-bottom: 10px;
+            }
+            .pricing-image-large {
+                max-width: 180px; /* Scales down the large lawn image */
+                margin-bottom: 10px;
+            }
+            .pricing-card h3 {
+                font-size: 1.4rem; /* Smaller plan title */
+            }
+            .price {
+                font-size: 2.5rem; /* Smaller price text */
+                margin-bottom: 15px;
+            }
+            .pricing-list {
+                margin: 0 0 20px 0;
+            }
+            .pricing-list li {
+                padding: 8px 0; /* Tighter spacing between list items */
+                font-size: 0.95rem; /* Slightly smaller list text */
+            }
+            .pricing-list li:before {
+                font-size: 1rem; /* Slightly smaller checkmarks */
+            }
         }
     </style>
 </head>
