@@ -258,10 +258,17 @@
         
         .pricing-image {
             width: 100%;
-            max-width: 150px; /* Keeps the images from getting too huge */
             height: auto;
-            margin: 0 auto 20px auto; /* Centers it and pushes the title down slightly */
+            margin: 0 auto 20px auto; 
             display: block;
+        }
+
+        .pricing-image-small {
+            max-width: 150px; /* Keeps your small lawn image the size you like */
+        }
+
+        .pricing-image-large {
+            max-width: 280px; /* Allows the wider image to scale up */
         }
 
         /* FAQ Section */
@@ -424,7 +431,7 @@
             
            <div class="pricing-card">
                 <!-- Image added here -->
-                <img src="smalllawn.png" alt="Small Lawn Sizes up to 500m2" class="pricing-image">
+                <img src="smalllawn.png" alt="Small Lawn Sizes up to 500m2" class="pricing-image pricing-image-small">
                 
                 <h3>Up to 500m²</h3>
                 <div class="price">$45<span> / week</span></div>
@@ -440,7 +447,7 @@
 
             <div class="pricing-card">
                 <!-- Image added here -->
-                <img src="largelawn.png" alt="Large Lawn Sizes 500m2 to 1000m2" class="pricing-image">
+                <img src="largelawn.png" alt="Large Lawn Sizes 500m2 to 1000m2" class="pricing-image pricing-image-large">
                 
                 <h3>500m² - 1000m²</h3>
                 <div class="price">$49<span> / week</span></div>
