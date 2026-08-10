@@ -145,6 +145,17 @@ body {
             font-weight: bold;
         }
 
+        /* Features Highlights Section */
+.features-section {
+    background-color: #ffffff;
+    border-bottom: 1px solid #eee;
+}
+
+.feature-icon {
+    font-size: 2.5rem;
+    margin-bottom: 15px;
+}
+        
         /* Hero Section - IMAGE BACKGROUND */
         .hero {
             position: relative;
@@ -490,14 +501,15 @@ body {
   </button>
 
   <!-- Dropdown Menu -->
-  <nav class="dropdown-menu" id="dropdown-menu">
-    <ul>
-      <li><a href="#how-it-works">How It Works</a></li>
-      <li><a href="#pricing">Pricing</a></li>
-      <li><a href="#faqs">FAQs</a></li>
-      <li><a href="#sign-up">Sign Up</a></li>
-    </ul>
-  </nav>
+<nav class="dropdown-menu" id="dropdown-menu">
+  <ul>
+    <li><a href="#how-it-works">How It Works</a></li>
+    <li><a href="#features">Smart Features</a></li>
+    <li><a href="#pricing">Pricing</a></li>
+    <li><a href="#faqs">FAQs</a></li>
+    <li><a href="#enquire">Enquire</a></li>
+  </ul>
+</nav>
 </header>
 
     <!-- Hero Section (Now with Image) -->
@@ -510,6 +522,29 @@ body {
         </div>
     </div>
 
+    <!-- Smart Features Section -->
+<section id="features" class="features-section">
+    <h2 class="section-title">Smart, Simple, Automated</h2>
+    <p class="section-subtitle">Effortless lawn care powered by modern robotic technology.</p>
+    <div class="grid-3">
+        <div class="card">
+            <div class="feature-icon">📱</div>
+            <h3>Managed From Your Phone</h3>
+            <p>Monitor your robot, adjust schedules, and check mower status anytime directly through your smartphone app.</p>
+        </div>
+        <div class="card">
+            <div class="feature-icon">🌱</div>
+            <h3>Freshly Mowed Every Day</h3>
+            <p>Micro-cutting continuously maintains carpet-like grass, feeding nutrients back into your soil for a greener lawn.</p>
+        </div>
+        <div class="card">
+            <div class="feature-icon">⚡</div>
+            <h3>Self-Docking & Charging</h3>
+            <p>When power gets low, the mower automatically navigates back to its charging base and resumes work when ready.</p>
+        </div>
+    </div>
+</section>
+    
     <!-- How It Works Section -->
     <section id="how-it-works">
         <h2 class="section-title">How Robot-as-a-Service Works</h2>
@@ -552,7 +587,7 @@ body {
                     <li>Guaranteed to always cut with sharp blades</li>
                     <li>Remote troubleshooting & support</li>
                 </ul>
-                <a href="#sign-up" class="cta-button">Select Plan</a>
+                <a href="#enquire" class="cta-button">Select Plan</a>
             </div>
 
             <div class="pricing-card">
@@ -568,7 +603,7 @@ body {
                     <li>Guaranteed to always cut with sharp blades</li>
                     <li>Remote troubleshooting & support</li>
                 </ul>
-                <a href="#sign-up" class="cta-button">Select Plan</a>
+                <a href="#enquire" class="cta-button">Select Plan</a>
             </div>
 
         </div>
@@ -593,8 +628,8 @@ body {
     </section>
 
     <!-- Sign Up / Contact Section -->
-    <section id="sign-up">
-        <h2 class="section-title">Ready for a perfect lawn?</h2>
+    <section id="enquire">
+        <h2 class="section-title">Ready for a perfectly mowed lawn everyday?</h2>
         <p class="section-subtitle">Request your free yard assessment today.</p>
         
         <form class="contact-form" action="https://formspree.io/f/xwvpoenl" method="POST">
@@ -617,7 +652,7 @@ body {
            <div class="form-group">
                 <label for="size">Estimated Lawn Size</label>
                 <select id="size" name="lawn_size">
-                    <option value="unsure">Not sure yet - let's measure it together</option>
+                    <option value="unsure">Unsure - I need a free measure & quote</option>
                     <option value="upto500">Up to 500m² ($45/week)</option>
                     <option value="500to1000">500m² - 1000m² ($49/week)</option>
                     <option value="over1000">Over 1000m² (Custom Quote)</option>
