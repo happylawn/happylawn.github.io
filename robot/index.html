@@ -352,6 +352,36 @@ body {
             max-width: 250px; /* Allows the wider image to scale up */
         }
 
+        .buy-option-card {
+    margin: 40px auto 0 auto;
+    max-width: 840px;
+    padding: 25px;
+    background-color: #ffffff;
+    border: 2px dashed #a5d6a7;
+    border-radius: 12px;
+    text-align: center;
+}
+.buy-option-card h3 {
+    margin-top: 0;
+    color: var(--primary-color);
+}
+.buy-option-card p {
+    margin-bottom: 15px;
+    color: #555;
+}
+.cta-button-small {
+    display: inline-block;
+    background-color: var(--primary-color);
+    color: #ffffff;
+    padding: 10px 25px;
+    text-decoration: none;
+    border-radius: 25px;
+    font-weight: bold;
+    transition: background 0.2s;
+}
+.cta-button-small:hover {
+    background-color: #1b5e20;
+}
         /* FAQ Section */
         .faq-container {
             max-width: 800px;
@@ -606,6 +636,11 @@ body {
                 <a href="#enquire" class="cta-button">Select Plan</a>
             </div>
 
+            <div class="buy-option-card">
+    <h3>Prefer to buy outright?</h3>
+    <p>We are an authorized Navimow dealer. If you’d rather own your mower, we offer full Navimow sales, setup, and local support.</p>
+    <a href="#enquire" class="cta-button-small">Enquire About Sales</a>
+</div>
         </div>
     </section>
     <!-- FAQ Section -->
@@ -624,6 +659,10 @@ body {
                 <h4>Does the robot handle edges and borders?</h4>
                 <p>The robot cuts right up to the perimeter wire. Depending on your landscaping, you may occasionally need to run a quick string trimmer around fences or retaining walls, but the bulk of your lawn is completely automated.</p>
             </div>
+            <div class="faq-item">
+    <h4>Can I buy a robot mower outright instead of subscribing?</h4>
+    <p>Yes! We offer Navimow robot mowers for direct purchase. Send us an enquiry with your yard details and we'll help you pick the right model for your property.</p>
+</div>
         </div>
     </section>
 
@@ -656,6 +695,7 @@ body {
                     <option value="upto500">Up to 500m² ($45/week)</option>
                     <option value="500to1000">500m² - 1000m² ($49/week)</option>
                     <option value="over1000">Over 1000m² (Custom Quote)</option>
+                    <option value="buy_outright">I'm interested in buying a Navimow mower outright</option>
                 </select>
             </div>
 
