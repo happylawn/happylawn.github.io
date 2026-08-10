@@ -112,17 +112,19 @@ body {
 }
 
         .logo {
-            display: flex;
-            align-items: center;
-            text-decoration: none;
-        }
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  height: 100%; /* Makes the link take up the full height of the header */
+}
 
-        .logo img {
-            height: 45px;
-            width: auto;
-            display: block;
-        }
-
+.logo img {
+  height: 100%;    /* Scales the logo to match the header height */
+  max-height: 55px; /* Caps it so it doesn't get ridiculously huge */
+  width: auto;
+  display: block;
+  padding: 5px 0;   /* Adds a tiny breathing room top and bottom without growing the bar */
+}
         .nav-links a {
             color: var(--text-light);
             text-decoration: none;
