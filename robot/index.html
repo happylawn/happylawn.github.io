@@ -288,6 +288,78 @@ body {
             margin: 0 auto 20px auto;
         }
 
+        /* App Section Styling */
+.app-section {
+    background-color: #f0f7f2;
+    padding: 70px 20px;
+    border-radius: 16px;
+    margin: 40px auto;
+}
+
+.app-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    align-items: center;
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+.app-text h2 {
+    color: var(--primary-color);
+    font-size: 2.2rem;
+    margin-top: 0;
+}
+
+.app-features {
+    list-style: none;
+    padding: 0;
+    margin-top: 20px;
+}
+
+.app-features li {
+    margin-bottom: 18px;
+    line-height: 1.5;
+    font-size: 1.05rem;
+}
+
+.app-visual {
+    display: flex;
+    justify-content: center;
+}
+
+.phone-mockup {
+    background: #1c3b22;
+    color: white;
+    width: 280px;
+    height: 420px;
+    border-radius: 36px;
+    border: 8px solid #333;
+    padding: 30px 20px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.mockup-badge {
+    background: var(--accent-color);
+    color: #000;
+    font-weight: bold;
+    padding: 4px 12px;
+    border-radius: 12px;
+    font-size: 0.85rem;
+    align-self: center;
+    margin-bottom: 15px;
+}
+
+@media (max-width: 768px) {
+    .app-container {
+        grid-template-columns: 1fr;
+    }
+}
+        
         /* Pricing Grid */
         .grid-2 {
             display: grid;
@@ -398,6 +470,45 @@ body {
 .cta-button-small:hover {
     background-color: #1b5e20;
 }
+
+        /* Comparison Table Styling */
+.comparison-table-wrapper {
+    overflow-x: auto;
+    margin-top: 30px;
+}
+
+.comparison-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #ffffff;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+}
+
+.comparison-table th, 
+.comparison-table td {
+    padding: 16px 20px;
+    text-align: left;
+    border-bottom: 1px solid #eee;
+}
+
+.comparison-table th {
+    background-color: #f5f5f5;
+    font-size: 1.1rem;
+    color: var(--text-dark);
+}
+
+.comparison-table .highlight-col {
+    background-color: #e8f5e9;
+    color: #1b5e20;
+}
+
+.comparison-table th.highlight-col {
+    background-color: var(--primary-color);
+    color: #ffffff;
+}
+        
         /* FAQ Section */
         .faq-container {
             max-width: 800px;
@@ -614,6 +725,42 @@ body {
         </div>
     </section>
 
+    <!-- Mobile App Spotlight Section -->
+<section id="app-control" class="app-section">
+    <div class="app-container">
+        <div class="app-text">
+            <h2>Total Control in Your Pocket 📱</h2>
+            <p>Managing your lawn care is as easy as opening your phone. The official app gives you full control from anywhere in the world.</p>
+            
+            <ul class="app-features">
+                <li>
+                    <strong>⏱️ Custom Schedules:</strong>
+                    Set it to cut while you're at work or sleeping so your garden is always clear.
+                </li>
+                <li>
+                    <strong>📏 Cutting Height Adjustments:</strong>
+                    Change grass height on the fly with a single slider.
+                </li>
+                <li>
+                    <strong>📍 GPS & Anti-Theft Tracking:</strong>
+                    Check real-time location and receive instant alerts if the mower leaves your property.
+                </li>
+                <li>
+                    <strong>🌧️ Weather Sensing:</strong>
+                    Automatically pauses cutting during heavy rain to protect your turf.
+                </li>
+            </ul>
+        </div>
+        <div class="app-visual">
+            <div class="phone-mockup">
+                <span class="mockup-badge">App Managed</span>
+                <h3>Navimow App</h3>
+                <p>Real-time status & custom zone setup</p>
+            </div>
+        </div>
+    </div>
+</section>
+    
    <!-- Pricing Section -->
     <section id="pricing">
         <h2 class="section-title">Transparent Pricing</h2>
@@ -659,6 +806,57 @@ body {
 </div>
         </div>
     </section>
+
+    <!-- Comparison Section -->
+<section id="comparison">
+    <h2 class="section-title">Why Choose HappyLawn?</h2>
+    <p class="section-subtitle">See how robot subscription compares to traditional lawn care.</p>
+    
+    <div class="comparison-table-wrapper">
+        <table class="comparison-table">
+            <thead>
+                <tr>
+                    <th>Feature</th>
+                    <th>Traditional Mowing</th>
+                    <th class="highlight-col">HappyLawn Robot Subscription</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Your Time Spent</strong></td>
+                    <td>1–2 hours every weekend</td>
+                    <td class="highlight-col"><strong>0 hours (100% Automated)</strong></td>
+                </tr>
+                <tr>
+                    <td><strong>Lawn Appearance</strong></td>
+                    <td>Overgrown by Friday, short on Sunday</td>
+                    <td class="highlight-col"><strong>Perfect carpet-look every single day</strong></td>
+                </tr>
+                <tr>
+                    <td><strong>Upfront Equipment Cost</strong></td>
+                    <td>$800–$2,500+ for mower/trimmer</td>
+                    <td class="highlight-col"><strong>$0 Upfront Cost</strong></td>
+                </tr>
+                <tr>
+                    <td><strong>Maintenance & Blades</strong></td>
+                    <td>Your hassle, cost & storage space</td>
+                    <td class="highlight-col"><strong>Included free every 2 months</strong></td>
+                </tr>
+                <tr>
+                    <td><strong>Noise Level</strong></td>
+                    <td>Loud gas engines (85+ dB)</td>
+                    <td class="highlight-col"><strong>Ultra-quiet (<54 dB) — run at night</strong></td>
+                </tr>
+                <tr>
+                    <td><strong>Lawn Health</strong></td>
+                    <td>Creates heavy grass clippings pile</td>
+                    <td class="highlight-col"><strong>Micro-mulching feeds soil naturally</strong></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</section>
+    
     <!-- FAQ Section -->
     <section id="faqs">
         <h2 class="section-title">Frequently Asked Questions</h2>
