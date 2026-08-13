@@ -30,14 +30,18 @@ body {
   height: 2000px; 
 }
 
-/* Make the header sticky */
-position: fixed;
-  top: 20px;
+/* Sticky Header - Dark Frosted Glass */
+.sticky-header {
+  position: fixed;
+  top: 0;
   left: 0;
   width: 100%;
-  padding: 0 30px;
-  background: transparent; /* Removes background bar completely */
-  border-bottom: none;
+  height: 65px;
+  background: rgba(0, 0, 0, 0.65); /* Dark semi-transparent tint */
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+  padding: 0 25px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -47,24 +51,20 @@ position: fixed;
 
 /* Hamburger button styling */
 .hamburger {
-  background: rgba(0, 0, 0, 0.6);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  padding: 12px;
-  border-radius: 50%;
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: none;
+  border: none;
   cursor: pointer;
   display: flex;
   flex-direction: column;
-  gap: 5px; /* Space between the 3 lines */
-  z-index: 1001; /* Keeps button above the menu */
+  gap: 5px;
+  z-index: 1001;
 }
 
-/* The 3 horizontal lines */
+/* Hamburger white lines */
 .hamburger .bar {
   width: 25px;
   height: 3px;
-  background-color: #ffffff;
+  background-color: #ffffff; /* White lines visible over dark frosted bar */
   transition: all 0.3s ease-in-out;
 }
 
