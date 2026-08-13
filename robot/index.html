@@ -31,23 +31,28 @@ body {
 }
 
 /* Make the header sticky */
-.sticky-header {
-  position: sticky;
-  top: 0;
-  background-color: #e5e7be;
-  border-bottom: 1px solid #d4d6a8; /* Optional: slightly darker border to match */
-  padding: 0 20px; /* Removes top/bottom padding completely */
-  height: 65px;    /* Fixed height so you can control it precisely */
+position: fixed;
+  top: 20px;
+  left: 0;
+  width: 100%;
+  padding: 0 30px;
+  background: transparent; /* Removes background bar completely */
+  border-bottom: none;
   display: flex;
   justify-content: space-between;
   align-items: center;
   z-index: 1000;
+  box-sizing: border-box;
 }
 
 /* Hamburger button styling */
 .hamburger {
-  background: none;
-  border: none;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  padding: 12px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.2);
   cursor: pointer;
   display: flex;
   flex-direction: column;
@@ -59,7 +64,7 @@ body {
 .hamburger .bar {
   width: 25px;
   height: 3px;
-  background-color: #333;
+  background-color: #ffffff;
   transition: all 0.3s ease-in-out;
 }
 
