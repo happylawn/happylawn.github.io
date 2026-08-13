@@ -304,14 +304,14 @@ body {
 
 .app-container {
     display: grid;
-    grid-template-columns: 1fr 320px; /* Locks right column width to phone size */
+    grid-template-columns: 1fr 320px; /* Locks right column width on desktop */
     gap: 40px;
     align-items: center;
     max-width: 1100px;
     margin: 0 auto;
 }
 
-/* Crucial: prevents large images from pushing grid columns out */
+/* Prevents large images from pushing grid columns out */
 .app-text, .app-visual {
     min-width: 0; 
 }
@@ -342,11 +342,11 @@ body {
 
 .phone-frame {
     width: 100%;
-    max-width: 130px; /* Hard cap on phone mockup width */
+    max-width: 280px; /* Desktop phone frame size */
     background: #000000;
-    padding: 5px;
-    border-radius: 20px;
-    border: 2px solid #222222;
+    padding: 10px;
+    border-radius: 36px;
+    border: 4px solid #222222;
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
     box-sizing: border-box;
 }
@@ -356,13 +356,53 @@ body {
     max-width: 100%;
     height: auto;
     display: block;
-    border-radius: 15px;
+    border-radius: 26px;
     object-fit: contain;
 }
 
+/* Option 2: Mobile Stacked Re-ordering */
 @media (max-width: 768px) {
+    .app-section {
+        padding: 40px 20px;
+    }
+
     .app-container {
-        grid-template-columns: 1fr;
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    /* Un-nests app-text so items re-order directly inside container */
+    .app-text {
+        display: contents;
+    }
+
+    /* 1. Title & Paragraph top */
+    .app-text h2, 
+    .app-text > p {
+        order: 1;
+    }
+
+    /* 2. Phone graphic in the middle */
+    .app-visual {
+        order: 2;
+        margin: 15px 0;
+    }
+
+    /* 3. Feature list at the bottom */
+    .app-features {
+        order: 3;
+    }
+
+    .phone-frame {
+        max-width: 210px; /* Nicely proportioned mobile size */
+        padding: 8px;
+        border-radius: 28px;
+        border-width: 3px;
+    }
+
+    .app-screen-img {
+        border-radius: 20px;
     }
 }
         
