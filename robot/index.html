@@ -641,15 +641,21 @@ body {
 .footer-title-wrap {
     display: flex;
     align-items: center;
-    gap: 12px;
-    margin-bottom: 12px;
+    gap: 16px;
+    margin-bottom: 15px;
 }
 
 .footer-logo {
-    height: 45px !important; /* Adjust this value if you want it slightly bigger/smaller */
+    height: 70px !important; /* Adjust this value if you want it slightly bigger/smaller */
     width: auto !important;
-    max-height: 45px !important;
-    display: block;
+    max-height: 70px !important;
+    display: block
+    object-fit: contain;
+}
+        .footer-title-wrap h3 {
+    margin: 0;
+    font-size: 1.8rem; /* Scales text up slightly to match the larger logo */
+    line-height: 1;
 }
         /* Footer Styling */
 .site-footer {
