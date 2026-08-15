@@ -149,20 +149,20 @@ body {
             border-radius: 20px;
             font-weight: bold;
         }
-/* Hero Location Badge */
-.location-badge {
-    display: inline-block;
-    background: rgba(255, 255, 255, 0.2);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    color: #ffffff;
-    padding: 6px 18px;
-    border-radius: 20px;
-    font-size: 0.95rem;
+.top-announcement-bar {
+    background-color: #112415;
+    color: #a5d6a7;
+    text-align: center;
+    padding: 7px 15px;
+    font-size: 0.82rem;
     font-weight: 600;
-    margin-bottom: 15px;
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    letter-spacing: 0.5px;
+    letter-spacing: 0.4px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* If using Option 3, adjust sticky header position so it sits below the bar */
+.sticky-header {
+    top: 31px; /* Adjusts top position to account for the announcement bar */
 }
         /* Features Highlights Section */
 /* Update .features-section */
@@ -752,7 +752,9 @@ body {
     </style>
 </head>
 <body>
-
+<div class="top-announcement-bar">
+    🌿 Local Robot Lawn Care — Servicing Nelson &amp; Surrounding Suburbs
+</div>
     <!-- Sticky Navigation -->
   <header class="sticky-header">
   
@@ -784,8 +786,6 @@ body {
     <div class="hero">
         <div class="hero-overlay"></div>
         <div class="hero-content">
-            <!-- Location Badge -->
-<div class="location-badge">📍 Servicing Nelson &amp; Surrounding Suburbs</div>
             <h1>The Perfect Lawn, Zero Effort.</h1>
             <p>With our robotic mower subscription, We install the robot, manage the maintenance, and you wake up to perfect grass every day.</p>
             <a href="#pricing" class="cta-button">View Pricing</a>
