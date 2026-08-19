@@ -433,87 +433,69 @@ body {
         
         /* App Section Styling */
 /* App Section Styling - Layout Fix */
-.app-section {
-    background-color: #f0f7f2;
-    padding: 70px 20px;
-    border-radius: 16px;
-    margin: 40px auto;
-}
-
-.app-container {
-    display: grid;
-    grid-template-columns: 1fr 320px; /* Locks right column width on desktop */
-    gap: 40px;
-    align-items: center;
-    max-width: 1100px;
-    margin: 0 auto;
-}
-
-/* Prevents large images from pushing grid columns out */
-.app-text, .app-visual {
-    min-width: 0; 
-}
-
-.app-text h2 {
-    color: var(--primary-color);
-    font-size: 2.2rem;
-    margin-top: 0;
-}
-
-.app-features {
-    list-style: none;
-    padding: 0;
-    margin-top: 20px;
-}
-
-.app-features li {
-    margin-bottom: 18px;
-    line-height: 1.5;
-    font-size: 1.05rem;
-}
-
-.app-visual {
-    display: flex;
-    justify-content: center;
-    width: 100%;
-}
-
-.phone-frame {
-    width: 100%;
-    max-width: 280px; /* Desktop phone frame size */
-    background: #000000;
-    padding: 10px;
-    border-radius: 36px;
-    border: 4px solid #222222;
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
-    box-sizing: border-box;
-}
-
-.app-screen-img {
-    width: 100%;
-    max-width: 100%;
-    height: auto;
-    display: block;
-    border-radius: 26px;
-    object-fit: contain;
-}
-
-/* Option 2: Mobile Stacked Re-ordering */
 @media (max-width: 768px) {
     .app-section {
-        padding: 40px 20px;
+        padding: 30px 16px !important;
     }
 
     .app-container {
-        display: flex;
-        flex-direction: column;
-        gap: 15px;
+        display: grid !important;
+        grid-template-columns: 1fr 115px !important; /* Text left, phone right */
+        gap: 12px !important;
+        align-items: center !important;
     }
 
-    /* Un-nests app-text so items re-order directly inside container */
+    /* Un-nests app-text so grid controls its children directly */
     .app-text {
-        display: contents;
+        display: contents !important;
     }
+
+    .app-text h2 {
+        grid-column: 1 / 2;
+        font-size: 1.35rem !important;
+        margin-bottom: 6px !important;
+    }
+
+    .app-text > p {
+        grid-column: 1 / 2;
+        font-size: 0.85rem !important;
+        line-height: 1.3 !important;
+        margin: 0 !important;
+    }
+
+    /* Phone sits in column 2, aligned with title & paragraph */
+    .app-visual {
+        grid-column: 2 / 3;
+        grid-row: 1 / 3;
+        margin: 0 !important;
+        justify-content: flex-end !important;
+    }
+
+    .phone-frame {
+        max-width: 115px !important;
+        padding: 4px !important;
+        border-radius: 18px !important;
+        border-width: 2px !important;
+    }
+
+    .app-screen-img {
+        border-radius: 14px !important;
+    }
+
+    /* Bullets span full width underneath both elements */
+    .app-features {
+        grid-column: 1 / -1; 
+        margin-top: 15px !important;
+        padding-top: 15px !important;
+        border-top: 1px solid rgba(0, 0, 0, 0.08);
+    }
+
+    .app-features li {
+        font-size: 0.88rem !important;
+        margin-bottom: 12px !important;
+        line-height: 1.35 !important;
+    }
+}
 
     /* 1. Title & Paragraph top */
     .app-text h2, 
