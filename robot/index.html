@@ -151,30 +151,77 @@ body {
         }
 
         /* Features Highlights Section */
-/* Update .features-section */
-.features-section {
-    background: linear-gradient(180deg, #eef7f2 0%, #ffffff 100%);
-    border-bottom: 1px solid #e0e0e0;
+/* Feature Cards Upgrade */
+.features-grid, .process-steps {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 25px;
+    max-width: 1100px;
+    margin: 30px auto;
+    padding: 0 20px;
 }
 
-/* Update .card to add top border accents and hover animations */
-.card {
+.feature-card {
     background: #ffffff;
-    padding: 40px 25px;
-    border-radius: 12px;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
-    border-top: 4px solid var(--primary-color); /* Green top accent line */
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: 1px solid #e2ece4;
+    border-radius: 16px;
+    padding: 30px 24px;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 
-.card:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 15px 30px rgba(46, 125, 50, 0.15);
+.feature-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 12px 30px rgba(46, 125, 50, 0.1);
+    border-color: #a5d6a7;
 }
 
 .feature-icon {
-    font-size: 2.5rem;
-    margin-bottom: 15px;
+    width: 52px;
+    height: 52px;
+    background: #eef7f0;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+/* Process Steps Timeline Styling */
+.process-section {
+    background: #f8faf8;
+    padding: 60px 0;
+    margin-top: 40px;
+    border-top: 1px solid #eaf2eb;
+}
+
+.step-card {
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 30px 24px;
+    position: relative;
+    border: 1px solid #e5ebe6;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+}
+
+.step-badge {
+    width: 36px;
+    height: 36px;
+    background: #2e7d32;
+    color: #ffffff;
+    font-weight: 700;
+    font-size: 1.1rem;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 18px;
+    box-shadow: 0 4px 10px rgba(46, 125, 50, 0.3);
+}
+
+@media (max-width: 768px) {
+    .features-grid, .process-steps {
+        grid-template-columns: 1fr;
+    }
 }
         
         /* Hero Section - IMAGE BACKGROUND */
@@ -815,57 +862,74 @@ body {
     </div>
 
     <!-- Smart Features Section -->
-<section id="features" class="features-section">
-    <h2 class="section-title">Smart, Simple, Automated</h2>
-    <p class="section-subtitle">Effortless lawn care powered by modern robotic technology.</p>
-    <div class="grid-3">
-        <div class="card">
-            <div class="feature-icon">📱</div>
+<section class="features-section">
+    <div class="section-header">
+        <h2>Smart, Simple, Automated</h2>
+        <p>Effortless lawn care powered by modern technology.</p>
+    </div>
+
+    <div class="features-grid">
+        <div class="feature-card">
+            <div class="feature-icon">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#2e7d32" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
+            </div>
             <h3>Managed From Your Phone</h3>
             <p>Monitor your robot, adjust schedules, and check mower status anytime directly through your smartphone app.</p>
         </div>
-        <div class="card">
-            <div class="feature-icon">🌱</div>
+
+        <div class="feature-card">
+            <div class="feature-icon">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#2e7d32" stroke-width="2"><path d="M12 2a10 10 0 0 0-10 10c0 5.523 4.477 10 10 10s10-4.477 10-10A10 10 0 0 0 12 2z"/><path d="M12 6v6l4 2"/></svg>
+            </div>
             <h3>Freshly Mowed Every Day</h3>
             <p>Micro-cutting continuously maintains carpet-like grass, feeding nutrients back into your soil for a greener lawn.</p>
         </div>
-        <div class="card">
-            <div class="feature-icon">⚡</div>
-            <h3>Self-Docking & Charging</h3>
-            <p>When power gets low, the mower automatically navigates back to its charging base and resumes work when ready.</p>
+
+        <div class="feature-card">
+            <div class="feature-icon">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#2e7d32" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+            </div>
+            <h3>Self-Docking &amp; Charging</h3>
+            <p>When battery levels drop, the mower automatically navigates back to its charging base and resumes work when ready.</p>
         </div>
     </div>
 </section>
     
     <!-- How It Works Section -->
     <section id="how-it-works">
-        <h2 class="section-title">How Robot-as-a- Works</h2>
-        <p class="section-subtitle">A completely hands-off experience from day one.</p>
-        <div class="grid-3">
-            <div class="card">
-                <div class="card-number">1</div>
-                <h3>Lawn Assessment</h3>
-                <p>Free on-site yard assessment - checking lawn type and slope.</p>
-            </div>
-            <div class="card">
-                <div class="card-number">2</div>
-                <h3>Professional Setup</h3>
-                <p>We map your boundaries digitally, and program the optimal mowing schedule for your grass type.</p>
-            </div>
-            <div class="card">
-                <div class="card-number">3</div>
-                <h3>Sit Back & Relax</h3>
-                <p>Your robot mows quietly, navigates around obstacles, and automatically returns to its base to charge.</p>
-            </div>
+        <section class="process-section">
+    <div class="section-header">
+        <h2>3 Steps to Your Perfect Lawn</h2>
+        <p>A completely hands-off experience from day one.</p>
+    </div>
+
+    <div class="process-steps">
+        <div class="step-card">
+            <div class="step-badge">1</div>
+            <h3>Free Lawn Assessment</h3>
+            <p>We evaluate your lawn size, slope, and boundaries to pair you with the ideal Navimow model.</p>
         </div>
-    </section>
+
+        <div class="step-card">
+            <div class="step-badge">2</div>
+            <h3>Professional Setup</h3>
+            <p>Our team installs the docking station, maps your lawn, configures ideal cutting schedules, and help set you up with the app.</p>
+        </div>
+
+        <div class="step-card">
+            <div class="step-badge">3</div>
+            <h3>Sit Back &amp; Relax</h3>
+            <p>Enjoy a perfect fresh-cut lawn with full maintenance, blade replacements, and support included.</p>
+        </div>
+    </div>
+</section>
 
    <!-- Mobile App Spotlight Section -->
 <section id="app-control" class="app-section">
     <div class="app-container">
         <div class="app-text">
             <h2>Total Control in Your Pocket 📱</h2>
-            <p>Managing your lawn care is as easy as opening your phone. The official app gives you full control from anywhere in the world.</p>
+            <p>Managing your lawn care is as easy as opening your phone. The official app gives you full control from anywhere!</p>
             
             <ul class="app-features">
                 <li>
