@@ -431,74 +431,117 @@ body {
     margin: 0;
 }
         
-        /* App Section Styling */
-/* App Section Styling - Layout Fix */
-/* Mobile Layout Fix for App Section */
+/* App Section Styling */
+.app-section {
+    background-color: #f4f8f5; /* Subtle background color break */
+    padding: 60px 20px;
+    border-radius: 20px;
+    max-width: 1100px;
+    margin: 40px auto;
+}
+
+.app-header {
+    text-align: center;
+    max-width: 600px;
+    margin: 0 auto 30px auto;
+}
+
+.app-badge {
+    background: #e2f0e4;
+    color: #2e7d32;
+    font-size: 0.75rem;
+    font-weight: 800;
+    letter-spacing: 1.2px;
+    padding: 6px 14px;
+    border-radius: 20px;
+    display: inline-block;
+    margin-bottom: 12px;
+}
+
+.app-header h2 {
+    color: #112415;
+    font-size: 1.8rem;
+    font-weight: 800;
+    margin: 0 0 10px 0;
+}
+
+.app-header p {
+    color: #555555;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    margin: 0;
+}
+
+/* Phone Display */
+.app-visual {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 30px;
+}
+
+.phone-frame {
+    width: 190px;
+    background: #111;
+    padding: 6px;
+    border-radius: 28px;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+}
+
+.app-screen-img {
+    width: 100%;
+    height: auto;
+    border-radius: 22px;
+    display: block;
+}
+
+/* Feature Cards Grid */
+.app-features-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+}
+
+.app-card {
+    background: #ffffff;
+    border: 1px solid #e1ebe3;
+    border-radius: 14px;
+    padding: 18px;
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+}
+
+.app-icon {
+    font-size: 1.4rem;
+    background: #f0f7f1;
+    padding: 8px;
+    border-radius: 10px;
+    line-height: 1;
+}
+
+.app-card strong {
+    display: block;
+    color: #112415;
+    font-size: 0.95rem;
+    margin-bottom: 4px;
+}
+
+.app-card p {
+    color: #666666;
+    font-size: 0.85rem;
+    line-height: 1.4;
+    margin: 0;
+}
+
+/* Mobile Responsiveness */
 @media (max-width: 768px) {
-    .app-section {
-        padding: 30px 16px !important;
-        overflow: hidden !important; /* Stops horizontal blowout */
+    .app-features-grid {
+        grid-template-columns: 1fr; /* Single column cards on phone */
     }
-
-    .app-container {
-        display: flex !important;
-        flex-direction: column !important;
-        width: 100% !important;
-    }
-
-    /* Text Block */
-    .app-text {
-        display: flex !important;
-        flex-direction: column !important;
-        width: 100% !important;
-    }
-
-    .app-text h2 {
-        font-size: 1.4rem !important;
-        margin-bottom: 8px !important;
-    }
-
-    .app-text > p {
-        font-size: 0.9rem !important;
-        line-height: 1.4 !important;
-        margin-bottom: 0 !important;
-    }
-
-    /* Centered Phone Image */
-    .app-visual {
-        width: 100% !important;
-        display: flex !important;
-        justify-content: center !important;
-        margin: 20px 0 !important;
-    }
-
-    .phone-frame {
-        width: 170px !important; /* Hard cap on mobile phone width */
-        max-width: 170px !important;
-        padding: 6px !important;
-        border-radius: 24px !important;
-        border-width: 3px !important;
-        box-sizing: border-box !important;
-    }
-
-    .app-screen-img {
-        width: 100% !important;
-        height: auto !important;
-        border-radius: 18px !important;
-        display: block !important;
-    }
-
-    /* Full-Width Feature List Below Image */
-    .app-features {
-        margin-top: 10px !important;
-        padding-left: 0 !important;
-        width: 100% !important;
-    }
-
-    .app-features li {
-        font-size: 0.88rem !important;
-        margin-bottom: 12px !important;
-        line-height: 1.4 !important;
+    
+    .app-header h2 {
+        font-size: 1.5rem;
     }
 }
         
@@ -954,34 +997,55 @@ body {
 </section>
 
    <!-- Mobile App Spotlight Section -->
+<!-- Mobile App Spotlight Section -->
 <section id="app-control" class="app-section">
     <div class="app-container">
-        <div class="app-text">
-            <h2>Total Control in Your Pocket 📱</h2>
-            <p>Managing your lawn care is as easy as opening your phone. The official app gives you full control from anywhere!</p>
-            
-            <ul class="app-features">
-                <li>
-                    <strong>⏱️ Custom Schedules:</strong>
-                    Set it to cut while you're at work or sleeping so your yard is always clear.
-                </li>
-                <li>
-                    <strong>📲 Real-Time Monitoring:</strong>
-                    Check mowing progress, view battery level, or send the mower back to its dock with a single tap.
-                </li>
-                <li>
-                    <strong>📍 GPS & Anti-Theft Tracking:</strong>
-                    Check real-time location and receive instant alerts if the mower leaves your property.
-                </li>
-                <li>
-                    <strong>🌧️ Weather Sensing:</strong>
-                    Automatically syncs with local weather forecasts to pause mowing during rain.
-                </li>
-            </ul>
+        <!-- Eyebrow & Title -->
+        <div class="app-header">
+            <span class="app-badge">SMART CONTROL</span>
+            <h2>Total Control in Your Pocket</h2>
+            <p>Managing your lawn care is as easy as opening your phone. The official Navimow app gives you full control from anywhere.</p>
         </div>
+
+        <!-- Phone Graphic -->
         <div class="app-visual">
             <div class="phone-frame">
                 <img src="appscreen.jpg" alt="Navimow Mobile App Screen" class="app-screen-img">
+            </div>
+        </div>
+
+        <!-- Styled Feature Cards -->
+        <div class="app-features-grid">
+            <div class="app-card">
+                <span class="app-icon">⏱️</span>
+                <div>
+                    <strong>Custom Schedules</strong>
+                    <p>Set it to cut while you're at work or sleeping so your yard is always clear.</p>
+                </div>
+            </div>
+
+            <div class="app-card">
+                <span class="app-icon">📲</span>
+                <div>
+                    <strong>Real-Time Monitoring</strong>
+                    <p>Check mowing progress, battery level, or send the mower back to dock in one tap.</p>
+                </div>
+            </div>
+
+            <div class="app-card">
+                <span class="app-icon">📍</span>
+                <div>
+                    <strong>GPS & Anti-Theft</strong>
+                    <p>Track real-time location and receive instant alerts if the mower leaves your property.</p>
+                </div>
+            </div>
+
+            <div class="app-card">
+                <span class="app-icon">🌧️</span>
+                <div>
+                    <strong>Weather Sensing</strong>
+                    <p>Automatically syncs with forecasts to pause mowing during rain.</p>
+                </div>
             </div>
         </div>
     </div>
